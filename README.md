@@ -1,13 +1,18 @@
 # My Personal Project
 
-## A subtitle
+[//]: # (## A subtitle)
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
+[//]: # ()
+[//]: # (A *bulleted* list:)
 
-An example of text with **bold** and *italic* fonts.  
+[//]: # (- item 1)
+
+[//]: # (- item 2)
+
+[//]: # (- item 3)
+
+[//]: # ()
+[//]: # (An example of text with **bold** and *italic* fonts.  )
 
 ## Idea generation
 
@@ -16,7 +21,7 @@ An example of text with **bold** and *italic* fonts.
 - "What to have for dinner?"
 - "Shit, some ingredients are starting to rot. I'm too poor to throw them away,
 how should I cook them?" 
-- "I bought this cucumber but it tastes bad and I don't feel like eating it 
+- "I bought this cucumber but it tastes bad so I don't feel like eating it 
 raw, is there any recipe that use cooked cucumber?"
 
 ### Project idea to solve these problems
@@ -31,8 +36,19 @@ types of dish, ingredients, dietary requirements, and time consumption.
 - Working people who live by themselves: only buy groceries occasionally but low
 consumption -> usually see their ingredients go rotten
 - People who crave for weird combinations of ingredients but don't know how to
-process them, or don't want to visit the washroom 10 times a day after they
-eat their meal
+process them, or don't want to visit the washroom 10 times after they
+eat their cooking
+
+### User stories
+
+- As a user, I want to be able to filter recipes based on types of dish, ingredients,
+dietary requirements, and/or time consumption
+- As a user, I want to be able to view the list of recipes after filtering
+- As a user, I want to be able to add my recipes to my collections
+- As a user, I want to be able to improvise a recipe from the original database,
+and keep a record of it
+- As a user, I want to be able to select a recipe in the database and rate it, as
+well as comment on it
 
 ### Scrap ideas
 
