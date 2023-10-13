@@ -95,9 +95,14 @@ public class Recipe {
             printSteps += "\n" + "Step " + i + ": " + steps.get(i - 1);
         }
 
+        String printIngredients = "";
+        for (Ingredient i : ingredients) {
+            printIngredients += i.getName() + ", ";
+        }
+
         return "ID: " + getId() + "\nRecipe: " + getName() + "\nAuthor: " + getAuthor()
                 + "\nTotal time: " + time + "\n\nDietary notes: " + getDietaryRequirements()
-                + "\nIngredient: " + getIngredients() + "\n\nInstructions: "
+                + "\nIngredient: " + printIngredients + "\n\nInstructions: "
                 + printSteps;
     }
 }

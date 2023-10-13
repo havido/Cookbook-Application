@@ -59,7 +59,7 @@ public class RecipeApp {
 
         Set<Ingredient> ing2 = new HashSet<Ingredient>();
         ing2.add(new Ingredient("fish", Categories.MEAT));
-        ing2.add(new Ingredient("potato", Categories.GLUTEN));
+        ing2.add(new Ingredient("potato", Categories.NONE));
         recipe2 = new Recipe("Fish and Chips", "", ing2,20);
 
         library = new RecipeLibrary();
@@ -83,7 +83,6 @@ public class RecipeApp {
         System.out.println("\ti -> ingredients");
         System.out.println("\td -> dietary requirements");
         System.out.println("\tt -> time consumption");
-        System.out.println("\tb -> back to main menu");
 
         String command = sc.nextLine().toLowerCase();
         boolean commandValid = false;
@@ -106,14 +105,11 @@ public class RecipeApp {
                     searchByTime();
                     commandValid = true;
                     break;
-                case ("b"):
-                    commandValid = true;
                 default:
                     System.out.println("Selection not valid...");
                     command = sc.nextLine().toLowerCase();
             }
         }
-        System.out.println("hihi");
     }
 
     private void searchByName() {
@@ -135,7 +131,7 @@ public class RecipeApp {
     }
 
     private void searchByTime() {
-        System.out.println("Search here:");
+        System.out.println("Enter maximum time:");
         int maxTime = sc.nextInt();
         printList(library.filterByTime(maxTime));
     }
@@ -147,35 +143,39 @@ public class RecipeApp {
         String author = sc.nextLine();
         Set<Ingredient> ingredients = new HashSet<Ingredient>();
         System.out.println("Enter a list of ingredients; each ingredient on a separate line; press d to finish: ");
-        while (!sc.nextLine().equals("d")) {
-            while (sc.hasNext() && !sc.nextLine().isBlank()) {
-                Ingredient ing = new Ingredient(sc.nextLine(), Categories.NONE);
-                // I'm still figuring out a way to change categories of an ingredient
+
+        String ingredientInput;
+        while (!(ingredientInput = sc.nextLine()).equals("d")) {
+            if (!ingredientInput.isBlank()) {
+                Ingredient ing = new Ingredient(ingredientInput, Categories.NONE);
                 ingredients.add(ing);
             }
         }
+
         System.out.println("Enter the time needed to make this: ");
         int time = sc.nextInt();
+        sc.nextLine();
 
         Recipe newRecipe = new Recipe(name, author, ingredients, time);
 
         System.out.println("Enter a list of steps; each step on a separate line, press d to finish: ");
-        while (!sc.nextLine().equals("d")) {
-            while (sc.hasNext() && !sc.nextLine().isBlank()) {
-                newRecipe.getSteps().add(sc.nextLine());
+        String stepInput;
+        while (!(stepInput = sc.nextLine()).equals("d")) {
+            if (!stepInput.isBlank()) {
+                newRecipe.getSteps().add(stepInput);
             }
         }
-        System.out.println("Your recipe has been added successfully!");
+        System.out.println("\nYour recipe has been added successfully!");
         System.out.println(newRecipe.toString());
+        library.getLibrary().add(newRecipe);
     }
 
-    public String printList(List<Recipe> array) {
+    public void printList(List<Recipe> array) {
         String print = "";
         for (int i = 0; i < array.size(); i++) {
             if (!array.get(i).getName().isBlank()) {
-                print += "\n" + array.get(i).getName();
+                System.out.println("\n" + array.get(i).getName());
             }
         }
-        return print;
     }
 }
