@@ -16,6 +16,7 @@ public class RecipeApp {
         runApp();
     }
 
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void runApp() {
         boolean keepGoing = true;
         String command;
@@ -135,6 +136,7 @@ public class RecipeApp {
         printList(library.filterByTime(maxTime));
     }
 
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void addRecipe() {
         System.out.println("Enter a name for the recipe: ");
         String name = sc.nextLine();
@@ -169,7 +171,7 @@ public class RecipeApp {
         library.getLibrary().add(newRecipe);
     }
 
-    public void printList(List<Recipe> array) {
+    private void printList(List<Recipe> array) {
         for (Recipe recipe : array) {
             if (!recipe.getName().isBlank()) {
                 System.out.println("[ID: " + recipe.getId() + "] " + recipe.getName());
@@ -177,7 +179,7 @@ public class RecipeApp {
         }
     }
 
-    public void viewRecipe() {
+    private void viewRecipe() {
         System.out.println("Enter the corresponding ID to view the recipe, or enter 0 to return to main menu: ");
         int input = sc.nextInt();
         sc.nextLine();
