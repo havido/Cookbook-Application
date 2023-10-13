@@ -41,7 +41,7 @@ eat their cooking
 
 ### User stories
 
-- As a user, I want to be able to filter recipes based on types of dish, ingredients,
+- As a user, I want to be able to filter recipes based on names, ingredients,
 dietary requirements, and/or time consumption
 - As a user, I want to be able to view the list of recipes after filtering
 - As a user, I want to be able to add my recipes to my collections
