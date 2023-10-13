@@ -16,7 +16,7 @@ public class RecipeApp {
         runApp();
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    @SuppressWarnings("methodlength")
     private void runApp() {
         boolean keepGoing = true;
         String command;
@@ -136,7 +136,7 @@ public class RecipeApp {
         printList(library.filterByTime(maxTime));
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    @SuppressWarnings("methodlength")
     private void addRecipe() {
         System.out.println("Enter a name for the recipe: ");
         String name = sc.nextLine();

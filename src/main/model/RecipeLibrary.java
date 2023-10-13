@@ -6,7 +6,6 @@ import java.util.List;
 
 public class RecipeLibrary {
     private List<Recipe> library;
-//    private Iterator<Recipe> iterator;
 
     public RecipeLibrary() {
         library = new ArrayList<Recipe>();
@@ -29,12 +28,6 @@ public class RecipeLibrary {
     public List<Recipe> filterByIngredients(String keyword) {
         List<Recipe> filteredIngredients = new ArrayList<Recipe>();
         for (Recipe recipe : library) {
-//            iterator = recipe.getIngredients().iterator();
-//            while (iterator.hasNext()) {
-//                if (iterator.next().equals(keyword.toLowerCase())) {
-//                    filteredIngredients.add(recipe);
-//                }
-//            }
 
             for (Ingredient ingredient : recipe.getIngredients()) {
                 if (ingredient.getName().toLowerCase().equals(keyword.toLowerCase())) {
@@ -49,13 +42,6 @@ public class RecipeLibrary {
     public List<Recipe> filterByDiet(String keyword) {
         List<Recipe> filteredDiet = new ArrayList<Recipe>();
         for (Recipe recipe : library) {
-//            iterator = recipe.getDietaryRequirements().iterator();
-//            while (iterator.hasNext()) {
-//                if (iterator.next().equals(keyword.toLowerCase())) {
-//                    filteredDiet.add(recipe);
-//                }
-//            }
-
             for (String requirement : recipe.getDietaryRequirements()) {
                 if (requirement.toLowerCase().equals(keyword.toLowerCase())) {
                     filteredDiet.add(recipe);

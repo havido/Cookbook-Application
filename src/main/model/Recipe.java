@@ -18,6 +18,7 @@ public class Recipe {
      *          to any other recipe; if author is empty or contains only blankspaces, then
      *          recipe's author is "Anonymous", otherwise recipe's author is set to author.
      */
+    @SuppressWarnings("methodlength")
     public Recipe(String name, String author, Set<Ingredient> ingredients, int time) {
         this.name = name;
         if (author.isBlank()) {
@@ -31,20 +32,6 @@ public class Recipe {
         dietaryRequirements.add("lactose-free");
         dietaryRequirements.add("gluten-free");
         dietaryRequirements.add("vegetarian");
-
-//        Iterator<Ingredient> iterator = ingredients.iterator();
-//        while (iterator.hasNext()) {
-//            Ingredient ingredient = iterator.next();
-//            if (iterator.next().getCategory() == Categories.MEAT) {
-//                dietaryRequirements.remove("vegetarian");
-//            }
-//            if (iterator.next().getCategory() == Categories.GLUTEN) {
-//                dietaryRequirements.remove("gluten-free");
-//            }
-//            if (iterator.next().getCategory() == Categories.LACTOSE) {
-//                dietaryRequirements.remove("lactose-free");
-//            }
-//        }
 
         for (Ingredient ingredient : ingredients) {
             if (ingredient.getCategory() == Categories.MEAT) {
