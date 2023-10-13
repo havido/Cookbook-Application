@@ -82,14 +82,19 @@ public class Recipe {
             printSteps += "\n" + "Step " + i + ": " + steps.get(i - 1);
         }
 
-        String printIngredients = "";
+        List<String> sortedIngredients = new ArrayList<>();
         for (Ingredient i : ingredients) {
-            printIngredients += i.getName() + ", ";
+            sortedIngredients.add(i.getName());
         }
+        Collections.sort(sortedIngredients);
+
+        List<String> sortedDiets = new ArrayList<>();
+        sortedDiets.addAll(dietaryRequirements);
+        Collections.sort(sortedDiets);
 
         return "ID: " + getId() + "\nRecipe: " + getName() + "\nAuthor: " + getAuthor()
-                + "\nTotal time: " + time + "\n\nDietary notes: " + getDietaryRequirements()
-                + "\nIngredient: " + printIngredients + "\n\nInstructions: "
+                + "\nTotal time: " + time + "\n\nDietary notes: " + sortedDiets
+                + "\nIngredients: " + sortedIngredients + "\n\nInstructions: "
                 + printSteps;
     }
 }

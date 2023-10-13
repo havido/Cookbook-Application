@@ -44,9 +44,8 @@ eat their cooking
 - As a user, I want to be able to filter recipes based on names, ingredients,
 dietary requirements, and/or time consumption
 - As a user, I want to be able to view the list of recipes after filtering
-- As a user, I want to be able to add my recipes to my collections
-- As a user, I want to be able to improvise a recipe from the original database,
-and keep a record of it
+- As a user, I want to be able to add my recipes to the library
+- As a user, I want to be able to view a recipe using its ID
 - As a user, I want to be able to select a recipe in the database and rate it, as
 well as comment on it
 

@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,6 +30,7 @@ class RecipeTest {
         Set<Ingredient> ing2 = new HashSet<Ingredient>();
         ing2.add(new Ingredient("fish", Categories.MEAT));
         ing2.add(i3 = new Ingredient("potato", Categories.NONE));
+        ing2.add(new Ingredient("butter", Categories.LACTOSE));
         test2 = new Recipe("Fish and Chips", "", ing2,15);
         test2.getSteps().add("test step 1");
         test2.getSteps().add("test step 2");
@@ -50,14 +53,15 @@ class RecipeTest {
 
         assertTrue(test1.getDietaryRequirements().contains("lactose-free"));
         assertFalse(test1.getDietaryRequirements().contains("gluten-free"));
+        assertTrue(test2.getDietaryRequirements().contains("gluten-free"));
         assertFalse(test2.getDietaryRequirements().contains("vegetarian"));
-        assertTrue(test2.getDietaryRequirements().contains("lactose-free"));
+        assertFalse(test2.getDietaryRequirements().contains("lactose-free"));
 
         assertEquals(20, test1.getTime());
         assertEquals(15, test2.getTime());
 
-//        assertEquals("ID: 1\nRecipe: Crispy Cucumber Snack\nAuthor: Hannah\nTotal time: 20\n\n"
-//                + "Dietary notes: " + test1.getDietaryRequirements() + "\nIngredients: " + test1.g"\n\nInstructions: "
-//                + "\nStep 1: test step 1\nStep 2: test step 2\nStep 3: test step 3", test1.toString());
+        assertEquals("ID: 1\nRecipe: Crispy Cucumber Snack\nAuthor: Hannah\nTotal time: 20\n\n"
+                + "Dietary notes: [lactose-free, vegetarian]" + "\nIngredients: [cucumber, flour]" + "\n\nInstructions: "
+                + "\nStep 1: test step 1\nStep 2: test step 2\nStep 3: test step 3", test1.toString());
     }
 }
