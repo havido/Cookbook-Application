@@ -6,17 +6,20 @@ import model.Recipe;
 import model.RecipeLibrary;
 import java.util.*;
 
+// Cookbook application
 public class RecipeApp {
     private RecipeLibrary library;
     private Recipe recipe1;
     private Recipe recipe2;
     private Scanner sc;
 
+    // EFFECTS: runs the recipe application
     public RecipeApp() {
         runApp();
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: processes user input
     @SuppressWarnings("methodlength")
     private void runApp() {
         boolean keepGoing = true;
@@ -47,6 +50,8 @@ public class RecipeApp {
         System.out.println("\nGoodbye!");
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes recipes and library
     private void initialise() {
         Set<Ingredient> ing1 = new HashSet<Ingredient>();
         ing1.add(new Ingredient("cucumber", Categories.NONE));
@@ -72,6 +77,7 @@ public class RecipeApp {
         sc.useDelimiter("\n");
     }
 
+    // EFFECTS: displays menu of options to user
     private void menu() {
         System.out.println("\nWhat do you want to do today?");
         System.out.println("\ts -> search up recipes");
@@ -79,6 +85,7 @@ public class RecipeApp {
         System.out.println("\tq -> quit");
     }
 
+    // EFFECTS: displays menu of options to user inside the "search" branch
     private void searchMenu() {
         System.out.println("What do you want to based your search on?");
         System.out.println("\tn -> name of dishes");
@@ -87,6 +94,9 @@ public class RecipeApp {
         System.out.println("\tt -> time consumption");
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input, and after the list of filtered recipes is shown,
+    // they can choose to view the recipe by ID
     private void searchUpRecipesMenu() {
         searchMenu();
         String command = sc.nextLine().toLowerCase();
@@ -113,30 +123,36 @@ public class RecipeApp {
         viewRecipe();
     }
 
+    // EFFECTS: filter the library by names and print a filtered list
     private void searchByName() {
         System.out.println("Search here:");
         String keyword = sc.nextLine();
         printList(library.filterByName(keyword));
     }
 
+    // EFFECTS: filter the library by ingredients and print a filtered list
     private void searchByIngredients() {
         System.out.println("Search here:");
         String keyword = sc.nextLine();
         printList(library.filterByIngredients(keyword));
     }
 
+    // EFFECTS: filter the library by dietary requirements and print a filtered list
     private void searchByDiet() {
         System.out.println("Search here:");
         String keyword = sc.nextLine();
         printList(library.filterByDiet(keyword));
     }
 
+    // EFFECTS: filter the library by time taken and print a filtered list
     private void searchByTime() {
         System.out.println("Enter maximum time:");
         int maxTime = sc.nextInt();
         printList(library.filterByTime(maxTime));
     }
 
+    // MODIFIES: this
+    // EFFECTS: construct a new Recipe object and add this object to the library
     @SuppressWarnings("methodlength")
     private void addRecipe() {
         System.out.println("Enter a name for the recipe: ");
@@ -172,6 +188,7 @@ public class RecipeApp {
         library.getLibrary().add(newRecipe);
     }
 
+    // EFFECTS: print a list of type Recipe
     private void printList(List<Recipe> array) {
         for (Recipe recipe : array) {
             if (!recipe.getName().isBlank()) {
@@ -180,6 +197,7 @@ public class RecipeApp {
         }
     }
 
+    // EFFECTS: print a recipe with its information
     private void viewRecipe() {
         System.out.println("Enter the corresponding ID to view the recipe, or enter 0 to return to main menu: ");
         int input = sc.nextInt();
