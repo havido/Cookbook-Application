@@ -16,7 +16,10 @@ public class Recipe {
      * REQUIRES: name has a non-zero length
      * EFFECTS: recipe's name is set to name; recipe id is a positive integer not assigned
      *          to any other recipe; if author is empty or contains only blankspaces, then
-     *          recipe's author is "Anonymous", otherwise recipe's author is set to author.
+     *          recipe's author is "Anonymous", otherwise recipe's author is set to author;
+     *          recipe's ingredients is set to ingredients, recipe's dietary requirements
+     *          is calculated based on the category assigned with each ingredient; and an
+     *          arraylist to store instructions is initialised.
      */
     @SuppressWarnings("methodlength")
     public Recipe(String name, String author, Set<Ingredient> ingredients, int time) {
@@ -82,6 +85,7 @@ public class Recipe {
             printSteps += "\n" + "Step " + i + ": " + steps.get(i - 1);
         }
 
+        // Putting the Sets to sorted list so that the toString() method always print out similar statements
         List<String> sortedIngredients = new ArrayList<>();
         for (Ingredient i : ingredients) {
             sortedIngredients.add(i.getName());

@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class RecipeLibrary {
@@ -15,6 +14,9 @@ public class RecipeLibrary {
         return library;
     }
 
+    /*
+     * EFFECTS: filter the library by the name of each recipe, and add the filtered recipes to a new ArrayList
+     */
     public List<Recipe> filterByName(String keyword) {
         List<Recipe> filteredName = new ArrayList<Recipe>();
         for (Recipe recipe : library) {
@@ -25,6 +27,9 @@ public class RecipeLibrary {
         return filteredName;
     }
 
+    /*
+     * EFFECTS: filter the library by the ingredients of each recipe, and add the filtered recipes to a new ArrayList
+     */
     public List<Recipe> filterByIngredients(String keyword) {
         List<Recipe> filteredIngredients = new ArrayList<Recipe>();
         for (Recipe recipe : library) {
@@ -39,6 +44,10 @@ public class RecipeLibrary {
         return filteredIngredients;
     }
 
+    /*
+     * EFFECTS: filter the library by the dietary requirements of each recipe,
+     *          and add the filtered recipes to a new ArrayList
+     */
     public List<Recipe> filterByDiet(String keyword) {
         List<Recipe> filteredDiet = new ArrayList<Recipe>();
         for (Recipe recipe : library) {
@@ -52,6 +61,10 @@ public class RecipeLibrary {
         return filteredDiet;
     }
 
+    /*
+     * EFFECTS: filter the library by the time taken to make of each recipe,
+     *          and add the filtered recipes to a new ArrayList
+     */
     public List<Recipe> filterByTime(int maxTime) {
         List<Recipe> filteredTime = new ArrayList<Recipe>();
         for (Recipe recipe : library) {

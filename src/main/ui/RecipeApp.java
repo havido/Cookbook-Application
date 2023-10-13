@@ -16,6 +16,7 @@ public class RecipeApp {
         runApp();
     }
 
+
     @SuppressWarnings("methodlength")
     private void runApp() {
         boolean keepGoing = true;
