@@ -4,8 +4,6 @@ import model.Categories;
 import model.Ingredient;
 import model.Recipe;
 import model.RecipeLibrary;
-
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class RecipeApp {
@@ -20,7 +18,7 @@ public class RecipeApp {
 
     private void runApp() {
         boolean keepGoing = true;
-        String command = null;
+        String command;
         initialise();
 
         while (keepGoing) {
@@ -30,20 +28,16 @@ public class RecipeApp {
 
             while (!commandValid) {
                 switch (command) {
-                    case ("q"):
-                        keepGoing = false;
+                    case ("q"): keepGoing = false;
                         commandValid = true;
                         break;
-                    case ("s"):
-                        searchUpRecipesMenu();
+                    case ("s"): searchUpRecipesMenu();
                         commandValid = true;
                         break;
-                    case ("a"):
-                        addRecipe();
+                    case ("a"): addRecipe();
                         commandValid = true;
                         break;
-                    default:
-                        System.out.println("Selection not valid...");
+                    default: System.out.println("Selection not valid...");
                         command = sc.nextLine().toLowerCase();
                 }
             }
@@ -56,11 +50,17 @@ public class RecipeApp {
         ing1.add(new Ingredient("cucumber", Categories.NONE));
         ing1.add(new Ingredient("flour", Categories.GLUTEN));
         recipe1 = new Recipe("Crispy Cucumber Snack", "Hannah", ing1, 20);
+        recipe1.getSteps().add("test step 1, please don't fry cucumbers they taste like shit, no offense");
+        recipe1.getSteps().add("test step 2, i made fried rice with cucumbers once bc there was nothing left to eat");
+        recipe1.getSteps().add("test step 3, it was horrendous");
 
         Set<Ingredient> ing2 = new HashSet<Ingredient>();
         ing2.add(new Ingredient("fish", Categories.MEAT));
         ing2.add(new Ingredient("potato", Categories.NONE));
         recipe2 = new Recipe("Fish and Chips", "", ing2,20);
+        recipe2.getSteps().add("test step 1, this is like the easiest dish to eat");
+        recipe2.getSteps().add("test step 2, even the frozen fish and fried fries are good");
+        recipe2.getSteps().add("test step 3, i like it, but it's kinda unhealthy");
 
         library = new RecipeLibrary();
         library.getLibrary().add(recipe1);
@@ -77,39 +77,38 @@ public class RecipeApp {
         System.out.println("\tq -> quit");
     }
 
-    private void searchUpRecipesMenu() {
+    private void searchMenu() {
         System.out.println("What do you want to based your search on?");
         System.out.println("\tn -> name of dishes");
         System.out.println("\ti -> ingredients");
         System.out.println("\td -> dietary requirements");
         System.out.println("\tt -> time consumption");
+    }
 
+    private void searchUpRecipesMenu() {
+        searchMenu();
         String command = sc.nextLine().toLowerCase();
         boolean commandValid = false;
 
         while (!commandValid) {
             switch (command) {
-                case ("n"):
-                    searchByName();
+                case ("n"): searchByName();
                     commandValid = true;
                     break;
-                case ("i"):
-                    searchByIngredients();
+                case ("i"): searchByIngredients();
                     commandValid = true;
                     break;
-                case ("d"):
-                    searchByDiet();
+                case ("d"): searchByDiet();
                     commandValid = true;
                     break;
-                case ("t"):
-                    searchByTime();
+                case ("t"): searchByTime();
                     commandValid = true;
                     break;
-                default:
-                    System.out.println("Selection not valid...");
+                default: System.out.println("Selection not valid...");
                     command = sc.nextLine().toLowerCase();
             }
         }
+        viewRecipe();
     }
 
     private void searchByName() {
@@ -171,11 +170,34 @@ public class RecipeApp {
     }
 
     public void printList(List<Recipe> array) {
-        String print = "";
-        for (int i = 0; i < array.size(); i++) {
-            if (!array.get(i).getName().isBlank()) {
-                System.out.println("\n" + array.get(i).getName());
+        for (Recipe recipe : array) {
+            if (!recipe.getName().isBlank()) {
+                System.out.println("[ID: " + recipe.getId() + "] " + recipe.getName());
             }
         }
+    }
+
+    public void viewRecipe() {
+        System.out.println("Enter the corresponding ID to view the recipe, or enter 0 to return to main menu: ");
+        int input = sc.nextInt();
+        sc.nextLine();
+        boolean valid = false;
+
+        if (input == 0) {
+            return;
+        } else {
+            while (!valid) {
+                try {
+                    System.out.println(library.getLibrary().get(input - 1).toString());
+                    // because each recipe's id = its index in the List library - 1
+                    valid = true;
+                } catch (Exception e) {
+                    System.out.println("Invalid ID! Please choose one from the list: ");
+                    input = sc.nextInt();
+                    sc.nextLine();
+                }
+            }
+        }
+        System.out.println("\nEnd of recipe.");
     }
 }
