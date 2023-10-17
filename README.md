@@ -41,12 +41,18 @@ eat their cooking
 
 ### User stories
 
-- As a user, I want to be able to filter recipes based on names, ingredients,
+- [x] As a user, I want to be able to filter recipes based on names, ingredients,
 dietary requirements, and/or time consumption
-- As a user, I want to be able to view the list of recipes after filtering
-- As a user, I want to be able to add my recipes to the library
-- As a user, I want to be able to view a recipe using its ID
-- As a user, I want to be able to select a recipe in the database and rate it, as
+- [x] As a user, I want to be able to view the list of recipes after filtering
+- [x] As a user, I want to be able to add my recipes to the library
+- [ ] As a user, I want to be able to save my recipe to the library (if I so choose)
+- [ ] As a user, when I select the quit option from the application menu and I have a
+recipe that is not fully constructed, I want to be reminded to save my recipe to 
+file and have the option to do so or not.
+- [ ] As a user, when I start the application, I want to be given the option to load my 
+half-constructed recipe from file.
+- [x] As a user, I want to be able to view a recipe using its ID
+- [ ] As a user, I want to be able to select a recipe in the database and rate it, as
 well as comment on it
 
 ### Scrap ideas

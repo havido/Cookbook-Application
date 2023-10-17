@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RecipeLibrary {
     private List<Recipe> library;
-
+    
     public RecipeLibrary() {
         library = new ArrayList<Recipe>();
     }

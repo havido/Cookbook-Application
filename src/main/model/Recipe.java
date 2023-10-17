@@ -37,17 +37,21 @@ public class Recipe {
         dietaryRequirements.add("vegetarian");
 
         for (Ingredient ingredient : ingredients) {
-            if (ingredient.getCategory() == Categories.MEAT) {
-                dietaryRequirements.remove("vegetarian");
-            }
-            if (ingredient.getCategory() == Categories.GLUTEN) {
-                dietaryRequirements.remove("gluten-free");
-            }
-            if (ingredient.getCategory() == Categories.LACTOSE) {
-                dietaryRequirements.remove("lactose-free");
-            }
+            extracted(ingredient);
         }
         steps = new ArrayList<String>();
+    }
+
+    private void extracted(Ingredient ingredient) {
+        if (ingredient.getCategory() == Categories.MEAT) {
+            dietaryRequirements.remove("vegetarian");
+        }
+        if (ingredient.getCategory() == Categories.GLUTEN) {
+            dietaryRequirements.remove("gluten-free");
+        }
+        if (ingredient.getCategory() == Categories.LACTOSE) {
+            dietaryRequirements.remove("lactose-free");
+        }
     }
 
     public String getName() {
