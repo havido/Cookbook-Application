@@ -1,8 +1,12 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.*;
 
-public class Recipe {
+public class Recipe implements Writable {
     private String name;
     private static int nextRecipeId = 1;
     private int id;
@@ -43,13 +47,13 @@ public class Recipe {
     }
 
     private void extracted(Ingredient ingredient) {
-        if (ingredient.getCategory() == Categories.MEAT) {
+        if (ingredient.getCategory() == IngredientCategories.MEAT) {
             dietaryRequirements.remove("vegetarian");
         }
-        if (ingredient.getCategory() == Categories.GLUTEN) {
+        if (ingredient.getCategory() == IngredientCategories.GLUTEN) {
             dietaryRequirements.remove("gluten-free");
         }
-        if (ingredient.getCategory() == Categories.LACTOSE) {
+        if (ingredient.getCategory() == IngredientCategories.LACTOSE) {
             dietaryRequirements.remove("lactose-free");
         }
     }
@@ -104,5 +108,18 @@ public class Recipe {
                 + "\nTotal time: " + time + "\n\nDietary notes: " + sortedDiets
                 + "\nIngredients: " + sortedIngredients + "\n\nInstructions: "
                 + printSteps;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("id", id);
+        json.put("author", author);
+        json.put("ingredients", ingredients);
+        json.put("dietary restrictions", dietaryRequirements);
+        json.put("time", time);
+        json.put("steps", steps);
+        return json;
     }
 }

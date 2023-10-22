@@ -1,6 +1,6 @@
 package model;
 
-public enum Categories {
+public enum IngredientCategories {
     LACTOSE,
     GLUTEN,
     MEAT,

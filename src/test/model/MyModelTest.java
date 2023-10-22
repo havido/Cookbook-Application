@@ -12,15 +12,15 @@ class IngredientTest {
 
     @BeforeEach
     void runBefore() {
-        test1 = new Ingredient("cucumber", Categories.NONE);
-        test2 = new Ingredient("fish", Categories.MEAT);
+        test1 = new Ingredient("cucumber", IngredientCategories.NONE);
+        test2 = new Ingredient("fish", IngredientCategories.MEAT);
     }
 
     @Test
     void testConstructor() {
         assertEquals("cucumber", test1.getName());
-        assertEquals(Categories.NONE, test1.getCategory());
+        assertEquals(IngredientCategories.NONE, test1.getCategory());
         assertEquals("fish", test2.getName());
-        assertEquals(Categories.MEAT, test2.getCategory());
+        assertEquals(IngredientCategories.MEAT, test2.getCategory());
     }
 }

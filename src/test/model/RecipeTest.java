@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,17 +18,17 @@ class RecipeTest {
     @BeforeEach
     void runBefore() {
         Set<Ingredient> ing1 = new HashSet<Ingredient>();
-        ing1.add(i1 = new Ingredient("cucumber", Categories.NONE));
-        ing1.add(i2 = new Ingredient("flour", Categories.GLUTEN));
+        ing1.add(i1 = new Ingredient("cucumber", IngredientCategories.NONE));
+        ing1.add(i2 = new Ingredient("flour", IngredientCategories.GLUTEN));
         test1 = new Recipe("Crispy Cucumber Snack", "Hannah", ing1, 20);
         test1.getSteps().add("test step 1");
         test1.getSteps().add("test step 2");
         test1.getSteps().add("test step 3");
 
         Set<Ingredient> ing2 = new HashSet<Ingredient>();
-        ing2.add(new Ingredient("fish", Categories.MEAT));
-        ing2.add(i3 = new Ingredient("potato", Categories.NONE));
-        ing2.add(new Ingredient("butter", Categories.LACTOSE));
+        ing2.add(new Ingredient("fish", IngredientCategories.MEAT));
+        ing2.add(i3 = new Ingredient("potato", IngredientCategories.NONE));
+        ing2.add(new Ingredient("butter", IngredientCategories.LACTOSE));
         test2 = new Recipe("Fish and Chips", "", ing2,15);
         test2.getSteps().add("test step 1");
         test2.getSteps().add("test step 2");

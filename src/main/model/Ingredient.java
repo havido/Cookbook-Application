@@ -2,12 +2,12 @@ package model;
 
 public class Ingredient {
     private String name; // lowercase
-    private Categories category;
+    private IngredientCategories category;
 
     /*
      * EFFECTS: Set this.name to name, and this.category to category
      */
-    public Ingredient(String name, Categories category) {
+    public Ingredient(String name, IngredientCategories category) {
         this.name = name.toLowerCase();
         this.category = category;
     }
@@ -16,7 +16,7 @@ public class Ingredient {
         return name;
     }
 
-    public Categories getCategory() {
+    public IngredientCategories getCategory() {
         return category;
     }
 }

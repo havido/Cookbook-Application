@@ -2,7 +2,6 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import model.RecipeLibrary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,16 +18,16 @@ class RecipeLibraryTest {
 
         // Create sample recipes and add them to the library
         Set<Ingredient> ingredients1 = new HashSet<>();
-        ingredients1.add(new Ingredient("Chicken", Categories.MEAT));
+        ingredients1.add(new Ingredient("Chicken", IngredientCategories.MEAT));
         recipeLibrary.getLibrary().add(new Recipe("Chicken Curry", "John", ingredients1, 60));
 
         Set<Ingredient> ingredients2 = new HashSet<>();
-        ingredients2.add(new Ingredient("Pasta", Categories.GLUTEN));
+        ingredients2.add(new Ingredient("Pasta", IngredientCategories.GLUTEN));
         recipeLibrary.getLibrary().add(new Recipe("Pasta Carbonara", "Alice", ingredients2, 30));
 
         Set<Ingredient> ingredients3 = new HashSet<>();
-        ingredients3.add(new Ingredient("Tofu", Categories.NONE));
-        ingredients3.add(new Ingredient("Rice", Categories.NONE));
+        ingredients3.add(new Ingredient("Tofu", IngredientCategories.NONE));
+        ingredients3.add(new Ingredient("Rice", IngredientCategories.NONE));
         recipeLibrary.getLibrary().add(new Recipe("Tofu Stir-Fry", "Bob", ingredients3, 45));
     }
 

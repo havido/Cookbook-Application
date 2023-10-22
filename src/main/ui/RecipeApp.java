@@ -1,6 +1,6 @@
 package ui;
 
-import model.Categories;
+import model.IngredientCategories;
 import model.Ingredient;
 import model.Recipe;
 import model.RecipeLibrary;
@@ -54,16 +54,16 @@ public class RecipeApp {
     // EFFECTS: initializes recipes and library
     private void initialise() {
         Set<Ingredient> ing1 = new HashSet<Ingredient>();
-        ing1.add(new Ingredient("cucumber", Categories.NONE));
-        ing1.add(new Ingredient("flour", Categories.GLUTEN));
+        ing1.add(new Ingredient("cucumber", IngredientCategories.NONE));
+        ing1.add(new Ingredient("flour", IngredientCategories.GLUTEN));
         recipe1 = new Recipe("Crispy Cucumber Snack", "Hannah", ing1, 20);
         recipe1.getSteps().add("test step 1, please don't fry cucumbers they taste like shit, no offense");
         recipe1.getSteps().add("test step 2, i made fried rice with cucumbers once bc there was nothing left to eat");
         recipe1.getSteps().add("test step 3, it was horrendous");
 
         Set<Ingredient> ing2 = new HashSet<Ingredient>();
-        ing2.add(new Ingredient("fish", Categories.MEAT));
-        ing2.add(new Ingredient("potato", Categories.NONE));
+        ing2.add(new Ingredient("fish", IngredientCategories.MEAT));
+        ing2.add(new Ingredient("potato", IngredientCategories.NONE));
         recipe2 = new Recipe("Fish and Chips", "", ing2,20);
         recipe2.getSteps().add("test step 1, this is like the easiest dish to eat");
         recipe2.getSteps().add("test step 2, even the frozen fish and fried fries are good");
@@ -165,7 +165,7 @@ public class RecipeApp {
         String ingredientInput;
         while (!(ingredientInput = sc.nextLine()).equals("d")) {
             if (!ingredientInput.isBlank()) {
-                Ingredient ing = new Ingredient(ingredientInput, Categories.NONE);
+                Ingredient ing = new Ingredient(ingredientInput, IngredientCategories.NONE);
                 ingredients.add(ing);
             }
         }
