@@ -49,7 +49,7 @@ public class RecipeApp {
                     case ("s"): searchUpRecipesMenu();
                         commandValid = true;
                         break;
-                    case ("a"): addRecipe();
+                    case ("a"): menuOfAddRecipe();
                         commandValid = true;
                         break;
                     default: System.out.println("Selection not valid...");
@@ -234,5 +234,65 @@ public class RecipeApp {
             }
         }
         System.out.println("\nEnd of recipe.");
+    }
+
+    public void menuOfAddRecipe() {
+        System.out.println("Do you want to create a new recipe or load one from drafts?");
+        System.out.println("\tn -> new draft");
+        System.out.println("\tl -> load a draft");
+
+        String command = sc.nextLine().toLowerCase();
+        boolean commandValid = false;
+
+        while (!commandValid) {
+            switch (command) {
+                case ("n"): addRecipe();
+                    commandValid = true;
+                    break;
+                case ("l"): viewDrafts();
+                    commandValid = true;
+                    break;
+                default: System.out.println("Selection not valid...");
+                    command = sc.nextLine().toLowerCase();
+            }
+        }
+    }
+
+    public void viewDrafts() {
+        // stub
+    }
+
+    public void menuChangeFieldsInRecipe() {
+        System.out.println("Choose a field to rewrite: ");
+        System.out.println("\tn -> recipe name");
+        System.out.println("\ta -> author's name");
+        System.out.println("\ti -> list of ingredients");
+        System.out.println("\tt -> time needed");
+        System.out.println("\ts -> steps");
+
+        String command = sc.nextLine().toLowerCase();
+        boolean commandValid = false;
+
+        while (!commandValid) {
+            switch (command) {
+                case ("n"): //stub
+                    commandValid = true;
+                    break;
+                case ("a"): //stub
+                    commandValid = true;
+                    break;
+                case ("i"): //stub
+                    commandValid = true;
+                    break;
+                case ("t"): //stub
+                    commandValid = true;
+                    break;
+                case ("s"): //stub
+                    commandValid = true;
+                    break;
+                default: System.out.println("Selection not valid...");
+                    command = sc.nextLine().toLowerCase();
+            }
+        }
     }
 }
