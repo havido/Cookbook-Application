@@ -4,18 +4,28 @@ import model.IngredientCategories;
 import model.Ingredient;
 import model.Recipe;
 import model.RecipeLibrary;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
 import java.util.*;
 
 // Cookbook application
 public class RecipeApp {
+    private static final String JSON_STORE = "./data/library.json";
     private RecipeLibrary library;
     private Recipe recipe1;
     private Recipe recipe2;
     private Scanner sc;
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
     // EFFECTS: runs the recipe application
-    public RecipeApp() {
+    public RecipeApp() throws FileNotFoundException {
         runApp();
+        library = new RecipeLibrary();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // MODIFIES: this
