@@ -51,7 +51,6 @@ public class JsonReader {
         List dietaryRequirements = (List) jsonObject.getJSONArray("Dietary restrictions");
         int time = jsonObject.getInt("Time");
         List steps = (List) jsonObject.getJSONArray("Steps");
-        addThingies(recipe, jsonObject);
         return recipe;
     }
 

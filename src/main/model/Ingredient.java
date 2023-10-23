@@ -1,8 +1,9 @@
 package model;
 
 import org.json.JSONObject;
+import persistence.Writable;
 
-public class Ingredient {
+public class Ingredient implements Writable {
     private String name; // lowercase
     private IngredientCategories category;
 
