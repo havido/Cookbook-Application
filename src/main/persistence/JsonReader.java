@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import org.json.*;
+
 
 // Represents a reader that reads workroom from JSON data stored in file
 public class JsonReader {
@@ -26,12 +28,12 @@ public class JsonReader {
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseWorkRoom(jsonObject);
     }
-    // EFFECTS: reads source file as string and returns it
 
+    // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
-        try (Stream<String> stream = Files.lines( Paths.get(source), StandardCharsets.UTF_8)) {
+        try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         }
 
