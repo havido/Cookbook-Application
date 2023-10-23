@@ -1,5 +1,6 @@
 package persistence;
 
+import model.Recipe;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.json.*;
@@ -23,10 +25,10 @@ public class JsonReader {
 
     // EFFECTS: reads workroom from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public WorkRoom read() throws IOException {
+    public Recipe read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseWorkRoom(jsonObject);
+        return parseRecipe(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -41,29 +43,32 @@ public class JsonReader {
     }
 
     // EFFECTS: parses workroom from JSON object and returns it
-    private WorkRoom parseWorkRoom(JSONObject jsonObject) {
+    private Recipe parseRecipe(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        WorkRoom wr = new WorkRoom(name);
-        addThingies(wr, jsonObject);
-        return wr;
+        String author = jsonObject.getString("author");
+        List ingredients = (List) jsonObject.getJSONArray("ingredients");
+        int time = jsonObject.getInt("time");
+        List steps = (List) jsonObject.getJSONArray("steps");
+        addThingies(recipe, jsonObject);
+        return recipe;
     }
 
-    // MODIFIES: wr
+    // MODIFIES: recipe
     // EFFECTS: parses thingies from JSON object and adds them to workroom
-    private void addThingies(WorkRoom wr, JSONObject jsonObject) {
+    private void addThingies(Recipe recipe, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("thingies");
         for (Object json : jsonArray) {
             JSONObject nextThingy = (JSONObject) json;
-            addThingy(wr, nextThingy);
+            addThingy(recipe, nextThingy);
         }
     }
 
-    // MODIFIES: wr
+    // MODIFIES: recipe
     // EFFECTS: parses thingy from JSON object and adds it to workroom
-    private void addThingy(WorkRoom wr, JSONObject jsonObject) {
+    private void addThingy(Recipe recipe, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Category category = Category.valueOf(jsonObject.getString("category"));
         Thingy thingy = new Thingy(name, category);
-        wr.addThingy(thingy);
+        recipe.addThingy(thingy);
     }
 }
