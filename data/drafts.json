@@ -1,0 +1,21 @@
+// FIX
+{
+  "Name": "a",
+  "ID": 1,
+  "Author": "a",
+  "Ingredients": [
+    {
+      "Ingredient": "egg",
+      "Type": NONE
+    }
+  ],
+  "Dietary restrictions": [
+    "lactose-free"
+  ],
+  "Time": 30,
+  "Steps": [
+    "1. hihi",
+    "2. hehe",
+    "3. hoho"
+  ]
+}

@@ -23,11 +23,16 @@ public class Ingredient implements Writable {
         return category;
     }
 
+    // EFFECTS: returns string representation of this ingredient
+    public String toString() {
+        return name + ", " + category;
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("ingredient", name);
-        json.put("type", category);
+        json.put("Ingredient", name);
+        json.put("Type", category);
         return json;
     }
 }

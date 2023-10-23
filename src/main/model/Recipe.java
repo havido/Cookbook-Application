@@ -25,7 +25,7 @@ public class Recipe implements Writable {
      *          arraylist to store instructions is initialised.
      */
     @SuppressWarnings("methodlength")
-    public Recipe(String name, String author, int time) {
+    public Recipe(String name, String author) {
         this.name = name;
         if (author.isBlank()) {
             this.author = "Anonymous";
@@ -33,8 +33,9 @@ public class Recipe implements Writable {
             this.author = author;
         }
         id = nextRecipeId++;
+
+        time = 0;
         List<Ingredient> ingredients = new ArrayList<Ingredient>();
-        this.time = time;
         dietaryRequirements.add("lactose-free");
         dietaryRequirements.add("gluten-free");
         dietaryRequirements.add("vegetarian");
@@ -61,12 +62,20 @@ public class Recipe implements Writable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
 
     public String getAuthor() {
         return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public List<Ingredient> getIngredients() {
@@ -79,6 +88,10 @@ public class Recipe implements Writable {
 
     public int getTime() {
         return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public List<String> getSteps() {
