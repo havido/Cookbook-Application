@@ -44,20 +44,22 @@ public class JsonReader {
 
     // EFFECTS: parses workroom from JSON object and returns it
     private Recipe parseRecipe(JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
-        String author = jsonObject.getString("author");
-        List ingredients = (List) jsonObject.getJSONArray("ingredients");
-        int time = jsonObject.getInt("time");
-        List steps = (List) jsonObject.getJSONArray("steps");
+        String name = jsonObject.getString("Name");
+        int id = jsonObject.getInt("ID");
+        String author = jsonObject.getString("Author");
+        List ingredients = (List) jsonObject.getJSONArray("Ingredients");
+        List dietaryRequirements = (List) jsonObject.getJSONArray("Dietary restrictions");
+        int time = jsonObject.getInt("Time");
+        List steps = (List) jsonObject.getJSONArray("Steps");
         addThingies(recipe, jsonObject);
         return recipe;
     }
 
     // MODIFIES: recipe
     // EFFECTS: parses thingies from JSON object and adds them to workroom
-    private void addThingies(Recipe recipe, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("thingies");
-        for (Object json : jsonArray) {
+    private void changeName(Recipe recipe, JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        for (Object json : recipe) {
             JSONObject nextThingy = (JSONObject) json;
             addThingy(recipe, nextThingy);
         }

@@ -1,6 +1,5 @@
 package model;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -11,8 +10,8 @@ public class Recipe implements Writable {
     private static int nextRecipeId = 1;
     private int id;
     private String author;
-    private Set<Ingredient> ingredients = new HashSet<Ingredient>();
-    private Set<String> dietaryRequirements = new HashSet<String>();
+    private List<Ingredient> ingredients;
+    private List<String> dietaryRequirements;
     private int time; // in minutes
     private List<String> steps;
 
@@ -26,7 +25,7 @@ public class Recipe implements Writable {
      *          arraylist to store instructions is initialised.
      */
     @SuppressWarnings("methodlength")
-    public Recipe(String name, String author, Set<Ingredient> ingredients, int time) {
+    public Recipe(String name, String author, int time) {
         this.name = name;
         if (author.isBlank()) {
             this.author = "Anonymous";
@@ -34,7 +33,7 @@ public class Recipe implements Writable {
             this.author = author;
         }
         id = nextRecipeId++;
-        this.ingredients = ingredients;
+        List<Ingredient> ingredients = new ArrayList<Ingredient>();
         this.time = time;
         dietaryRequirements.add("lactose-free");
         dietaryRequirements.add("gluten-free");
@@ -70,11 +69,11 @@ public class Recipe implements Writable {
         return author;
     }
 
-    public Set<Ingredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public Set<String> getDietaryRequirements() {
+    public List<String> getDietaryRequirements() {
         return dietaryRequirements;
     }
 
@@ -113,13 +112,13 @@ public class Recipe implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("name", name);
-        json.put("id", id);
-        json.put("author", author);
-        json.put("ingredients", ingredients);
-        json.put("dietary restrictions", dietaryRequirements);
-        json.put("time", time);
-        json.put("steps", steps);
+        json.put("Name", name);
+        json.put("ID", id);
+        json.put("Author", author);
+        json.put("Ingredients", ingredients);
+        json.put("Dietary restrictions", dietaryRequirements);
+        json.put("Time", time);
+        json.put("Steps", steps);
         return json;
     }
 }

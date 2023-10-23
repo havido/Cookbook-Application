@@ -56,7 +56,7 @@ public class RecipeApp {
         Set<Ingredient> ing1 = new HashSet<Ingredient>();
         ing1.add(new Ingredient("cucumber", IngredientCategories.NONE));
         ing1.add(new Ingredient("flour", IngredientCategories.GLUTEN));
-        recipe1 = new Recipe("Crispy Cucumber Snack", "Hannah", ing1, 20);
+        recipe1 = new Recipe("Crispy Cucumber Snack", "Hannah", 20);
         recipe1.getSteps().add("test step 1, please don't fry cucumbers they taste like shit, no offense");
         recipe1.getSteps().add("test step 2, i made fried rice with cucumbers once bc there was nothing left to eat");
         recipe1.getSteps().add("test step 3, it was horrendous");
@@ -64,7 +64,7 @@ public class RecipeApp {
         Set<Ingredient> ing2 = new HashSet<Ingredient>();
         ing2.add(new Ingredient("fish", IngredientCategories.MEAT));
         ing2.add(new Ingredient("potato", IngredientCategories.NONE));
-        recipe2 = new Recipe("Fish and Chips", "", ing2,20);
+        recipe2 = new Recipe("Fish and Chips", "", 20);
         recipe2.getSteps().add("test step 1, this is like the easiest dish to eat");
         recipe2.getSteps().add("test step 2, even the frozen fish and fried fries are good");
         recipe2.getSteps().add("test step 3, i like it, but it's kinda unhealthy");
@@ -159,22 +159,26 @@ public class RecipeApp {
         String name = sc.nextLine();
         System.out.println("Enter your name as the author: ");
         String author = sc.nextLine();
-        Set<Ingredient> ingredients = new HashSet<Ingredient>();
-        System.out.println("Enter a list of ingredients; each ingredient on a separate line; press d to finish: ");
+        System.out.println("Enter the time needed to make this: ");
+        int time = sc.nextInt();
+        sc.nextLine();
+
+        Recipe newRecipe = new Recipe(name, author, time);
+
+        Set<Ingredient> tempIngredients = new HashSet<Ingredient>();
+        System.out.println("Enter a list of tempIngredients; each ingredient on a separate line; press d to finish: ");
 
         String ingredientInput;
         while (!(ingredientInput = sc.nextLine()).equals("d")) {
             if (!ingredientInput.isBlank()) {
                 Ingredient ing = new Ingredient(ingredientInput, IngredientCategories.NONE);
-                ingredients.add(ing);
+                tempIngredients.add(ing);
             }
         }
 
-        System.out.println("Enter the time needed to make this: ");
-        int time = sc.nextInt();
-        sc.nextLine();
-
-        Recipe newRecipe = new Recipe(name, author, ingredients, time);
+        for (Ingredient i : tempIngredients) {
+            newRecipe.getIngredients().add(i);
+        }
 
         System.out.println("Enter a list of steps; each step on a separate line, press d to finish: ");
         String stepInput;

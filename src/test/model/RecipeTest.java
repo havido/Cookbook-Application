@@ -20,7 +20,7 @@ class RecipeTest {
         Set<Ingredient> ing1 = new HashSet<Ingredient>();
         ing1.add(i1 = new Ingredient("cucumber", IngredientCategories.NONE));
         ing1.add(i2 = new Ingredient("flour", IngredientCategories.GLUTEN));
-        test1 = new Recipe("Crispy Cucumber Snack", "Hannah", ing1, 20);
+        test1 = new Recipe("Crispy Cucumber Snack", "Hannah", 20);
         test1.getSteps().add("test step 1");
         test1.getSteps().add("test step 2");
         test1.getSteps().add("test step 3");
@@ -29,7 +29,7 @@ class RecipeTest {
         ing2.add(new Ingredient("fish", IngredientCategories.MEAT));
         ing2.add(i3 = new Ingredient("potato", IngredientCategories.NONE));
         ing2.add(new Ingredient("butter", IngredientCategories.LACTOSE));
-        test2 = new Recipe("Fish and Chips", "", ing2,15);
+        test2 = new Recipe("Fish and Chips", "", 15);
         test2.getSteps().add("test step 1");
         test2.getSteps().add("test step 2");
         test2.getSteps().add("test step 3");

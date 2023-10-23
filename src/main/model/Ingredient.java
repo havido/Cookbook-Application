@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 public class Ingredient {
     private String name; // lowercase
     private IngredientCategories category;
@@ -18,5 +20,13 @@ public class Ingredient {
 
     public IngredientCategories getCategory() {
         return category;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("ingredient", name);
+        json.put("type", category);
+        return json;
     }
 }
