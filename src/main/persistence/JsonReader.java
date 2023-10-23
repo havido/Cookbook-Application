@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Ingredient;
+import model.IngredientCategories;
 import model.Recipe;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,8 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
-
-import org.json.*;
 
 
 // Represents a reader that reads workroom from JSON data stored in file
@@ -49,12 +49,29 @@ public class JsonReader {
 
         Recipe recipe = new Recipe(name, author);
 
-        int id = jsonObject.getInt("ID");
-        List ingredients = (List) jsonObject.getJSONArray("Ingredients");
-        List dietaryRequirements = (List) jsonObject.getJSONArray("Dietary restrictions");
-        int time = jsonObject.getInt("Time");
-        List steps = (List) jsonObject.getJSONArray("Steps");
+        addIngredients(recipe, jsonObject);
+        recipe.setTime(jsonObject.getInt("Time"));
+        addSteps(recipe, jsonObject);
+
         return recipe;
+    }
+
+    private void addIngredients(Recipe recipe, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("Ingredients");
+        for (Object json : jsonArray) {
+            String ingredientName = jsonObject.getString("Ingredient");
+            IngredientCategories ingredientType = IngredientCategories.valueOf(jsonObject.getString("Type"));
+            recipe.addIngredients(new Ingredient(ingredientName, ingredientType));
+        }
+    }
+
+    private void addSteps(Recipe recipe, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("Steps");
+
+        // I don't understand why this is wrong
+        for (String step : jsonArray) {
+            recipe.addSteps(step);
+        }
     }
 
     // MODIFIES: recipe

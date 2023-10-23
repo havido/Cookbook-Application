@@ -22,10 +22,11 @@ public class RecipeApp {
 
     // EFFECTS: runs the recipe application
     public RecipeApp() throws FileNotFoundException {
-        runApp();
+        sc = new Scanner(System.in);
         library = new RecipeLibrary();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        runApp();
     }
 
     // MODIFIES: this

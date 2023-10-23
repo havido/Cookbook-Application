@@ -33,28 +33,29 @@ public class Recipe implements Writable {
             this.author = author;
         }
         id = nextRecipeId++;
+        // an ID is created when recipe is initialised -> when read from json, doesn't need to setId
 
         time = 0;
-        List<Ingredient> ingredients = new ArrayList<Ingredient>();
+        ingredients = new ArrayList<Ingredient>();
+        dietaryRequirements = new ArrayList<String>();
         dietaryRequirements.add("lactose-free");
         dietaryRequirements.add("gluten-free");
         dietaryRequirements.add("vegetarian");
 
-        for (Ingredient ingredient : ingredients) {
-            extracted(ingredient);
-        }
         steps = new ArrayList<String>();
     }
 
-    private void extracted(Ingredient ingredient) {
-        if (ingredient.getCategory() == IngredientCategories.MEAT) {
-            dietaryRequirements.remove("vegetarian");
-        }
-        if (ingredient.getCategory() == IngredientCategories.GLUTEN) {
-            dietaryRequirements.remove("gluten-free");
-        }
-        if (ingredient.getCategory() == IngredientCategories.LACTOSE) {
-            dietaryRequirements.remove("lactose-free");
+    private void calculateDietaryRequirements(List<Ingredient> ingredients) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getCategory() == IngredientCategories.MEAT) {
+                dietaryRequirements.remove("vegetarian");
+            }
+            if (ingredient.getCategory() == IngredientCategories.GLUTEN) {
+                dietaryRequirements.remove("gluten-free");
+            }
+            if (ingredient.getCategory() == IngredientCategories.LACTOSE) {
+                dietaryRequirements.remove("lactose-free");
+            }
         }
     }
 
@@ -82,6 +83,11 @@ public class Recipe implements Writable {
         return ingredients;
     }
 
+    public void addIngredients(Ingredient ingredient) {
+        ingredients.add(ingredient);
+        calculateDietaryRequirements(ingredients);
+    }
+
     public List<String> getDietaryRequirements() {
         return dietaryRequirements;
     }
@@ -96,6 +102,10 @@ public class Recipe implements Writable {
 
     public List<String> getSteps() {
         return steps;
+    }
+
+    public void addSteps(String step) {
+        steps.add(step);
     }
 
     // Fix
