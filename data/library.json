@@ -1,21 +1,317 @@
-// FIX
-{
-  "Name": "a",
-  "ID": 1,
-  "Author": "a",
-  "Ingredients": [
-    {
-      "Ingredient": "egg",
-      "Type": "NONE"
-    }
-  ],
-  "Dietary restrictions": [
-    "lactose-free"
-  ],
-  "Time": 30,
-  "Steps": [
-    "1. hihi",
-    "2. hehe",
-    "3. hoho"
-  ]
-}
+[
+  {
+    "Name": "Ground Beef Spinach Casserole",
+    "ID": 1,
+    "Author": "JNAMCD @ allrecipes.com",
+    "Ingredients": [
+      {
+        "Ingredient": "ground beef",
+        "Type": "MEAT"
+      },
+      {
+        "Ingredient": "onion",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "garlic",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "mushrooms",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "oregano",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "spinach",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "cream of celery soup",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "sour cream",
+        "Type": "LACTOSE"
+      },
+      {
+        "Ingredient": "mozzarella cheese",
+        "Type": "LACTOSE"
+      }
+    ],
+    "Dietary restrictions": [
+      "gluten-free"
+    ],
+    "Time": 40,
+    "Steps": [
+      "Step 1: Preheat the oven to 350 degrees F (175 degrees C).",
+      "Step 2: Heat a large skillet over medium-high heat. Add ground beef, onion, and garlic; cook and stir in the hot skillet until beef is browned and crumbly, 5 to 7 minutes. Drain and discard grease. Add mushrooms, oregano, hot sauce, salt, and pepper; simmer for 5 minutes.",
+      "Step 3: Add spinach, condensed soup, and sour cream; cook until heated through, about 5 minutes. Transfer mixture to a casserole dish and cover with mozzarella cheese.",
+      "Step 4: Bake in the preheated oven until cheese is melted, 15 to 20 minutes."
+    ]
+  },
+  {
+    "Name": "Mexican Ground Beef Casserole",
+    "ID": 2,
+    "Author": "AndreaF @ allrecipes.com",
+    "Ingredients": [
+      {
+        "Ingredient": "ground beef",
+        "Type": "MEAT"
+      },
+      {
+        "Ingredient": "onion",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "salted butter",
+        "Type": "LACTOSE"
+      },
+      {
+        "Ingredient": "cornbread stuffing mix",
+        "Type": "GLUTEN"
+      },
+      {
+        "Ingredient": "tomato",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "jalapeno",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "green chile peppers",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "ground cumin",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "sweet corn",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "cheddar cheese",
+        "Type": "LACTOSE"
+      }
+    ],
+    "Dietary restrictions": [
+      "none"
+    ],
+    "Time": 55,
+    "Steps": [
+      "Step 1: Preheat the oven to 375 degrees F (190 degrees C).",
+      "Step 2: Heat a large skillet over medium-high heat. Cook and stir ground beef and onion in the hot skillet until beef is browned and crumbly, 5 to 7 minutes. Drain and discard grease.",
+      "Step 3: While the beef is cooking, make stuffing. Bring water and butter to a boil in a medium saucepan. Stir in stuffing mix; cover. Remove from heat. Let stand for 5 minutes. Fluff with a fork.",
+      "Step 4: Stir both cans of diced tomatoes, chili powder, cumin, and hot sauce into the beef mixture. Simmer for 2 minutes. Add corn and Cheddar cheese. Simmer until cheese is melted completely, about 1 minute. Transfer mixture to a casserole dish. Spread cornbread stuffing evenly over the top.",
+      "Step 5: Bake in the preheated oven until browned, 20 to 30 minutes."
+    ]
+  },
+  {
+    "Name": "Spaghetti Pie",
+    "ID": 3,
+    "Author": "Kimberley @ allrecipes.com",
+    "Ingredients": [
+      {
+        "Ingredient": "vegetable oil",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "spaghetti",
+        "Type": "GLUTEN"
+      },
+      {
+        "Ingredient": "eggs",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "parmesan cheese",
+        "Type": "LACTOSE"
+      },
+      {
+        "Ingredient": "butter",
+        "Type": "LACTOSE"
+      },
+      {
+        "Ingredient": "ground beef",
+        "Type": "MEAT"
+      },
+      {
+        "Ingredient": "onion",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "bell pepper",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "tomato",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "mozzarella cheese",
+        "Type": "LACTOSE"
+      }
+    ],
+    "Dietary restrictions": [
+      "none"
+    ],
+    "Time": 85,
+    "Steps": [
+      "Step 1: Preheat the oven to 350 degrees F (175 degrees C). Grease a 10-inch pie plate or springform pan.",
+      "Step 2: Bring a large pot of water to a boil. Stir in 1 tablespoon oil and 2 teaspoons salt. Cook spaghetti in boiling water-oil mixture, stirring occasionally, until tender yet firm to the bite, about 12 minutes. Drain, then transfer to a large bowl.",
+      "Step 3: Mix eggs, Parmesan cheese, and butter into spaghetti until well combined. Press and shape into the prepared pie plate to form crust. Spread cottage cheese over crust.",
+      "Step 4: Heat 1 tablespoon oil in a large skillet over medium-high heat. Cook and stir beef, onion, and green pepper until beef is thoroughly browned and crumbly, 5 to 7 minutes. Mix in tomatoes, tomato paste, sugar, oregano, 1/2 teaspoon salt, and garlic powder until combined. Spread mixture over cottage cheese.",
+      "Step 5: Bake uncovered in the preheated oven for 30 minutes. Sprinkle with mozzarella cheese and continue baking until cheese is bubbly and beginning to brown, 5 to 10 minutes more."
+    ]
+  },
+  {
+    "Name": "Chef John's Buttermilk Fried Chicken",
+    "ID": 4,
+    "Author": "Chef John @ allrecipes.com",
+    "Ingredients": [
+      {
+        "Ingredient": "chicken",
+        "Type": "MEAT"
+      },
+      {
+        "Ingredient": "buttermilk",
+        "Type": "LACTOSE"
+      },
+      {
+        "Ingredient": "flour",
+        "Type": "GLUTEN"
+      },
+      {
+        "Ingredient": "peanut oil",
+        "Type": "NONE"
+      }
+    ],
+    "Dietary restrictions": [
+      "none"
+    ],
+    "Time": 410,
+    "Steps": [
+      "Step 1: Toss chicken pieces, black pepper, salt, paprika, white pepper, rosemary, thyme, oregano, sage, and cayenne together in a large bowl.",
+      "Step 2: Stir in buttermilk until chicken is evenly coated. Cover and refrigerate for 6 hours.",
+      "Step 3: Combine flour, salt, paprika, cayenne, garlic powder, white pepper, and onion powder in a large shallow dish.",
+      "Step 4: Remove chicken from buttermilk and dredge each piece in seasoned flour; shake off any excess and transfer to a plate.",
+      "Step 5: Heat peanut oil in a large Dutch oven to 350 degrees F (175 degrees C).",
+      "Step 6: Add chicken pieces to the hot oil and fry for 10 minutes. Turn chicken pieces and fry for another 10 to 15 minutes. An instant-read thermometer inserted near the bone should read 165 degrees F (74 degrees C).",
+      "Step 7: Transfer fried chicken to a cooling rack set over a paper towel-lined baking sheet. Let sit for 10 minutes before serving."
+    ]
+  },
+  {
+    "Name": "Classic Meatloaf",
+    "ID": 5,
+    "Author": "Chef John @ allrecipes.com",
+    "Ingredients": [
+      {
+        "Ingredient": "carrot",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "celery",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "onion",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "bell pepper",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "mushroom",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "garlic",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "ground chuck",
+        "Type": "MEAT"
+      },
+      {
+        "Ingredient": "Worcestershire sauce",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "egg",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "bread crumbs",
+        "Type": "GLUTEN"
+      }
+    ],
+    "Dietary restrictions": [
+      "lactose-free", "gluten-free"
+    ],
+    "Time": 90,
+    "Steps": [
+      "Step 1: Preheat the oven to 325 degrees F (165 degrees C). Line a baking dish with lightly greased foil.",
+      "Step 2: Place carrot, celery, onion, bell pepper, mushrooms, and garlic in a food processor; pulse until very finely chopped, almost to a purée. Transfer to a large mixing bowl.",
+      "Step 3: Add ground chuck to the vegetables, along with Worcestershire sauce, egg, Italian herbs, salt, black pepper, and cayenne. Mix gently with a wooden spoon until ingredients are just combined. Sprinkle in bread crumbs and gently mix with your fingertips until just combined; don't overmix.",
+      "Step 4: Shape the mixture into a loaf, about 4 inches high by 6 inches across. Place in the prepared baking pan.",
+      "Step 5: Bake in the preheated oven just until the meatloaf is hot, about 15 minutes.",
+      "Step 6: Meanwhile, stir brown sugar, ketchup, Dijon, and Sriracha for glaze in a small bowl until brown sugar has dissolved.",
+      "Step 7: Remove meatloaf from the oven. Spoon glaze on the top of the meatloaf with the back of a spoon, then pull a tiny bit glaze down the sides.",
+      "Step 8: Return to the oven, and bake until no longer pink inside, 45 to 75 more minutes. An instant-read thermometer inserted into the thickest part of the loaf should read at least 160 degrees F (70 degrees C), so start checking at 45 minutes and continue baking until meatloaf reaches that temperature. Cooking time will depend on shape and thickness of the meatloaf.",
+      "Step 9: Serve hot and enjoy!"
+    ]
+  },
+  {
+    "Name": "Greek Couscous Salad",
+    "ID": 6,
+    "Author": "KenzieKook @ allrecipes.com",
+    "Ingredients": [
+      {
+        "Ingredient": "mushroom broth",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "garlic",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "couscous",
+        "Type": "GLUTEN"
+      },
+      {
+        "Ingredient": "chickpea",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "tomato",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "olive",
+        "Type": "NONE"
+      },
+      {
+        "Ingredient": "feta cheese",
+        "Type": "LACTOSE"
+      },
+      {
+        "Ingredient": "white wine vinegar",
+        "Type": "NONE"
+      }
+    ],
+    "Dietary restrictions": [
+      "vegetarian"
+    ],
+    "Time": 45,
+    "Steps": [
+      "Step 1: Pour water and chicken broth into a saucepan; stir in the garlic and bring to a boil. Stir in pearl couscous, cover the pan, and remove from heat. Allow couscous to stand until water has been absorbed, about 5 minutes; fluff with a fork. Allow couscous to cool to warm temperature.",
+      "Step 2: Lightly toss couscous, chickpeas, sun-dried tomatoes, olives, and feta cheese in a large serving bowl.",
+      "Step 3: To make the dressing: Mix white wine vinegar, lemon juice, oregano, and black pepper in a small bowl until well combined. Pour over couscous mixture; toss again to serve."
+    ]
+  }
+]
