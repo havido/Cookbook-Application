@@ -1,21 +1,32 @@
-// FIX
 {
-  "Name": "a",
-  "ID": 1,
-  "Author": "a",
+  "Name": "Vi's breakfast toast",
+  "ID": 7,
+  "Author": "Vi",
   "Ingredients": [
     {
-      "Ingredient": "egg",
-      "Type": NONE
+      "Ingredient": "ham",
+      "Type": "MEAT"
+    },
+    {
+      "Ingredient": "cheese",
+      "Type": "LACTOSE"
+    },
+    {
+      "Ingredient": "butter",
+      "Type": "LACTOSE"
+    },
+    {
+      "Ingredient": "bread",
+      "Type": "GLUTEN"
+    },
+    {
+      "Ingredient": "tomato",
+      "Type": "NONE"
     }
   ],
   "Dietary restrictions": [
-    "lactose-free"
+    "none"
   ],
-  "Time": 30,
-  "Steps": [
-    "1. hihi",
-    "2. hehe",
-    "3. hoho"
-  ]
+  "Time": 15,
+  "Steps": null
 }
