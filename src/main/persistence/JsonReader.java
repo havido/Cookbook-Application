@@ -23,10 +23,10 @@ public class JsonReader {
 
     // EFFECTS: reads workroom from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public Recipe read() throws IOException {
+    public RecipeLibrary read() throws IOException {
         String jsonData = readFile(source);
-        JSONObject jsonObject = new JSONObject(jsonData);
-        return parseRecipe(jsonObject);
+        JSONArray jsonArray = new JSONArray(jsonData);
+        return parseRecipeLibrary(jsonArray);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -40,43 +40,45 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    private RecipeLibrary parseRecipeLibrary(JSONArray jsonArray) {
+        RecipeLibrary library = new RecipeLibrary();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonRecipe = jsonArray.getJSONObject(i);
+            Recipe recipe = parseRecipe(jsonRecipe);
+            if (recipe.getTag() == RecipeTag.DEFAULT) {
+                library.getLibrary().add(recipe);
+            } else if (recipe.getTag() ==  RecipeTag.DRAFT) {
+                library.getDrafts().add(recipe);
+            }
+        }
+        return library;
+    }
+
     // EFFECTS: parses workroom from JSON object and returns it
     private Recipe parseRecipe(JSONObject jsonObject) {
+        RecipeTag tag = RecipeTag.valueOf(jsonObject.getString("Tag"));
         String name = jsonObject.getString("Name");
         String author = jsonObject.getString("Author");
 
-        Recipe recipe = new Recipe(name, author);
+        Recipe recipe = new Recipe(name, author, tag);
 
-        addIngredients(recipe, jsonObject);
-        recipe.setTime(jsonObject.getInt("Time"));
-        addSteps(recipe, jsonObject);
-
-        return recipe;
-    }
-
-    private void addIngredients(Recipe recipe, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("Ingredients");
-        for (Object json : jsonArray) {
+        // Parse ingredients
+        JSONArray jsonIngredients = jsonObject.getJSONArray("Ingredients");
+        for (Object json : jsonIngredients) {
             String ingredientName = jsonObject.getString("Ingredient");
             IngredientCategories ingredientType = IngredientCategories.valueOf(jsonObject.getString("Type"));
             recipe.addIngredients(new Ingredient(ingredientName, ingredientType));
         }
-    }
 
-    private void addSteps(Recipe recipe, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("Steps");
+        recipe.setTime(jsonObject.getInt("Time"));
 
-        // I don't understand why this is wrong
-        for (String step : jsonArray) {
-            recipe.addSteps(step);
+        // Parse steps
+        JSONArray jsonSteps = jsonObject.getJSONArray("Steps");
+        for (int i = 0; i < jsonSteps.length(); i++) {
+            recipe.getSteps().add(jsonSteps.getString(i).substring(0, 7));
         }
+
+        return recipe;
     }
-
-    // MODIFIES: recipe
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
-    // <blank class>
-
-    // MODIFIES: recipe
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
-    // <blank class>
 }

@@ -1,6 +1,8 @@
 package persistence;
 
 import model.Recipe;
+import model.RecipeLibrary;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -20,13 +22,13 @@ public class JsonWriter {
     // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
     // be opened for writing
     public void open() throws FileNotFoundException {
-        writer = new PrintWriter(new File(destination));
+        writer = new PrintWriter(destination);
     }
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of recipe to file
-    public void write(Recipe recipe) {
-        JSONObject json = recipe.toJson();
+    public void write(RecipeLibrary library) {
+        JSONObject json = libraryToJson(library);
         saveToFile(json.toString(TAB));
     }
 
@@ -40,5 +42,18 @@ public class JsonWriter {
     // EFFECTS: writes string to file
     private void saveToFile(String json) {
         writer.print(json);
+    }
+
+    private JSONObject libraryToJson(RecipeLibrary library) {
+        JSONObject jsonLibrary = new JSONObject();
+        JSONArray recipes = new JSONArray();
+
+        library.getLibrary().forEach(recipe -> {
+            JSONObject jsonRecipe = recipe.toJson();
+            recipes.put(jsonRecipe);
+        });
+
+        jsonLibrary.put("recipes", recipes);
+        return jsonLibrary;
     }
 }

@@ -1,9 +1,6 @@
 package ui;
 
-import model.IngredientCategories;
-import model.Ingredient;
-import model.Recipe;
-import model.RecipeLibrary;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -170,14 +167,14 @@ public class RecipeApp {
         String name = sc.nextLine();
         System.out.println("Enter your name as the author: ");
         String author = sc.nextLine();
+
+        Recipe newRecipe = new Recipe(name, author, RecipeTag.DRAFT);
+
         System.out.println("Enter the time needed to make this: ");
-        int time = sc.nextInt();
+        newRecipe.setTime(sc.nextInt());
         sc.nextLine();
-
-        Recipe newRecipe = new Recipe(name, author, time);
-
         Set<Ingredient> tempIngredients = new HashSet<Ingredient>();
-        System.out.println("Enter a list of tempIngredients; each ingredient on a separate line; press d to finish: ");
+        System.out.println("Enter a list of ingredients; each ingredient on a separate line; press d to finish: ");
 
         String ingredientInput;
         while (!(ingredientInput = sc.nextLine()).equals("d")) {

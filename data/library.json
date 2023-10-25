@@ -321,6 +321,39 @@
         "Step 2: Lightly toss couscous, chickpeas, sun-dried tomatoes, olives, and feta cheese in a large serving bowl.",
         "Step 3: To make the dressing: Mix white wine vinegar, lemon juice, oregano, and black pepper in a small bowl until well combined. Pour over couscous mixture; toss again to serve."
       ]
+    },
+    {
+      "Tag": "DRAFT",
+      "Name": "Vi's breakfast toast",
+      "ID": 7,
+      "Author": "Vi",
+      "Ingredients": [
+        {
+          "Ingredient": "ham",
+          "Type": "MEAT"
+        },
+        {
+          "Ingredient": "cheese",
+          "Type": "LACTOSE"
+        },
+        {
+          "Ingredient": "butter",
+          "Type": "LACTOSE"
+        },
+        {
+          "Ingredient": "bread",
+          "Type": "GLUTEN"
+        },
+        {
+          "Ingredient": "tomato",
+          "Type": "NONE"
+        }
+      ],
+      "Dietary restrictions": [
+        "none"
+      ],
+      "Time": 15,
+      "Steps": null
     }
   ]
 }

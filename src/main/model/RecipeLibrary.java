@@ -5,13 +5,19 @@ import java.util.List;
 
 public class RecipeLibrary {
     private List<Recipe> library;
+    private List<Recipe> drafts;
     
     public RecipeLibrary() {
         library = new ArrayList<Recipe>();
+        drafts = new ArrayList<Recipe>();
     }
 
     public List<Recipe> getLibrary() {
         return library;
+    }
+
+    public List<Recipe> getDrafts() {
+        return drafts;
     }
 
     /*
