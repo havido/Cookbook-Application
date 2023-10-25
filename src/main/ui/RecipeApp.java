@@ -11,8 +11,6 @@ import java.util.*;
 public class RecipeApp {
     private static final String JSON_STORE = "./data/library.json";
     private RecipeLibrary library;
-    private Recipe recipe1;
-    private Recipe recipe2;
     private Scanner sc;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
@@ -32,7 +30,7 @@ public class RecipeApp {
     private void runApp() {
         boolean keepGoing = true;
         String command;
-        initialise();
+        loadLibrary();
 
         while (keepGoing) {
             menu();
@@ -58,31 +56,23 @@ public class RecipeApp {
         System.out.println("\nGoodbye!");
     }
 
-    // MODIFIES: this
-    // EFFECTS: initializes recipes and library
-    private void initialise() {
-        Set<Ingredient> ing1 = new HashSet<Ingredient>();
-        ing1.add(new Ingredient("cucumber", IngredientCategories.NONE));
-        ing1.add(new Ingredient("flour", IngredientCategories.GLUTEN));
-        recipe1 = new Recipe("Crispy Cucumber Snack", "Hannah", 20);
-        recipe1.getSteps().add("test step 1, please don't fry cucumbers they taste like shit, no offense");
-        recipe1.getSteps().add("test step 2, i made fried rice with cucumbers once bc there was nothing left to eat");
-        recipe1.getSteps().add("test step 3, it was horrendous");
+    private void loadLibrary() {
+        try {
+            library = jsonReader.read();
+        } catch (Exception e) {
+            System.out.println("Error loading library from " + JSON_STORE);
+        }
+    }
 
-        Set<Ingredient> ing2 = new HashSet<Ingredient>();
-        ing2.add(new Ingredient("fish", IngredientCategories.MEAT));
-        ing2.add(new Ingredient("potato", IngredientCategories.NONE));
-        recipe2 = new Recipe("Fish and Chips", "", 20);
-        recipe2.getSteps().add("test step 1, this is like the easiest dish to eat");
-        recipe2.getSteps().add("test step 2, even the frozen fish and fried fries are good");
-        recipe2.getSteps().add("test step 3, i like it, but it's kinda unhealthy");
-
-        library = new RecipeLibrary();
-        library.getLibrary().add(recipe1);
-        library.getLibrary().add(recipe2);
-
-        sc = new Scanner(System.in);
-        sc.useDelimiter("\n");
+    private void saveLibrary() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(library);
+            jsonWriter.close();
+            System.out.println("All changes saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error saving library to " + JSON_STORE);
+        }
     }
 
     // EFFECTS: displays menu of options to user
@@ -247,7 +237,9 @@ public class RecipeApp {
                 case ("n"): addRecipe();
                     commandValid = true;
                     break;
-                case ("l"): viewDrafts();
+                case ("l"): printList(library.getDrafts());
+                    viewRecipe();
+                    menuChangeFieldsInRecipe();
                     commandValid = true;
                     break;
                 default: System.out.println("Selection not valid...");
@@ -256,11 +248,8 @@ public class RecipeApp {
         }
     }
 
-    public void viewDrafts() {
-        // stub
-    }
-
-    public void menuChangeFieldsInRecipe() {
+    @SuppressWarnings("methodlength")
+    public void menuChangeFieldsInRecipe(Recipe recipe) {
         System.out.println("Choose a field to rewrite: ");
         System.out.println("\tn -> recipe name");
         System.out.println("\ta -> author's name");
@@ -273,19 +262,26 @@ public class RecipeApp {
 
         while (!commandValid) {
             switch (command) {
-                case ("n"): //stub
+                case ("n"):
+                    System.out.println("Type a name to change to: ");
+                    recipe.setName(sc.nextLine());
                     commandValid = true;
                     break;
-                case ("a"): //stub
+                case ("a"): System.out.println("Type an author's name to change to: ");
+                    recipe.setAuthor(sc.nextLine());
                     commandValid = true;
                     break;
-                case ("i"): //stub
+                case ("i"): System.out.println("Type more ingredients to add to the recipe: ");
+                    recipe.addIngredients();
                     commandValid = true;
                     break;
-                case ("t"): //stub
+                case ("t"): System.out.println("Type a duration to change to (in minutes): ");
+                    recipe.setTime(sc.nextInt());
+                    sc.nextLine();
                     commandValid = true;
                     break;
-                case ("s"): //stub
+                case ("s"): System.out.println("Type more steps to add to the recipe: ");
+                    recipe.setName(sc.nextLine());
                     commandValid = true;
                     break;
                 default: System.out.println("Selection not valid...");
