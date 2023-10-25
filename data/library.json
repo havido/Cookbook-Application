@@ -1,6 +1,7 @@
 {
   "Library": [
     {
+      "Tag": "DEFAULT",
       "Name": "Ground Beef Spinach Casserole",
       "ID": 1,
       "Author": "JNAMCD @ allrecipes.com",
@@ -54,6 +55,7 @@
       ]
     },
     {
+      "Tag": "DEFAULT",
       "Name": "Mexican Ground Beef Casserole",
       "ID": 2,
       "Author": "AndreaF @ allrecipes.com",
@@ -112,6 +114,7 @@
       ]
     },
     {
+      "Tag": "DEFAULT",
       "Name": "Spaghetti Pie",
       "ID": 3,
       "Author": "Kimberley @ allrecipes.com",
@@ -170,6 +173,7 @@
       ]
     },
     {
+      "Tag": "DEFAULT",
       "Name": "Chef John's Buttermilk Fried Chicken",
       "ID": 4,
       "Author": "Chef John @ allrecipes.com",
@@ -206,6 +210,7 @@
       ]
     },
     {
+      "Tag": "DEFAULT",
       "Name": "Classic Meatloaf",
       "ID": 5,
       "Author": "Chef John @ allrecipes.com",
@@ -269,6 +274,7 @@
       ]
     },
     {
+      "Tag": "DEFAULT",
       "Name": "Greek Couscous Salad",
       "ID": 6,
       "Author": "KenzieKook @ allrecipes.com",

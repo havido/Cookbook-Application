@@ -6,6 +6,7 @@ import persistence.Writable;
 import java.util.*;
 
 public class Recipe implements Writable {
+    private RecipeTag tag;
     private String name;
     private static int nextRecipeId = 1;
     private int id;
@@ -25,13 +26,14 @@ public class Recipe implements Writable {
      *          arraylist to store instructions is initialised.
      */
     @SuppressWarnings("methodlength")
-    public Recipe(String name, String author) {
+    public Recipe(String name, String author, RecipeTag tag) {
         this.name = name;
         if (author.isBlank()) {
             this.author = "Anonymous";
         } else {
             this.author = author;
         }
+        this.tag = tag;
         id = nextRecipeId++;
         // an ID is created when recipe is initialised -> when read from json, doesn't need to setId
 
@@ -77,6 +79,14 @@ public class Recipe implements Writable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public RecipeTag getTag() {
+        return tag;
+    }
+
+    public void setTag(RecipeTag tag) {
+        this.tag = tag;
     }
 
     public List<Ingredient> getIngredients() {

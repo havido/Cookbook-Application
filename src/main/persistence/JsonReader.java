@@ -1,9 +1,6 @@
 package persistence;
 
-import model.Ingredient;
-import model.IngredientCategories;
-import model.Recipe;
-import model.RecipeLibrary;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -72,13 +69,6 @@ public class JsonReader {
         // I don't understand why this is wrong
         for (String step : jsonArray) {
             recipe.addSteps(step);
-        }
-    }
-
-    private void addRecipe(RecipeLibrary library, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("Library");
-        while (jsonO) {
-
         }
     }
 

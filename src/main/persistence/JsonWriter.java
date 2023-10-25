@@ -24,7 +24,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of recipe to file
     public void write(Recipe recipe) {
         JSONObject json = recipe.toJson();
         saveToFile(json.toString(TAB));
