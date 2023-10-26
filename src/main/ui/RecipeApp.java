@@ -118,7 +118,7 @@ public class RecipeApp {
                     command = sc.nextLine().toLowerCase();
             }
         }
-        viewRecipe();
+        viewRecipeFromList();
     }
 
     // EFFECTS: filter the library by names and print a filtered list
@@ -160,29 +160,74 @@ public class RecipeApp {
 
         Recipe newRecipe = new Recipe(name, author, RecipeTag.DRAFT);
         System.out.println("Your draft has been initialised successfully! ID: " + newRecipe.getId());
-        System.out.println("Once you have completed all drafts, "
+        System.out.println("Once you have completed all fields, "
                 + "you have the option to officially add your recipe to the library.");
 
-        System.out.println("Enter the time needed to make this: ");
+        System.out.println("\nEnter the time needed to make this: ");
         newRecipe.setTime(sc.nextInt());
         sc.nextLine(); // Consume new line
 
         addIngredients(newRecipe);
         addSteps(newRecipe);
 
-        System.out.println("Completed all fields, enter 'a' to add to library anytime;"
-                + " enter 'c' to change a selected field");
+        System.out.println("Your current work:");
+        System.out.println(newRecipe.toString()); // Print recipe
+
+        System.out.println("\nWhat do you want to do next?");
+        System.out.println("\ts -> save as drafts");
+        System.out.println("\ta -> officially save & add to recipe library");
+        System.out.println("\tc -> edit a selected field in the current recipe");
+        System.out.println("WARNING: all changes will be lost if you close the app without saving!");
+
+        String command = sc.nextLine().toLowerCase();
+        boolean commandValid = false;
+
+        while (!commandValid) {
+            switch (command) {
+                case ("s"): library.getDrafts().add(newRecipe);
+                    commandValid = true;
+                    break;
+                case ("a"): boolean b = addRecipeToLibrary(newRecipe);
+                    if (b) {
+                        commandValid = true;
+                        break;
+                    } else if (!b) {
+                        continue;
+                    }
+                case ("c"): changeFieldsInRecipe(newRecipe);
+                    commandValid = true;
+                    break;
+                default: System.out.println("Selection not valid...");
+                    command = sc.nextLine().toLowerCase();
+            }
+        }
 
         System.out.println("\nYour recipe has been added successfully!");
         System.out.println(newRecipe.toString());
         library.getLibrary().add(newRecipe);
     }
 
+    private boolean addRecipeToLibrary(Recipe recipe) {
+        if (recipe.checkNotNull()) {
+            library.getLibrary().add(recipe);
+            return true;
+        } else {
+            System.out.println("One or more fields are blank or have inappropriate values! (e.g., time = 0 minute)");
+            System.out.println("Please make sure all fields are completed before adding recipe to library.");
+            return false;
+        }
+    }
+
     private void addSteps(Recipe newRecipe) {
-        System.out.println("Enter a list of steps; each step on a separate line, press d to finish: ");
+        System.out.println("Enter a list of steps to add to recipe; each step on a separate line; "
+                + "enter del to delete all steps; press d to finish: ");
         String stepInput;
         while (!(stepInput = sc.nextLine()).equals("d")) {
-            if (!stepInput.isBlank()) {
+            if (stepInput.equals("del")) {
+                for (String step : newRecipe.getSteps()) {
+                    newRecipe.getSteps().remove(step);
+                }
+            } else if (!stepInput.isBlank()) {
                 newRecipe.getSteps().add(stepInput);
             }
         }
@@ -190,11 +235,16 @@ public class RecipeApp {
 
     private void addIngredients(Recipe newRecipe) {
         Set<Ingredient> tempIngredients = new HashSet<Ingredient>();
-        System.out.println("Enter a list of ingredients; each ingredient on a separate line; press d to finish: ");
+        System.out.println("Enter a list of ingredients to add to recipe; each ingredient on a separate line; "
+                + "enter del to delete all ingredients; press d to finish: ");
 
         String ingredientInput;
         while (!(ingredientInput = sc.nextLine()).equals("d")) {
-            if (!ingredientInput.isBlank()) {
+            if (ingredientInput.equals("del")) {
+                for (Ingredient i : tempIngredients) {
+                    tempIngredients.remove(i);
+                }
+            } else if (!ingredientInput.isBlank()) {
                 Ingredient ing = new Ingredient(ingredientInput, IngredientCategories.NONE);
                 tempIngredients.add(ing);
             }
@@ -207,16 +257,21 @@ public class RecipeApp {
 
     // EFFECTS: print a list of type Recipe
     private void printList(List<Recipe> array) {
-        for (Recipe recipe : array) {
-            if (!recipe.getName().isBlank()) {
-                System.out.println("[ID: " + recipe.getId() + "] " + recipe.getName());
+        if (!array.isEmpty()) {
+            for (Recipe recipe : array) {
+                if (!recipe.getName().isBlank()) {
+                    System.out.println("[ID: " + recipe.getId() + "] " + recipe.getName());
+                }
             }
+        } else {
+            System.out.println("No data matched! Returning to menu...");
+            return;
         }
     }
 
     // EFFECTS: print a recipe with its information
-    private void viewRecipe() {
-        System.out.println("Enter the corresponding ID to view the recipe, or enter 0 to return to main menu: ");
+    private void viewRecipeFromList() {
+        System.out.println("Enter the corresponding ID to view the recipe, or enter 0 to return to menu: ");
         int input = sc.nextInt();
         sc.nextLine();
         boolean valid = false;
@@ -253,8 +308,8 @@ public class RecipeApp {
                     commandValid = true;
                     break;
                 case ("l"): printList(library.getDrafts());
-                    viewRecipe();
-                    menuChangeFieldsInRecipe();
+                    viewRecipeFromList();
+                    changeFieldsInRecipe(recipe);
                     commandValid = true;
                     break;
                 default: System.out.println("Selection not valid...");
@@ -264,21 +319,15 @@ public class RecipeApp {
     }
 
     @SuppressWarnings("methodlength")
-    public void menuChangeFieldsInRecipe(Recipe recipe) {
-        System.out.println("Choose a field to rewrite: ");
-        System.out.println("\tn -> recipe name");
-        System.out.println("\ta -> author's name");
-        System.out.println("\ti -> list of ingredients");
-        System.out.println("\tt -> time needed");
-        System.out.println("\ts -> steps");
+    public void changeFieldsInRecipe(Recipe recipe) {
+        menuChangeFieldsInRecipe();
 
         String command = sc.nextLine().toLowerCase();
         boolean commandValid = false;
 
         while (!commandValid) {
             switch (command) {
-                case ("n"):
-                    System.out.println("Type a name to change to: ");
+                case ("n"): System.out.println("Type a name to change to: ");
                     recipe.setName(sc.nextLine());
                     commandValid = true;
                     break;
@@ -286,8 +335,7 @@ public class RecipeApp {
                     recipe.setAuthor(sc.nextLine());
                     commandValid = true;
                     break;
-                case ("i"): System.out.println("Type more ingredients to add to the recipe: ");
-                    recipe.addIngredients();
+                case ("i"): addIngredients(recipe);
                     commandValid = true;
                     break;
                 case ("t"): System.out.println("Type a duration to change to (in minutes): ");
@@ -295,13 +343,21 @@ public class RecipeApp {
                     sc.nextLine();
                     commandValid = true;
                     break;
-                case ("s"): System.out.println("Type more steps to add to the recipe: ");
-                    recipe.getSteps().add(sc.nextLine());
+                case ("s"): addSteps(recipe);
                     commandValid = true;
                     break;
                 default: System.out.println("Selection not valid...");
                     command = sc.nextLine().toLowerCase();
             }
         }
+    }
+
+    private static void menuChangeFieldsInRecipe() {
+        System.out.println("Choose a field to rewrite: ");
+        System.out.println("\tn -> recipe name");
+        System.out.println("\ta -> author's name");
+        System.out.println("\ti -> list of ingredients");
+        System.out.println("\tt -> time needed");
+        System.out.println("\ts -> steps");
     }
 }

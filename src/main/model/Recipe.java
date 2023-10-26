@@ -118,6 +118,14 @@ public class Recipe implements Writable {
         steps.add(step);
     }
 
+    public boolean checkNotNull() {
+        if (!name.isBlank() || !author.isBlank() || time != 0 || ingredients != null || steps != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Fix
     @Override
     public String toString() {
