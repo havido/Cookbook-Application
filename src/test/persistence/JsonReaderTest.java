@@ -1,4 +1,4 @@
-package model;
+package persistence;
 
 public class JsonReaderTest {
 }

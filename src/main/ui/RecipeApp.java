@@ -40,6 +40,7 @@ public class RecipeApp {
             while (!commandValid) {
                 switch (command) {
                     case ("q"): keepGoing = false;
+                        saveLibrary();
                         commandValid = true;
                         break;
                     case ("s"): searchUpRecipesMenu();
