@@ -159,10 +159,36 @@ public class RecipeApp {
         String author = sc.nextLine();
 
         Recipe newRecipe = new Recipe(name, author, RecipeTag.DRAFT);
+        System.out.println("Your draft has been initialised successfully! ID: " + newRecipe.getId());
+        System.out.println("Once you have completed all drafts, "
+                + "you have the option to officially add your recipe to the library.");
 
         System.out.println("Enter the time needed to make this: ");
         newRecipe.setTime(sc.nextInt());
-        sc.nextLine();
+        sc.nextLine(); // Consume new line
+
+        addIngredients(newRecipe);
+        addSteps(newRecipe);
+
+        System.out.println("Completed all fields, enter 'a' to add to library anytime;"
+                + " enter 'c' to change a selected field");
+
+        System.out.println("\nYour recipe has been added successfully!");
+        System.out.println(newRecipe.toString());
+        library.getLibrary().add(newRecipe);
+    }
+
+    private void addSteps(Recipe newRecipe) {
+        System.out.println("Enter a list of steps; each step on a separate line, press d to finish: ");
+        String stepInput;
+        while (!(stepInput = sc.nextLine()).equals("d")) {
+            if (!stepInput.isBlank()) {
+                newRecipe.getSteps().add(stepInput);
+            }
+        }
+    }
+
+    private void addIngredients(Recipe newRecipe) {
         Set<Ingredient> tempIngredients = new HashSet<Ingredient>();
         System.out.println("Enter a list of ingredients; each ingredient on a separate line; press d to finish: ");
 
@@ -175,19 +201,8 @@ public class RecipeApp {
         }
 
         for (Ingredient i : tempIngredients) {
-            newRecipe.getIngredients().add(i);
+            newRecipe.getIngredients().add(i); // Add elements of HashSet into field ArrayList in object Recipe
         }
-
-        System.out.println("Enter a list of steps; each step on a separate line, press d to finish: ");
-        String stepInput;
-        while (!(stepInput = sc.nextLine()).equals("d")) {
-            if (!stepInput.isBlank()) {
-                newRecipe.getSteps().add(stepInput);
-            }
-        }
-        System.out.println("\nYour recipe has been added successfully!");
-        System.out.println(newRecipe.toString());
-        library.getLibrary().add(newRecipe);
     }
 
     // EFFECTS: print a list of type Recipe
@@ -281,7 +296,7 @@ public class RecipeApp {
                     commandValid = true;
                     break;
                 case ("s"): System.out.println("Type more steps to add to the recipe: ");
-                    recipe.setName(sc.nextLine());
+                    recipe.getSteps().add(sc.nextLine());
                     commandValid = true;
                     break;
                 default: System.out.println("Selection not valid...");
