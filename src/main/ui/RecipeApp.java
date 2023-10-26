@@ -170,14 +170,15 @@ public class RecipeApp {
         addIngredients(newRecipe);
         addSteps(newRecipe);
 
+        saveMenu(newRecipe);
+    }
+
+    @SuppressWarnings("methodlength")
+    private void saveMenu(Recipe newRecipe) {
         System.out.println("Your current work:");
         System.out.println(newRecipe.toString()); // Print recipe
 
-        System.out.println("\nWhat do you want to do next?");
-        System.out.println("\ts -> save as drafts");
-        System.out.println("\ta -> officially save & add to recipe library");
-        System.out.println("\tc -> edit a selected field in the current recipe");
-        System.out.println("WARNING: all changes will be lost if you close the app without saving!");
+        saveMenuPrompts();
 
         String command = sc.nextLine().toLowerCase();
         boolean commandValid = false;
@@ -201,10 +202,14 @@ public class RecipeApp {
                     command = sc.nextLine().toLowerCase();
             }
         }
+    }
 
-        System.out.println("\nYour recipe has been added successfully!");
-        System.out.println(newRecipe.toString());
-        library.getLibrary().add(newRecipe);
+    private static void saveMenuPrompts() {
+        System.out.println("\nWhat do you want to do next?");
+        System.out.println("\ts -> save as drafts");
+        System.out.println("\ta -> officially save & add to recipe library");
+        System.out.println("\tc -> edit a selected field in the current recipe");
+        System.out.println("WARNING: all changes will be lost if you close the app without saving!");
     }
 
     private boolean addRecipeToLibrary(Recipe recipe) {
@@ -270,14 +275,14 @@ public class RecipeApp {
     }
 
     // EFFECTS: print a recipe with its information
-    private void viewRecipeFromList() {
+    private Recipe viewRecipeFromList() {
         System.out.println("Enter the corresponding ID to view the recipe, or enter 0 to return to menu: ");
         int input = sc.nextInt();
         sc.nextLine();
         boolean valid = false;
 
         if (input == 0) {
-            return;
+            return null;
         } else {
             while (!valid) {
                 try {
@@ -292,6 +297,7 @@ public class RecipeApp {
             }
         }
         System.out.println("\nEnd of recipe.");
+        return library.getLibrary().get(input - 1);
     }
 
     public void menuOfAddRecipe() {
@@ -308,8 +314,7 @@ public class RecipeApp {
                     commandValid = true;
                     break;
                 case ("l"): printList(library.getDrafts());
-                    viewRecipeFromList();
-                    changeFieldsInRecipe(recipe);
+                    changeFieldsInRecipe(viewRecipeFromList());
                     commandValid = true;
                     break;
                 default: System.out.println("Selection not valid...");
@@ -321,7 +326,6 @@ public class RecipeApp {
     @SuppressWarnings("methodlength")
     public void changeFieldsInRecipe(Recipe recipe) {
         menuChangeFieldsInRecipe();
-
         String command = sc.nextLine().toLowerCase();
         boolean commandValid = false;
 
@@ -346,6 +350,9 @@ public class RecipeApp {
                 case ("s"): addSteps(recipe);
                     commandValid = true;
                     break;
+                case ("c"): saveMenu(recipe);
+                    commandValid = true;
+                    break;
                 default: System.out.println("Selection not valid...");
                     command = sc.nextLine().toLowerCase();
             }
@@ -359,5 +366,6 @@ public class RecipeApp {
         System.out.println("\ti -> list of ingredients");
         System.out.println("\tt -> time needed");
         System.out.println("\ts -> steps");
+        System.out.println("\tc -> close editing menu");
     }
 }
