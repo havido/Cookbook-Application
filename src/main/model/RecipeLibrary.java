@@ -80,4 +80,12 @@ public class RecipeLibrary {
         }
         return filteredTime;
     }
+
+    public int numRecipesInLibrary() {
+        return library.size();
+    }
+
+    public int numDrafts() {
+        return drafts.size();
+    }
 }

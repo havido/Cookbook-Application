@@ -1,0 +1,64 @@
+{
+  "Library": [
+    {
+      "Tag": "DEFAULT",
+      "Name": "Namee",
+      "ID": 1,
+      "Author": "Authorr",
+      "Ingredients": [
+        {
+          "Ingredient": "ingredient 1",
+          "Type": "NONE"
+        },
+        {
+          "Ingredient": "ingredient 2",
+          "Type": "MEAT"
+        },
+        {
+          "Ingredient": "ingredient 3",
+          "Type": "LACTOSE"
+        }
+      ],
+      "Dietary restrictions": [
+        "gluten-free"
+      ],
+      "Time": 40,
+      "Steps": [
+        "Step 1: ",
+        "Step 2: ",
+        "Step 3: ",
+        "Step 4: "
+      ]
+    },
+    {
+      "Tag": "DRAFT",
+      "Name": "Name2",
+      "ID": 2,
+      "Author": "Author2",
+      "Ingredients": [
+        {
+          "Ingredient": "ingredient 1",
+          "Type": "GLUTEN"
+        },
+        {
+          "Ingredient": "ingredient 2",
+          "Type": "NONE"
+        },
+        {
+          "Ingredient": "ingredient 3",
+          "Type": "NONE"
+        }
+      ],
+      "Dietary restrictions": [
+        "lactose-free", "vegetarian"
+      ],
+      "Time": 20,
+      "Steps": [
+        "Step 1: ",
+        "Step 2: ",
+        "Step 3: ",
+        "Step 4: "
+      ]
+    }
+  ]
+}
