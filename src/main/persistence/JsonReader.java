@@ -48,6 +48,7 @@ public class JsonReader {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonRecipe = jsonArray.getJSONObject(i);
             Recipe recipe = parseRecipe(jsonRecipe);
+            library.getAllRecipes().add(recipe);
             if (recipe.getTag() == RecipeTag.DEFAULT) {
                 library.getLibrary().add(recipe);
             } else if (recipe.getTag() == RecipeTag.DRAFT) {

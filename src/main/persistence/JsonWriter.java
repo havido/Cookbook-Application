@@ -22,11 +22,11 @@ public class JsonWriter {
     // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
     // be opened for writing
     public void open() throws FileNotFoundException {
-        writer = new PrintWriter(destination);
+        writer = new PrintWriter(new File(destination));
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of recipe to file
+    // EFFECTS: writes JSON representation of recipe library to file
     public void write(RecipeLibrary library) {
         JSONObject jsonLibrary = libraryToJson(library);
         saveToFile(jsonLibrary.toString(TAB));
@@ -48,7 +48,7 @@ public class JsonWriter {
         JSONObject jsonLibrary = new JSONObject();
         JSONArray recipes = new JSONArray();
 
-        library.getLibrary().forEach(recipe -> {
+        library.getAllRecipes().forEach(recipe -> {
             JSONObject jsonRecipe = recipe.toJson();
             recipes.put(jsonRecipe);
         });

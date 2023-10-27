@@ -208,6 +208,7 @@ public class RecipeApp {
         while (!commandValid) {
             switch (command) {
                 case ("s"): library.getDrafts().add(newRecipe);
+                    library.getAllRecipes().add(newRecipe);
                     saveLibrary();
                     commandValid = true;
                     break;
@@ -238,6 +239,8 @@ public class RecipeApp {
 
     private boolean addRecipeToLibrary(Recipe recipe) {
         if (recipe.checkNotNull()) {
+            recipe.setTag(RecipeTag.DEFAULT);
+            library.getDrafts().remove(recipe);
             library.getLibrary().add(recipe);
             saveLibrary();
             return true;

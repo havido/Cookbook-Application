@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeLibrary {
+    private List<Recipe> allRecipes;
     private List<Recipe> library;
     private List<Recipe> drafts;
     
@@ -18,6 +19,10 @@ public class RecipeLibrary {
 
     public List<Recipe> getDrafts() {
         return drafts;
+    }
+
+    public List<Recipe> getAllRecipes() {
+        return allRecipes;
     }
 
     /*
@@ -87,5 +92,9 @@ public class RecipeLibrary {
 
     public int numDrafts() {
         return drafts.size();
+    }
+
+    public int numTotal() {
+        return allRecipes.size();
     }
 }
