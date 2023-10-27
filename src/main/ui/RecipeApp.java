@@ -40,7 +40,7 @@ public class RecipeApp {
             while (!commandValid) {
                 switch (command) {
                     case ("q"): keepGoing = false;
-                        saveLibrary();
+                        quitPrompt();
                         commandValid = true;
                         break;
                     case ("s"): searchUpRecipesMenu();
@@ -55,6 +55,28 @@ public class RecipeApp {
             }
         }
         System.out.println("\nGoodbye!");
+    }
+
+    private void quitPrompt() {
+        System.out.println("Save all changes to data?");
+        System.out.println("y -> yes");
+        System.out.println("n -> no");
+        System.out.println("WARNING: all changes will be lost if you close the app without saving!");
+
+        String command = sc.nextLine().toLowerCase();
+        boolean commandValid = false;
+
+        while (!commandValid) {
+            switch (command) {
+                case ("y"): saveLibrary();
+                    commandValid = true;
+                    break;
+                case ("n"): commandValid = true;
+                    break;
+                default: System.out.println("Selection not valid...");
+                    command = sc.nextLine().toLowerCase();
+            }
+        }
     }
 
     private void loadLibrary() {
@@ -186,6 +208,7 @@ public class RecipeApp {
         while (!commandValid) {
             switch (command) {
                 case ("s"): library.getDrafts().add(newRecipe);
+                    saveLibrary();
                     commandValid = true;
                     break;
                 case ("a"): boolean b = addRecipeToLibrary(newRecipe);
@@ -216,6 +239,7 @@ public class RecipeApp {
     private boolean addRecipeToLibrary(Recipe recipe) {
         if (recipe.checkNotNull()) {
             library.getLibrary().add(recipe);
+            saveLibrary();
             return true;
         } else {
             System.out.println("One or more fields are blank or have inappropriate values! (e.g., time = 0 minute)");
@@ -269,7 +293,7 @@ public class RecipeApp {
                     System.out.println("[ID: " + recipe.getId() + "] " + recipe.getName());
                 }
             }
-            viewRecipeFromList();
+            viewRecipeFromList("");
             return array.size();
         } else {
             System.out.println("No data matched! Returning to menu...");
@@ -277,8 +301,10 @@ public class RecipeApp {
         }
     }
 
+    // REQUIRES: input is integer
     // EFFECTS: print a recipe with its information
-    private Recipe viewRecipeFromList() {
+    @SuppressWarnings("methodlength")
+    private Recipe viewRecipeFromList(String caller) {
         System.out.println("Enter the corresponding ID to view the recipe, or enter 0 to return to menu: ");
         int input = sc.nextInt();
         sc.nextLine();
@@ -289,9 +315,13 @@ public class RecipeApp {
         } else {
             while (!valid) {
                 try {
-                    System.out.println(library.getLibrary().get(input - 1).toString());
-                    // because each recipe's id = its index in the List library - 1
-                    valid = true;
+                    if (caller.equals("menuOfAddRecipe()")) {
+                        continue;
+                    } else {
+                        System.out.println(library.getLibrary().get(input - 1).toString());
+                        // because each recipe's id = its index in the List library - 1
+                        valid = true;
+                    }
                 } catch (Exception e) {
                     System.out.println("Invalid ID! Please choose one from the list: ");
                     input = sc.nextInt();
@@ -303,6 +333,7 @@ public class RecipeApp {
         return library.getLibrary().get(input - 1);
     }
 
+    @SuppressWarnings("methodlength")
     public void menuOfAddRecipe() {
         System.out.println("Do you want to create a new recipe or load one from drafts?");
         System.out.println("\tn -> new draft");
@@ -319,10 +350,17 @@ public class RecipeApp {
                 case ("l"): int temp = printList(library.getDrafts());
                     if (temp == 0) {
                         return;
+                        // empty list -> return to main menu
                     } else {
-                        changeFieldsInRecipe(viewRecipeFromList());
-                        commandValid = true;
-                        break;
+                        // list not empty -> prompt to choose to view a recipe -> saveMenu()
+                        Recipe tempRecipe = viewRecipeFromList("menuOfAddRecipe()");
+                        if (tempRecipe == null) {
+                            return;
+                        } else {
+                            saveMenu(tempRecipe);
+                            commandValid = true;
+                            break;
+                        }
                     }
                 default: System.out.println("Selection not valid...");
                     command = sc.nextLine().toLowerCase();
@@ -341,21 +379,26 @@ public class RecipeApp {
                 case ("n"): System.out.println("Type a name to change to: ");
                     recipe.setName(sc.nextLine());
                     commandValid = true;
+                    changeFieldsInRecipe(recipe);
                     break;
                 case ("a"): System.out.println("Type an author's name to change to: ");
                     recipe.setAuthor(sc.nextLine());
                     commandValid = true;
+                    changeFieldsInRecipe(recipe);
                     break;
                 case ("i"): addIngredients(recipe);
                     commandValid = true;
+                    changeFieldsInRecipe(recipe);
                     break;
                 case ("t"): System.out.println("Type a duration to change to (in minutes): ");
                     recipe.setTime(sc.nextInt());
                     sc.nextLine();
                     commandValid = true;
+                    changeFieldsInRecipe(recipe);
                     break;
                 case ("s"): addSteps(recipe);
                     commandValid = true;
+                    changeFieldsInRecipe(recipe);
                     break;
                 case ("c"): saveMenu(recipe);
                     commandValid = true;
