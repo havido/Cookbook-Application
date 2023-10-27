@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class JsonReaderTest extends JsonTest {
+public class JsonReaderTest {
 
     @Test
     void testReaderNonExistentFile() {
@@ -34,19 +34,19 @@ public class JsonReaderTest extends JsonTest {
             fail("Couldn't read from file");
         }
     }
-
-    @Test
-    void testReaderGeneralLibrary() {
-        JsonReader reader = new JsonReader("./data/testReaderGeneralLibrary.json");
-        try {
-            RecipeLibrary library = reader.read();
-            assertEquals("My work room", wr.getName());
-            List<Thingy> thingies = wr.getThingies();
-            assertEquals(2, thingies.size());
-            checkThingy("needle", Category.STITCHING, thingies.get(0));
-            checkThingy("saw", Category.WOODWORK, thingies.get(1));
-        } catch (IOException e) {
-            fail("Couldn't read from file");
-        }
-    }
+//
+//    @Test
+//    void testReaderGeneralLibrary() {
+//        JsonReader reader = new JsonReader("./data/testReaderGeneralLibrary.json");
+//        try {
+//            RecipeLibrary library = reader.read();
+//            assertEquals("My work room", wr.getName());
+//            List<Thingy> thingies = wr.getThingies();
+//            assertEquals(2, thingies.size());
+//            checkThingy("needle", Category.STITCHING, thingies.get(0));
+//            checkThingy("saw", Category.WOODWORK, thingies.get(1));
+//        } catch (IOException e) {
+//            fail("Couldn't read from file");
+//        }
+//    }
 }

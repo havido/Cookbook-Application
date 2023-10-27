@@ -2,9 +2,9 @@
   "Library": [
     {
       "Tag": "DEFAULT",
-      "Name": "Namee",
+      "Name": "Name1",
       "ID": 1,
-      "Author": "Authorr",
+      "Author": "Author1",
       "Ingredients": [
         {
           "Ingredient": "ingredient 1",

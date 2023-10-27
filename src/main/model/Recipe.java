@@ -119,7 +119,7 @@ public class Recipe implements Writable {
     }
 
     public boolean checkNotNull() {
-        if (!name.isBlank() || !author.isBlank() || time != 0 || ingredients != null || steps != null) {
+        if (!name.isBlank() && !author.isBlank() && time != 0 && ingredients.size() != 0 && steps.size() != 0) {
             return true;
         } else {
             return false;

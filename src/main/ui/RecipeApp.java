@@ -119,7 +119,6 @@ public class RecipeApp {
                     command = sc.nextLine().toLowerCase();
             }
         }
-        viewRecipeFromList();
     }
 
     // EFFECTS: filter the library by names and print a filtered list
@@ -194,7 +193,8 @@ public class RecipeApp {
                         commandValid = true;
                         break;
                     } else if (!b) {
-                        continue;
+                        saveMenuPrompts();
+                        command = sc.nextLine().toLowerCase();
                     }
                 case ("c"): changeFieldsInRecipe(newRecipe);
                     commandValid = true;
@@ -262,16 +262,18 @@ public class RecipeApp {
     }
 
     // EFFECTS: print a list of type Recipe
-    private void printList(List<Recipe> array) {
+    private int printList(List<Recipe> array) {
         if (!array.isEmpty()) {
             for (Recipe recipe : array) {
                 if (!recipe.getName().isBlank()) {
                     System.out.println("[ID: " + recipe.getId() + "] " + recipe.getName());
                 }
             }
+            viewRecipeFromList();
+            return array.size();
         } else {
             System.out.println("No data matched! Returning to menu...");
-            return;
+            return 0;
         }
     }
 
@@ -314,10 +316,14 @@ public class RecipeApp {
                 case ("n"): addRecipe();
                     commandValid = true;
                     break;
-                case ("l"): printList(library.getDrafts());
-                    changeFieldsInRecipe(viewRecipeFromList());
-                    commandValid = true;
-                    break;
+                case ("l"): int temp = printList(library.getDrafts());
+                    if (temp == 0) {
+                        return;
+                    } else {
+                        changeFieldsInRecipe(viewRecipeFromList());
+                        commandValid = true;
+                        break;
+                    }
                 default: System.out.println("Selection not valid...");
                     command = sc.nextLine().toLowerCase();
             }

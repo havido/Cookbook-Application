@@ -19,16 +19,16 @@ class RecipeLibraryTest {
         // Create sample recipes and add them to the library
         Set<Ingredient> ingredients1 = new HashSet<>();
         ingredients1.add(new Ingredient("Chicken", IngredientCategories.MEAT));
-        recipeLibrary.getLibrary().add(new Recipe("Chicken Curry", "John", 60));
+        recipeLibrary.getLibrary().add(new Recipe("Chicken Curry", "John", RecipeTag.DEFAULT));
 
         Set<Ingredient> ingredients2 = new HashSet<>();
         ingredients2.add(new Ingredient("Pasta", IngredientCategories.GLUTEN));
-        recipeLibrary.getLibrary().add(new Recipe("Pasta Carbonara", "Alice", 30));
+        recipeLibrary.getLibrary().add(new Recipe("Pasta Carbonara", "Alice", RecipeTag.DEFAULT));
 
         Set<Ingredient> ingredients3 = new HashSet<>();
         ingredients3.add(new Ingredient("Tofu", IngredientCategories.NONE));
         ingredients3.add(new Ingredient("Rice", IngredientCategories.NONE));
-        recipeLibrary.getLibrary().add(new Recipe("Tofu Stir-Fry", "Bob", 45));
+        recipeLibrary.getLibrary().add(new Recipe("Tofu Stir-Fry", "Bob", RecipeTag.DEFAULT));
     }
 
     @Test
