@@ -7,5 +7,6 @@ package model;
  *  DRAFT: haven't been added to library, still in construction
  */
 public enum RecipeTag {
-    DEFAULT, USER, DRAFT;
+    DEFAULT, DRAFT;
+    // Note: should have another tag USER, but can't implement it yet
 }
