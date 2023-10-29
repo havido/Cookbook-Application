@@ -1,16 +1,16 @@
 package persistence;
 
-import model.Recipe;
+import model.IngredientCategories;
 import model.RecipeLibrary;
+import model.RecipeTag;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class JsonReaderTest {
+public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderNonExistentFile() {
@@ -42,16 +42,34 @@ public class JsonReaderTest {
         try {
             RecipeLibrary library = reader.read();
             // size of lists
-            assertEquals("Name1", library.getAllRecipes().get(0).getName());
-            assertEquals("Name2", library.getAllRecipes().get(1).getName());
-            assertEquals("Name2", library.getDrafts().get(0).getName());
-            // name of items in each list
             assertEquals(2, library.getAllRecipes().size());
             assertEquals(1, library.getLibrary().size());
             assertEquals(1, library.getDrafts().size());
-            // check id
-//            checkThingy("needle", Category.STITCHING, thingies.get(0));
-//            checkThingy("saw", Category.WOODWORK, thingies.get(1));
+
+            // check 5 fields
+            // Check ingredient list's size and whether it contains the correct ingredients
+            assertEquals(2, library.getLibrary().get(0).getIngredients().size());
+            assertEquals(2, library.getDrafts().get(0).getIngredients().size());
+            checkIngredient(library.getAllRecipes().get(0).getIngredients().get(0), IngredientCategories.NONE, "ing1");
+            checkIngredient(library.getAllRecipes().get(1).getIngredients().get(1), IngredientCategories.GLUTEN, "ingb");
+
+            // Check 5 fields of recipe
+            checkRecipe(library.getLibrary().get(0), RecipeTag.DEFAULT, "Name1", "Author1", 1, 10);
+            checkRecipe(library.getDrafts().get(0), RecipeTag.DRAFT, "Name2", "Author2", 2, 20);
+
+            // Check dietary requirements
+            assertTrue(library.getLibrary().get(0).getDietaryRequirements().contains("gluten-free"));
+            assertFalse(library.getLibrary().get(0).getDietaryRequirements().contains("none"));
+            assertTrue(library.getDrafts().get(0).getDietaryRequirements().contains("vegetarian"));
+            assertFalse(library.getDrafts().get(0).getDietaryRequirements().contains("lactose-free"));
+
+            // Check steps
+            assertTrue(library.getLibrary().get(0).getSteps().contains("test1"));
+            assertFalse(library.getLibrary().get(0).getSteps().contains("test a"));
+            assertTrue(library.getDrafts().get(0).getSteps().contains("test b"));
+            assertFalse(library.getDrafts().get(0).getSteps().contains("test2"));
+
+
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

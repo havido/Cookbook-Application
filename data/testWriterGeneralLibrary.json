@@ -1,0 +1,49 @@
+{"Library": [
+    {
+        "Dietary restrictions": [
+            "lactose-free",
+            "gluten-free"
+        ],
+        "Steps": [
+            "test1",
+            "test2"
+        ],
+        "Ingredients": [
+            {
+                "name": "ing1",
+                "category": "NONE"
+            },
+            {
+                "name": "ing2",
+                "category": "MEAT"
+            }
+        ],
+        "Author": "Author1",
+        "Time": 10,
+        "Tag": "DEFAULT",
+        "ID": 1,
+        "Name": "Name1"
+    },
+    {
+        "Dietary restrictions": ["vegetarian"],
+        "Steps": [
+            "test a",
+            "test b"
+        ],
+        "Ingredients": [
+            {
+                "name": "inga",
+                "category": "LACTOSE"
+            },
+            {
+                "name": "ingb",
+                "category": "GLUTEN"
+            }
+        ],
+        "Author": "Author2",
+        "Time": 20,
+        "Tag": "DRAFT",
+        "ID": 2,
+        "Name": "Name2"
+    }
+]}

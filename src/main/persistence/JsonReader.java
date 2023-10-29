@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads recipes from JSON data stored in file, and add them to a RecipeLibrary object
 public class JsonReader {
     private String source;
 
@@ -22,7 +22,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads recipe library from file and returns it;
     // throws IOException if an error occurs reading data from file
     public RecipeLibrary read() throws IOException {
         String jsonData = readFile(source);
@@ -41,6 +41,8 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // MODIFIES: library
+    // EFFECTS: parses recipes from JSON object and adds them to library
     private RecipeLibrary parseRecipeLibrary(JSONObject jsonObject) {
         RecipeLibrary library = new RecipeLibrary();
         JSONArray jsonArray = jsonObject.getJSONArray("Library");
@@ -48,17 +50,13 @@ public class JsonReader {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonRecipe = jsonArray.getJSONObject(i);
             Recipe recipe = parseRecipe(jsonRecipe);
-            library.getAllRecipes().add(recipe);
-            if (recipe.getTag() == RecipeTag.DEFAULT) {
-                library.getLibrary().add(recipe);
-            } else if (recipe.getTag() == RecipeTag.DRAFT) {
-                library.getDrafts().add(recipe);
-            }
+
+            library.addRecipeToLibrary(recipe);
         }
         return library;
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses recipe from JSON object and returns it
     private Recipe parseRecipe(JSONObject jsonObject) {
         RecipeTag tag = RecipeTag.valueOf(jsonObject.getString("Tag"));
         String name = jsonObject.getString("Name");
@@ -71,9 +69,9 @@ public class JsonReader {
 
         for (int i = 0; i < jsonIngredients.length(); i++) {
             JSONObject jsonIngredient = jsonIngredients.getJSONObject(i);
-            String ingredientName = jsonIngredient.getString("Ingredient");
-            IngredientCategories ingredientType = IngredientCategories.valueOf(jsonIngredient.getString("Type"));
-            recipe.getIngredients().add(new Ingredient(ingredientName, ingredientType));
+            String ingredientName = jsonIngredient.getString("name");
+            IngredientCategories ingredientType = IngredientCategories.valueOf(jsonIngredient.getString("category"));
+            recipe.addIngredients(new Ingredient(ingredientName, ingredientType));
         }
 
         recipe.setTime(jsonObject.getInt("Time"));
@@ -81,7 +79,7 @@ public class JsonReader {
         // Parse steps
         JSONArray jsonSteps = jsonObject.getJSONArray("Steps");
         for (int i = 0; i < jsonSteps.length(); i++) {
-            recipe.getSteps().add(jsonSteps.getString(i).substring(8));
+            recipe.getSteps().add(jsonSteps.getString(i));
         }
 
         return recipe;

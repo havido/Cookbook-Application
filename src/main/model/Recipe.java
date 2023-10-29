@@ -5,10 +5,11 @@ import persistence.Writable;
 
 import java.util.*;
 
+// Represents a recipe having a tag, a name, a unique ID, an author's name, a list of ingredients,
+// a list of dietary restrictions, time consumption, and a list of steps
 public class Recipe implements Writable {
     private RecipeTag tag;
     private String name;
-    private static int nextRecipeId = 1;
     private int id;
     private String author;
     private List<Ingredient> ingredients;
@@ -18,14 +19,13 @@ public class Recipe implements Writable {
 
     /*
      * REQUIRES: name has a non-zero length
-     * EFFECTS: recipe's name is set to name; recipe id is a positive integer not assigned
-     *          to any other recipe; if author is empty or contains only blankspaces, then
+     * EFFECTS: recipe's name is set to name; recipe id is -1 to indicate that it's not saved;
+     *          if author is empty or contains only blankspaces, then
      *          recipe's author is "Anonymous", otherwise recipe's author is set to author;
      *          recipe's ingredients is set to ingredients, recipe's dietary requirements
      *          is calculated based on the category assigned with each ingredient; and an
      *          arraylist to store instructions is initialised.
      */
-    @SuppressWarnings("methodlength")
     public Recipe(String name, String author, RecipeTag tag) {
         this.name = name;
         if (author.isBlank()) {
@@ -34,8 +34,8 @@ public class Recipe implements Writable {
             this.author = author;
         }
         this.tag = tag;
-        id = nextRecipeId++;
-        // an ID is created when recipe is initialised -> when read from json, doesn't need to setId
+        id = -1;
+        // ID -1 means that the recipe is not saved yet
 
         time = 0;
         ingredients = new ArrayList<Ingredient>();
@@ -47,17 +47,17 @@ public class Recipe implements Writable {
         steps = new ArrayList<String>();
     }
 
-    private void calculateDietaryRequirements(List<Ingredient> ingredients) {
-        for (Ingredient ingredient : ingredients) {
-            if (ingredient.getCategory() == IngredientCategories.MEAT) {
-                dietaryRequirements.remove("vegetarian");
-            }
-            if (ingredient.getCategory() == IngredientCategories.GLUTEN) {
-                dietaryRequirements.remove("gluten-free");
-            }
-            if (ingredient.getCategory() == IngredientCategories.LACTOSE) {
-                dietaryRequirements.remove("lactose-free");
-            }
+    // MODIFIES: this
+    // EFFECTS: check ingredient to see if the recipe meets certain dietary restrictions
+    private void calculateDietaryRequirements(Ingredient ingredient) {
+        if (ingredient.getCategory() == IngredientCategories.MEAT) {
+            dietaryRequirements.remove("vegetarian");
+        }
+        if (ingredient.getCategory() == IngredientCategories.GLUTEN) {
+            dietaryRequirements.remove("gluten-free");
+        }
+        if (ingredient.getCategory() == IngredientCategories.LACTOSE) {
+            dietaryRequirements.remove("lactose-free");
         }
     }
 
@@ -71,6 +71,10 @@ public class Recipe implements Writable {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAuthor() {
@@ -93,9 +97,11 @@ public class Recipe implements Writable {
         return ingredients;
     }
 
+    // MODIFIES: this
+    // EFFECTS: add an ingredient to list and check dietary restrictions
     public void addIngredients(Ingredient ingredient) {
         ingredients.add(ingredient);
-        calculateDietaryRequirements(ingredients);
+        calculateDietaryRequirements(ingredients.get(ingredients.size() - 1));
     }
 
     public List<String> getDietaryRequirements() {
@@ -114,10 +120,7 @@ public class Recipe implements Writable {
         return steps;
     }
 
-    public void addSteps(String step) {
-        steps.add(step);
-    }
-
+    // EFFECTS: check if the recipe has any blank fields
     public boolean checkNotNull() {
         if (!name.isBlank() && !author.isBlank() && time != 0 && ingredients.size() != 0 && steps.size() != 0) {
             return true;
@@ -126,7 +129,7 @@ public class Recipe implements Writable {
         }
     }
 
-    // Fix
+    // EFFECTS: returns string representation of this recipe
     @Override
     public String toString() {
         String printSteps = "";
@@ -134,26 +137,21 @@ public class Recipe implements Writable {
             printSteps += "\n" + "Step " + i + ": " + steps.get(i - 1);
         }
 
-        // Putting the Sets to sorted list so that the toString() method always print out similar statements
-        List<String> sortedIngredients = new ArrayList<>();
+        List<String> ingName = new ArrayList<>();
         for (Ingredient i : ingredients) {
-            sortedIngredients.add(i.getName());
+            ingName.add(i.getName());
         }
-        Collections.sort(sortedIngredients);
-
-        List<String> sortedDiets = new ArrayList<>();
-        sortedDiets.addAll(dietaryRequirements);
-        Collections.sort(sortedDiets);
 
         return "ID: " + getId() + "\nRecipe: " + getName() + "\nAuthor: " + getAuthor()
-                + "\nTotal time: " + time + "\n\nDietary notes: " + sortedDiets
-                + "\nIngredients: " + sortedIngredients + "\n\nInstructions: "
+                + "\nTotal time: " + time + "\n\nDietary notes: " + dietaryRequirements
+                + "\nIngredients: " + ingName + "\n\nInstructions: "
                 + printSteps;
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
+        json.put("Tag", tag);
         json.put("Name", name);
         json.put("ID", id);
         json.put("Author", author);

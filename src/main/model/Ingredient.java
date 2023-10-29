@@ -3,13 +3,12 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+// Represents an ingredient having a name and a category
 public class Ingredient implements Writable {
     private String name; // lowercase
     private IngredientCategories category;
 
-    /*
-     * EFFECTS: Set this.name to name, and this.category to category
-     */
+    // EFFECTS: construct an ingredient with a name and category
     public Ingredient(String name, IngredientCategories category) {
         this.name = name.toLowerCase();
         this.category = category;
@@ -31,8 +30,8 @@ public class Ingredient implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("Ingredient", name);
-        json.put("Type", category);
+        json.put("name", name);
+        json.put("category", category);
         return json;
     }
 }

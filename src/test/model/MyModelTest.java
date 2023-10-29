@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class IngredientTest {
     private Ingredient test1;
     private Ingredient test2;
-    private Ingredient test3;
 
     @BeforeEach
     void runBefore() {

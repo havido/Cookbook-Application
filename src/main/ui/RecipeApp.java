@@ -7,7 +7,7 @@ import persistence.JsonWriter;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-// Cookbook application
+// Represents a cookbook application
 public class RecipeApp {
     private static final String JSON_STORE = "./data/library.json";
     private RecipeLibrary library;
@@ -15,7 +15,7 @@ public class RecipeApp {
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
 
-    // EFFECTS: runs the recipe application
+    // EFFECTS: constructs recipe library and runs application
     public RecipeApp() throws FileNotFoundException {
         sc = new Scanner(System.in);
         library = new RecipeLibrary();
@@ -57,6 +57,7 @@ public class RecipeApp {
         System.out.println("\nGoodbye!");
     }
 
+    // EFFECTS: prompt user to save changes before quitting
     private void quitPrompt() {
         System.out.println("Save all changes to data?");
         System.out.println("y -> yes");
@@ -79,6 +80,8 @@ public class RecipeApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: load library from file
     private void loadLibrary() {
         try {
             library = jsonReader.read();
@@ -87,6 +90,7 @@ public class RecipeApp {
         }
     }
 
+    // EFFECTS: save library to file
     private void saveLibrary() {
         try {
             jsonWriter.open();
@@ -116,8 +120,7 @@ public class RecipeApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: processes user input, and after the list of filtered recipes is shown,
-    // they can choose to view the recipe by ID
+    // EFFECTS: processes user input and return a list of recipes that meet descriptions
     private void searchUpRecipesMenu() {
         searchMenu();
         String command = sc.nextLine().toLowerCase();
@@ -147,33 +150,32 @@ public class RecipeApp {
     private void searchByName() {
         System.out.println("Search here:");
         String keyword = sc.nextLine();
-        printList(library.filterByName(keyword));
+        printList(library.filterByName(keyword),"");
     }
 
     // EFFECTS: filter the library by ingredients and print a filtered list
     private void searchByIngredients() {
         System.out.println("Search here:");
         String keyword = sc.nextLine();
-        printList(library.filterByIngredients(keyword));
+        printList(library.filterByIngredients(keyword), "");
     }
 
     // EFFECTS: filter the library by dietary requirements and print a filtered list
     private void searchByDiet() {
         System.out.println("Search here:");
         String keyword = sc.nextLine();
-        printList(library.filterByDiet(keyword));
+        printList(library.filterByDiet(keyword), "");
     }
 
     // EFFECTS: filter the library by time taken and print a filtered list
     private void searchByTime() {
         System.out.println("Enter maximum time:");
         int maxTime = sc.nextInt();
-        printList(library.filterByTime(maxTime));
+        printList(library.filterByTime(maxTime), "");
     }
 
     // MODIFIES: this
     // EFFECTS: construct a new Recipe object and add this object to the library
-    @SuppressWarnings("methodlength")
     private void addRecipe() {
         System.out.println("Enter a name for the recipe: ");
         String name = sc.nextLine();
@@ -181,7 +183,7 @@ public class RecipeApp {
         String author = sc.nextLine();
 
         Recipe newRecipe = new Recipe(name, author, RecipeTag.DRAFT);
-        System.out.println("Your draft has been initialised successfully! ID: " + newRecipe.getId());
+        System.out.println("Your draft has been created successfully! ID: " + newRecipe.getId() + " (-1 -> unsaved)");
         System.out.println("Once you have completed all fields, "
                 + "you have the option to officially add your recipe to the library.");
 
@@ -195,6 +197,8 @@ public class RecipeApp {
         saveMenu(newRecipe);
     }
 
+    // EFFECTS: prints to user their chosen draft & prompts user to save a chosen draft to library
+    // (if requirements are met)
     @SuppressWarnings("methodlength")
     private void saveMenu(Recipe newRecipe) {
         System.out.println("Your current work:");
@@ -207,19 +211,23 @@ public class RecipeApp {
 
         while (!commandValid) {
             switch (command) {
-                case ("s"): library.getDrafts().add(newRecipe);
-                    library.getAllRecipes().add(newRecipe);
-                    saveLibrary();
+                case ("s"):
+                    if (library.getDrafts().contains(newRecipe)) {
+                        saveLibrary();
+                    } else {
+                        library.addRecipeToLibrary(newRecipe);
+                        saveLibrary();
+                    }
                     commandValid = true;
                     break;
-                case ("a"): boolean b = addRecipeToLibrary(newRecipe);
+                case ("a"): boolean b = addRecipeToOfficialLibrary(newRecipe);
                     if (b) {
                         commandValid = true;
-                        break;
                     } else if (!b) {
                         saveMenuPrompts();
                         command = sc.nextLine().toLowerCase();
                     }
+                    break;
                 case ("c"): changeFieldsInRecipe(newRecipe);
                     commandValid = true;
                     break;
@@ -229,6 +237,7 @@ public class RecipeApp {
         }
     }
 
+    // EFFECTS: display menu of options to user
     private static void saveMenuPrompts() {
         System.out.println("\nWhat do you want to do next?");
         System.out.println("\ts -> save as drafts");
@@ -237,11 +246,16 @@ public class RecipeApp {
         System.out.println("WARNING: all changes will be lost if you close the app without saving!");
     }
 
-    private boolean addRecipeToLibrary(Recipe recipe) {
+    // EFFECTS: check recipe if it meets the requirements to be added to the library
+    private boolean addRecipeToOfficialLibrary(Recipe recipe) {
         if (recipe.checkNotNull()) {
-            recipe.setTag(RecipeTag.DEFAULT);
-            library.getDrafts().remove(recipe);
-            library.getLibrary().add(recipe);
+            if (library.getDrafts().contains(recipe)) {
+                library.getDrafts().remove(recipe);
+                library.getLibrary().add(recipe);
+                recipe.setTag(RecipeTag.DEFAULT);
+            } else {
+                library.addRecipeToLibrary(recipe);
+            }
             saveLibrary();
             return true;
         } else {
@@ -251,6 +265,7 @@ public class RecipeApp {
         }
     }
 
+    // EFFECTS: prompts user to add a list of steps to the recipe or delete the current list
     private void addSteps(Recipe newRecipe) {
         System.out.println("Enter a list of steps to add to recipe; each step on a separate line; "
                 + "enter del to delete all steps; press d to finish: ");
@@ -266,6 +281,7 @@ public class RecipeApp {
         }
     }
 
+    // EFFECTS: prompts user to add a list of ingredients to the recipe or delete the current list
     private void addIngredients(Recipe newRecipe) {
         Set<Ingredient> tempIngredients = new HashSet<Ingredient>();
         System.out.println("Enter a list of ingredients to add to recipe; each ingredient on a separate line; "
@@ -284,20 +300,24 @@ public class RecipeApp {
         }
 
         for (Ingredient i : tempIngredients) {
-            newRecipe.getIngredients().add(i); // Add elements of HashSet into field ArrayList in object Recipe
+            newRecipe.addIngredients(i); // Add elements of HashSet into field ArrayList in object Recipe
         }
     }
 
     // EFFECTS: print a list of type Recipe
-    private int printList(List<Recipe> array) {
+    private int printList(List<Recipe> array, String caller) {
         if (!array.isEmpty()) {
             for (Recipe recipe : array) {
                 if (!recipe.getName().isBlank()) {
                     System.out.println("[ID: " + recipe.getId() + "] " + recipe.getName());
                 }
             }
-            viewRecipeFromList("");
-            return array.size();
+            if (caller.equals("menuOfAddRecipe()")) {
+                return array.size();
+            } else {
+                viewRecipeFromList("");
+                return array.size();
+            }
         } else {
             System.out.println("No data matched! Returning to menu...");
             return 0;
@@ -319,9 +339,9 @@ public class RecipeApp {
             while (!valid) {
                 try {
                     if (caller.equals("menuOfAddRecipe()")) {
-                        continue;
+                        return library.getAllRecipes().get(input - 1);
                     } else {
-                        System.out.println(library.getLibrary().get(input - 1).toString());
+                        System.out.println(library.getAllRecipes().get(input - 1).toString());
                         // because each recipe's id = its index in the List library - 1
                         valid = true;
                     }
@@ -333,9 +353,10 @@ public class RecipeApp {
             }
         }
         System.out.println("\nEnd of recipe.");
-        return library.getLibrary().get(input - 1);
+        return library.getAllRecipes().get(input - 1);
     }
 
+    // EFFECTS: prompts user to choose between creating a new draft and load a list of existing drafts
     @SuppressWarnings("methodlength")
     public void menuOfAddRecipe() {
         System.out.println("Do you want to create a new recipe or load one from drafts?");
@@ -350,7 +371,7 @@ public class RecipeApp {
                 case ("n"): addRecipe();
                     commandValid = true;
                     break;
-                case ("l"): int temp = printList(library.getDrafts());
+                case ("l"): int temp = printList(library.getDrafts(), "menuOfAddRecipe()");
                     if (temp == 0) {
                         return;
                         // empty list -> return to main menu
@@ -371,6 +392,7 @@ public class RecipeApp {
         }
     }
 
+    // EFFECTS: processes user command to choose what field in a recipe to edit
     @SuppressWarnings("methodlength")
     public void changeFieldsInRecipe(Recipe recipe) {
         menuChangeFieldsInRecipe();
@@ -412,6 +434,7 @@ public class RecipeApp {
         }
     }
 
+    // EFFECTS: displays menu of options to user
     private static void menuChangeFieldsInRecipe() {
         System.out.println("Choose a field to rewrite: ");
         System.out.println("\tn -> recipe name");

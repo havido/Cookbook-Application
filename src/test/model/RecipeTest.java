@@ -3,63 +3,87 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RecipeTest {
-    private Recipe test1;
-    private Recipe test2;
+    private Recipe recipe;
     private Ingredient i1;
     private Ingredient i2;
     private Ingredient i3;
+    private Ingredient i4;
 
     @BeforeEach
     void runBefore() {
-        Set<Ingredient> ing1 = new HashSet<Ingredient>();
-        ing1.add(i1 = new Ingredient("cucumber", IngredientCategories.NONE));
-        ing1.add(i2 = new Ingredient("flour", IngredientCategories.GLUTEN));
-        test1 = new Recipe("Crispy Cucumber Snack", "Hannah", RecipeTag.DEFAULT);
-        test1.getSteps().add("test step 1");
-        test1.getSteps().add("test step 2");
-        test1.getSteps().add("test step 3");
-
-        Set<Ingredient> ing2 = new HashSet<Ingredient>();
-        ing2.add(new Ingredient("fish", IngredientCategories.MEAT));
-        ing2.add(i3 = new Ingredient("potato", IngredientCategories.NONE));
-        ing2.add(new Ingredient("butter", IngredientCategories.LACTOSE));
-        test2 = new Recipe("Fish and Chips", "", RecipeTag.DEFAULT);
-        test2.getSteps().add("test step 1");
-        test2.getSteps().add("test step 2");
-        test2.getSteps().add("test step 3");
+        recipe = new Recipe("name", "author", RecipeTag.DRAFT);
+        i1 = new Ingredient("i1", IngredientCategories.LACTOSE);
+        i2 = new Ingredient("i2", IngredientCategories.GLUTEN);
+        i3 = new Ingredient("i3", IngredientCategories.MEAT);
+        i4 = new Ingredient("i4", IngredientCategories.NONE);
     }
 
     @Test
     void testConstructor() {
-        assertEquals("Crispy Cucumber Snack", test1.getName());
+        assertEquals("name", recipe.getName());
+        assertEquals("author", recipe.getAuthor());
+        assertEquals(RecipeTag.DRAFT, recipe.getTag());
+        assertEquals(-1, recipe.getId());
+        assertEquals(0, recipe.getTime());
+        assertNotNull(recipe.getIngredients());
+        assertNotNull(recipe.getDietaryRequirements());
+        assertNotNull(recipe.getSteps());
+        assertEquals(3, recipe.getDietaryRequirements().size());
+    }
 
-        assertEquals("Hannah", test1.getAuthor());
-        assertEquals("Anonymous", test2.getAuthor());
+    @Test
+    public void testSetName() {
+        recipe.setName("test");
+        assertEquals("test", recipe.getName());
+    }
 
-        assertEquals(1, test1.getId());
-        assertEquals(2, test2.getId());
+    @Test
+    public void testSetAuthor() {
+        recipe.setAuthor("author 1");
+        assertEquals("author 1", recipe.getAuthor());
+    }
 
-        assertTrue(test1.getIngredients().contains(i1));
-        assertTrue(test2.getIngredients().contains(i3));
-        assertFalse(test2.getIngredients().contains(i2));
+    @Test
+    public void testSetTag() {
+        recipe.setTag(RecipeTag.DEFAULT);
+        assertEquals(RecipeTag.DEFAULT, recipe.getTag());
+    }
 
-        assertTrue(test1.getDietaryRequirements().contains("lactose-free"));
-        assertFalse(test1.getDietaryRequirements().contains("gluten-free"));
-        assertTrue(test2.getDietaryRequirements().contains("gluten-free"));
-        assertFalse(test2.getDietaryRequirements().contains("vegetarian"));
-        assertFalse(test2.getDietaryRequirements().contains("lactose-free"));
+    @Test
+    public void testSetTime() {
+        recipe.setTime(60);
+        assertEquals(60, recipe.getTime());
+    }
 
-        assertEquals(20, test1.getTime());
-        assertEquals(15, test2.getTime());
+    @Test
+    public void testAddIngredientsAndDiet() {
+        recipe.addIngredients(i1);
+        assertEquals(1, recipe.getIngredients().size());
+        assertTrue(recipe.getDietaryRequirements().contains("gluten-free"));
+        assertTrue(recipe.getDietaryRequirements().contains("vegetarian"));
 
-        assertEquals("ID: 1\nRecipe: Crispy Cucumber Snack\nAuthor: Hannah\nTotal time: 20\n\n"
-                + "Dietary notes: [lactose-free, vegetarian]" + "\nIngredients: [cucumber, flour]" + "\n\nInstructions: "
-                + "\nStep 1: test step 1\nStep 2: test step 2\nStep 3: test step 3", test1.toString());
+        recipe.addIngredients(i2);
+        assertEquals(2, recipe.getIngredients().size());
+        assertTrue(recipe.getDietaryRequirements().contains("vegetarian"));
+        assertEquals(1, recipe.getDietaryRequirements().size());
+
+        recipe.addIngredients(i3);
+        assertEquals(0, recipe.getIngredients().size());
+    }
+
+    @Test
+    public void testCheckNotNull() {
+        assertFalse(recipe.checkNotNull()); // Fields are empty
+
+        recipe.setTime(30);
+        recipe.addIngredients(i1);
+        recipe.getSteps().add("test 1");
+
+        assertTrue(recipe.checkNotNull()); // All fields are filled
     }
 }
