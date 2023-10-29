@@ -19,7 +19,7 @@ public class JsonReaderTest extends JsonTest {
             RecipeLibrary library = reader.read();
             fail("IOException expected");
         } catch (IOException e) {
-            // pass
+            // pass test
         }
     }
 
