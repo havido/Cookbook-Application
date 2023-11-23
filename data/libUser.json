@@ -1,0 +1,32 @@
+{
+  "Name": "User's library",
+  "Library": [
+    {
+      "Dietary restrictions": [
+        "lactose-free",
+        "gluten-free",
+        "vegetarian"
+      ],
+      "Steps": [],
+      "Ingredients": [
+        {
+          "name": "broccoli",
+          "category": "NONE"
+        },
+        {
+          "name": "beef",
+          "category": "NONE"
+        },
+        {
+          "name": "tomato",
+          "category": "NONE"
+        }
+      ],
+      "Author": "Cat2",
+      "Time": 20,
+      "Tag": "DRAFT",
+      "ID": 8,
+      "Name": "Cat"
+    }
+  ]
+}

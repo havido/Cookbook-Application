@@ -1,4 +1,6 @@
-{"Library": [
+{
+  "Name": "Default library",
+  "Library": [
     {
         "Dietary restrictions": ["gluten-free"],
         "Steps": [
@@ -365,10 +367,10 @@
                 "category": "NONE"
             }
         ],
-        "Author": "Vi",
+        "Author": "Cat2",
         "Time": 20,
         "Tag": "DRAFT",
         "ID": 8,
-        "Name": "Test!"
+        "Name": "Cat"
     }
 ]}

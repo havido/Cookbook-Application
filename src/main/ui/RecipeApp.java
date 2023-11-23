@@ -83,11 +83,12 @@ public class RecipeApp {
 
     // MODIFIES: this
     // EFFECTS: load library from file
-    private void loadLibrary() {
+    public void loadLibrary(String libLocation) {
         try {
             library = jsonReader.read();
+            if
         } catch (Exception e) {
-            System.out.println("Error loading library from " + JSON_STORE);
+            System.out.println("Error loading library from " + libLocation);
         }
     }
 
