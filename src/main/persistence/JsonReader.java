@@ -22,6 +22,10 @@ public class JsonReader {
         this.source = source;
     }
 
+    public String getSource() {
+        return source;
+    }
+
     // EFFECTS: reads recipe library from file and returns it;
     // throws IOException if an error occurs reading data from file
     public RecipeLibrary read() throws IOException {

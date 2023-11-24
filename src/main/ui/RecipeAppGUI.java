@@ -22,11 +22,11 @@ public class RecipeAppGUI extends JFrame {
         app = new RecipeApp();
         setLocationRelativeTo(null);
         setBackground(Color.pink);
-        setLayout(BoxLayout);
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
         libMenu = new LibraryPanel(app);
         saMenu = new SearchAddPanel(app, bigPanel);
-        bigPanel = new MainPanel(app);
+        bigPanel = new MainPanel(app, saMenu, libMenu);
 
         add(libMenu, BoxLayout.LINE_AXIS);
         add(saMenu, BoxLayout.LINE_AXIS);

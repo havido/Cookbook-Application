@@ -15,26 +15,36 @@ public class SearchAddPanel extends JPanel implements ActionListener {
         this.app = app;
         this.otherPanel = otherPanel;
         setBackground(new Color(241, 235, 225));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setSize(100,400);
+        setVisible(true);
+
         prompt = new JLabel("What do you want to do today?");
         prompt.setPreferredSize(new Dimension(100, 60));
+        add(prompt);
 
         searchButton = new JButton("Search recipes");
-        searchButton.setBackground(new Color(192,207,178));
-        searchButton.setSize(new Dimension(100, 60));
+        addButton = new JButton("Add a new recipe");
+//        searchButton.setBackground(new Color(192,207,178));
+//        searchButton.setSize(new Dimension(100, 60));
+//        addButton.setBackground(new Color(192,207,178));
+//        addButton.setSize(new Dimension(100, 60));
+
         searchButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActiveEvent e) {
-
+            public void actionPerformed(ActiveEvent ae) {
+                System.out.println("hehe");
             }
         });
-        addButton = new JButton("Add a new recipe");
-        addButton.setBackground(new Color(192,207,178));
-        addButton.setSize(new Dimension(100, 60));
 
-        add(prompt);
-        add(Box.createVerticalStrut(10));
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActiveEvent ae) {
+                System.out.println("hehe");
+            }
+        });
+
         add(searchButton);
-        add(Box.createVerticalStrut(10));
         add(addButton);
     }
 }
