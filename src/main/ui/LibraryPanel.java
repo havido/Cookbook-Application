@@ -90,8 +90,6 @@ public class LibraryPanel extends JPanel {
         add(Box.createVerticalGlue());
         add(saveStatus);
         add(saveButton);
-
-        otherPanel.setLibrary(library);
     }
 
 //    public void configureButton(JButton button) {

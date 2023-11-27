@@ -67,6 +67,16 @@ public class RecipeLibrary {
         return filteredIngredients;
     }
 
+    public List<Recipe> filterByMultipleIng(String s) {
+        List<Recipe> tempLib = new ArrayList<>(library);
+        String[] ing = s.split(",");
+        for (String ingredient : ing) {
+            List<Recipe> filteredList = filterByIngredients(ingredient.trim());
+            tempLib.retainAll(filteredList);
+        }
+        return tempLib;
+    }
+
     // EFFECTS: filter the library by the dietary requirements of each recipe,
     // and add the filtered recipes to a new ArrayList
     public List<Recipe> filterByDiet(String keyword) {

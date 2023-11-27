@@ -1,14 +1,22 @@
 package ui;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            new RecipeApp();
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to run application: file not found");
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    try {
+                        new RecipeAppGUI();
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Unable to run application: file not found");
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
-// comment test commit

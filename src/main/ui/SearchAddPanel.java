@@ -2,9 +2,10 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SearchAddPanel extends JPanel implements ActionListener {
+public class SearchAddPanel extends JPanel {
     private RecipeApp app;
     private MainPanel otherPanel;
     private JLabel prompt;
@@ -25,27 +26,30 @@ public class SearchAddPanel extends JPanel implements ActionListener {
 
         searchButton = new JButton("Search recipes");
         addButton = new JButton("Add a new recipe");
-//        searchButton.setBackground(new Color(192,207,178));
-//        searchButton.setSize(new Dimension(100, 60));
-//        addButton.setBackground(new Color(192,207,178));
-//        addButton.setSize(new Dimension(100, 60));
+        configureButton(searchButton);
+        configureButton(addButton);
 
         searchButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActiveEvent ae) {
-                System.out.println("hehe");
+            public void actionPerformed(ActionEvent ae) {
+                otherPanel.searchRecipePanel();
             }
         });
 
         addButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActiveEvent ae) {
-                System.out.println("hehe");
+            public void actionPerformed(ActionEvent ae) {
+                otherPanel.addRecipePanel();
             }
         });
 
         add(searchButton);
         add(addButton);
+    }
+
+    public void configureButton(JButton b) {
+        b.setBackground((new Color(192,207,178)));
+        b.setSize(new Dimension(100, 60));
     }
 }
 

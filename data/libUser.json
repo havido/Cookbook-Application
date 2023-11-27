@@ -1,5 +1,4 @@
 {
-  "Name": "User's library",
   "Library": [
     {
       "Dietary restrictions": [
@@ -25,8 +24,44 @@
       "Author": "Cat2",
       "Time": 20,
       "Tag": "DRAFT",
-      "ID": 8,
+      "ID": 1,
       "Name": "Cat"
+    },
+    {
+      "Dietary restrictions": [],
+      "Steps": [
+        "Toast your bread to the level you want it to be.",
+        "Spread butter on one side of each slice.",
+        "Add a slice of cheese, 1 or 2 slices of ham, and a few slices of tomato.",
+        "Put in the microwave for ~30 seconds."
+      ],
+      "Ingredients": [
+        {
+          "name": "ham",
+          "category": "MEAT"
+        },
+        {
+          "name": "cheese",
+          "category": "LACTOSE"
+        },
+        {
+          "name": "butter",
+          "category": "LACTOSE"
+        },
+        {
+          "name": "bread",
+          "category": "GLUTEN"
+        },
+        {
+          "name": "tomato",
+          "category": "NONE"
+        }
+      ],
+      "Author": "Vi",
+      "Time": 15,
+      "Tag": "DEFAULT",
+      "ID": 2,
+      "Name": "Vi's breakfast toast"
     }
   ]
 }

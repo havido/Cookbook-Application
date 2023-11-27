@@ -1,7 +1,5 @@
 package ui;
 
-import model.Recipe;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -25,8 +23,8 @@ public class RecipeAppGUI extends JFrame {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
         libMenu = new LibraryPanel(app);
+        bigPanel = new MainPanel(app, saMenu);  // Move the creation of bigPanel before saMenu
         saMenu = new SearchAddPanel(app, bigPanel);
-        bigPanel = new MainPanel(app, saMenu, libMenu);
 
         add(libMenu, BoxLayout.LINE_AXIS);
         add(saMenu, BoxLayout.LINE_AXIS);
@@ -34,5 +32,4 @@ public class RecipeAppGUI extends JFrame {
 
         setVisible(true);
     }
-
 }
