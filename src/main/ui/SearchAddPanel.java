@@ -6,14 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SearchAddPanel extends JPanel {
-    private RecipeApp app;
+//    private RecipeApp app;
     private MainPanel otherPanel;
     private JLabel prompt;
     private JButton searchButton;
     private JButton addButton;
 
-    public SearchAddPanel(RecipeApp app, MainPanel otherPanel) {
-        this.app = app;
+    public SearchAddPanel(MainPanel otherPanel) {
+//        this.app = app;
         this.otherPanel = otherPanel;
         setBackground(new Color(241, 235, 225));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

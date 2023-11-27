@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainPanel extends JPanel {
-    private RecipeApp app;
+//    private RecipeApp app;
     private SearchAddPanel saPanel;
     private AddRecipePanel addPanel;
     private SearchRecipePanel searchPanel;
 
-    public MainPanel(RecipeApp app, SearchAddPanel saPanel) {
-        this.app = app;
+    public MainPanel(SearchAddPanel saPanel) {
+//        this.app = app;
         this.saPanel = saPanel;
         setBackground(new Color(241,235,225));
         setVisible(true);

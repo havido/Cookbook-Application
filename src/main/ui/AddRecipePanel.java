@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 
 public class AddRecipePanel extends JPanel {
-    private RecipeApp app;
+//    private RecipeApp app;
     private MainPanel mainPanel;
     private RecipeLibrary library;
     private JPanel menu;
@@ -33,8 +33,8 @@ public class AddRecipePanel extends JPanel {
     private JTextArea stepInput;
     private JButton addStep;
 
-    public AddRecipePanel(RecipeApp app, MainPanel mainPanel) {
-        this.app = app;
+    public AddRecipePanel(MainPanel mainPanel) {
+//        this.app = app;
         this.mainPanel = mainPanel;
         library = LibraryPanel.getLibrary();
         setBackground(new Color(241,235,225));

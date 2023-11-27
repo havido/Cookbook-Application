@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 public class LibraryPanel extends JPanel {
-    private RecipeApp app;
+//    private RecipeApp app;
     private MainPanel otherPanel;
     private JLabel prompt;
     private JLabel loadStatus;
@@ -23,8 +23,8 @@ public class LibraryPanel extends JPanel {
     private JsonWriter jsonWriter;
     private static RecipeLibrary library;
 
-    public LibraryPanel(RecipeApp app) {
-        this.app = app;
+    public LibraryPanel() {
+//        this.app = app;
         this.otherPanel = otherPanel;
         setBackground(new Color(241, 235, 225));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

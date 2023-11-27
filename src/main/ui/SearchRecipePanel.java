@@ -8,12 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 import java.util.List;
 
 public class SearchRecipePanel extends JPanel {
     private final String ingPrompt = "Enter ingredients, each separated by a comma";
-    private RecipeApp app;
+//    private RecipeApp app;
     private MainPanel mainPanel;
     private RecipeLibrary library;
     private JPanel searchPanel;
@@ -28,11 +27,11 @@ public class SearchRecipePanel extends JPanel {
     private JSlider filTimeInput;
     private JButton enter;
 
-    public SearchRecipePanel(RecipeApp app, MainPanel mainPanel) {
-        this.app = app;
+    public SearchRecipePanel(MainPanel mainPanel) {
+//        this.app = app;
         this.mainPanel = mainPanel;
         library = LibraryPanel.getLibrary();
-        setBackground(new Color(241,235,225));
+        setBackground(new Color(241, 235, 225));
         setVisible(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -74,7 +73,7 @@ public class SearchRecipePanel extends JPanel {
                 filTimeInput.setVisible(true);
             }
         });
-        filTimeInput = new JSlider(0,1000);
+        filTimeInput = new JSlider(0, 1000);
         enter = new JButton("Search!");
         enter.addActionListener(new ActionListener() {
             @Override
@@ -90,25 +89,21 @@ public class SearchRecipePanel extends JPanel {
                 }
 
                 // Filter the library based on the user input
-                List<Recipe> filteredRecipes = new ArrayList<>();
-                List<Recipe> temp;
+                List<Recipe> filteredRecipes = library.getAllRecipes();
 
                 if (filterByName) {
-                    temp = library.filterByName(filNameInput.getText());
-                    filteredRecipes.retainAll(temp);
+                    filteredRecipes = library.filterByName(filNameInput.getText());
                 }
                 if (filterByIngredients) {
-                    temp = library.filterByMultipleIng(filIngInput.getText());
-                    filteredRecipes.retainAll(temp);
+                    filteredRecipes = library.filterByMultipleIng(filIngInput.getText());
                 }
                 if (filterByDiet) {
-                    temp = library.filterByDiet(filDietInput.getSelectedItem().toString());
-                    filteredRecipes.retainAll(temp);
+                    filteredRecipes = library.filterByDiet(filDietInput.getSelectedItem().toString());
                 }
                 if (filterByTime) {
-                    temp = library.filterByTime(filTimeInput.getValue());
-                    filteredRecipes.retainAll(temp);
+                    filteredRecipes = library.filterByTime(filTimeInput.getValue());
                 }
+
                 configureResult(filteredRecipes);
             }
         });

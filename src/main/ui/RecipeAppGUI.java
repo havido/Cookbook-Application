@@ -6,9 +6,9 @@ import java.io.FileNotFoundException;
 
 public class RecipeAppGUI extends JFrame {
 
-    private RecipeApp app;
+//    private RecipeApp app;
     private LibraryPanel libMenu;
-    private SearchAddPanel saMenu;
+    private SearchAddPanel saMenu;  // Changed from SearchAddPanel
     private MainPanel bigPanel;
 
     // Constructs main window
@@ -16,20 +16,20 @@ public class RecipeAppGUI extends JFrame {
     public RecipeAppGUI() throws FileNotFoundException {
         super("Virtual Cookbook");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        setSize(300, 200);
-        app = new RecipeApp();
+//        app = new RecipeApp();
         setLocationRelativeTo(null);
         setBackground(Color.pink);
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 
-        libMenu = new LibraryPanel(app);
-        bigPanel = new MainPanel(app, saMenu);  // Move the creation of bigPanel before saMenu
-        saMenu = new SearchAddPanel(app, bigPanel);
+        libMenu = new LibraryPanel();
+        saMenu = new SearchAddPanel(bigPanel);
+        bigPanel = new MainPanel(saMenu);
 
-        add(libMenu, BoxLayout.LINE_AXIS);
-        add(saMenu, BoxLayout.LINE_AXIS);
-        add(bigPanel, BoxLayout.LINE_AXIS);
+        add(libMenu);
+        add(saMenu);
+        add(bigPanel);
 
+        pack();
         setVisible(true);
     }
 }
