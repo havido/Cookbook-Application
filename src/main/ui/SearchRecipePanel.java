@@ -23,36 +23,35 @@ public class SearchRecipePanel extends JPanel {
         library = context.getLibrary();
         setBackground(new Color(241, 235, 225));
         setVisible(true);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BorderLayout());
 
         searchPanel = new JPanel(new SpringLayout());
         resultPanel = new JPanel();
-//        resultPanel.setLayout(new GridLayout(2,2,10,10));
         resultPanel.setBackground(new Color(241,235,225));
-        add(searchPanel);
-        add(resultPanel);
+        add(BorderLayout.NORTH, searchPanel);
+        add(BorderLayout.CENTER, resultPanel);
         configureSearch();
     }
 
     public void configureSearch() {
         searchPanel.setBackground(new Color(241, 235, 225));
 
-        String[] labelButtons = {"Filter by name", "Filter by ingredients",
-                "Filter by dietary requirements", "Filter by time (minutes)"};
-        int numPairs = labelButtons.length;
+        String[] labels = {"Filter by name: ", "Filter by ingredients: ",
+                "Filter by dietary requirements: ", "Filter by time (minutes): "};
+        int numPairs = labels.length;
         ArrayList<Object> inputFields = new ArrayList<>();
 
         for (int i = 0; i < numPairs; i++) {
-            JLabel b = new JLabel(labelButtons[i], JLabel.TRAILING);
+            JLabel b = new JLabel(labels[i], JLabel.TRAILING);
             searchPanel.add(b);
 
-            if (labelButtons[i].equals("Filter by dietary requirements")) {
+            if (labels[i].equals("Filter by dietary requirements: ")) {
                 String[] diets = {"None", "Lactose-free", "Gluten-free", "Vegetarian"};
                 JComboBox<String> input = new JComboBox<>(diets);
                 b.setLabelFor(input);
                 searchPanel.add(input);
                 inputFields.add(input);
-            } else if (labelButtons[i].equals("Filter by time (minutes)")) {
+            } else if (labels[i].equals("Filter by time (minutes): ")) {
                 JSlider input = new JSlider(JSlider.HORIZONTAL, 0, 1000, 1000);
                 input.setMajorTickSpacing(100);
                 input.setMinorTickSpacing(10);
