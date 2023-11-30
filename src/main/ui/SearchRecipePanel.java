@@ -1,6 +1,7 @@
 package ui;
 
-import model.IngredientCategories;
+import layout.SpringUtilities;
+import model.Ingredient;
 import model.Recipe;
 import model.RecipeLibrary;
 
@@ -8,152 +9,138 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchRecipePanel extends JPanel {
     private final String ingPrompt = "Enter ingredients, each separated by a comma";
-//    private RecipeApp app;
-    private MainPanel mainPanel;
     private RecipeLibrary library;
     private JPanel searchPanel;
     private JPanel resultPanel;
-    private JButton filName;
-    private JButton filIng;
-    private JButton filDiet;
-    private JButton filTime;
-    private JTextField filNameInput;
-    private JTextField filIngInput;
-    private JComboBox filDietInput;
-    private JSlider filTimeInput;
     private JButton enter;
 
-    public SearchRecipePanel(MainPanel mainPanel) {
-//        this.app = app;
-        this.mainPanel = mainPanel;
-        library = LibraryPanel.getLibrary();
+    public SearchRecipePanel(RecipeAppContext context) {
+        library = context.getLibrary();
         setBackground(new Color(241, 235, 225));
         setVisible(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        configureSearch();
-
+        searchPanel = new JPanel(new SpringLayout());
+        resultPanel = new JPanel();
+//        resultPanel.setLayout(new GridLayout(2,2,10,10));
+        resultPanel.setBackground(new Color(241,235,225));
         add(searchPanel);
         add(resultPanel);
+        configureSearch();
     }
 
     public void configureSearch() {
-        searchPanel = new JPanel();
         searchPanel.setBackground(new Color(241, 235, 225));
-        SpringLayout layout = new SpringLayout();
-        searchPanel.setLayout(layout);
-        List<Recipe> tempLib;
 
-        filName = new JButton("Filter by name");
-        filNameInput = new JTextField();
-        filIng = new JButton("Filter by ingredients");
-        filIng.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                filIngInput.setVisible(true);
+        String[] labelButtons = {"Filter by name", "Filter by ingredients",
+                "Filter by dietary requirements", "Filter by time (minutes)"};
+        int numPairs = labelButtons.length;
+        ArrayList<Object> inputFields = new ArrayList<>();
+
+        for (int i = 0; i < numPairs; i++) {
+            JLabel b = new JLabel(labelButtons[i], JLabel.TRAILING);
+            searchPanel.add(b);
+
+            if (labelButtons[i].equals("Filter by dietary requirements")) {
+                String[] diets = {"None", "Lactose-free", "Gluten-free", "Vegetarian"};
+                JComboBox<String> input = new JComboBox<>(diets);
+                b.setLabelFor(input);
+                searchPanel.add(input);
+                inputFields.add(input);
+            } else if (labelButtons[i].equals("Filter by time (minutes)")) {
+                JSlider input = new JSlider(JSlider.HORIZONTAL, 0, 1000, 1000);
+                input.setMajorTickSpacing(100);
+                input.setMinorTickSpacing(10);
+                input.setPaintTicks(true);
+                input.setPaintLabels(true);
+                b.setLabelFor(input);
+                searchPanel.add(input);
+                inputFields.add(input);
+            } else {
+                JTextField input = new JTextField();
+                b.setLabelFor(input);
+                searchPanel.add(input);
+                inputFields.add(input);
             }
-        });
-        filIngInput = new JTextField(ingPrompt);
-        filDiet = new JButton("Filter by dietary requirements");
-        filDiet.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                filDietInput.setVisible(true);
-            }
-        });
-        filDietInput = new JComboBox<>(IngredientCategories.values());
-        filTime = new JButton("Filter by time");
-        filTime.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                filTimeInput.setVisible(true);
-            }
-        });
-        filTimeInput = new JSlider(0, 1000);
+        }
+
+        SpringUtilities.makeCompactGrid(searchPanel, numPairs, 2, 6, 6, 6, 6);
+        searchPanel.setOpaque(true);
+
         enter = new JButton("Search!");
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean filterByName = filNameInput.isVisible() && !filNameInput.getText().isEmpty();
-                boolean filterByIngredients = filIngInput.isVisible() && !filIngInput.getText().isEmpty();
-                boolean filterByDiet = filDietInput.isVisible() && filDietInput.getSelectedIndex() != -1;
-                boolean filterByTime = filTimeInput.isVisible();
+                List<Recipe> filteredRecipes = new ArrayList<>(library.getLibrary());
+                List<Recipe> temp;
 
-                // If none of the fields are filled, do nothing
-                if (!filterByName && !filterByIngredients && !filterByDiet && !filterByTime) {
-                    return;
-                }
+                temp = library.filterByName(((JTextField) inputFields.get(0)).getText());
+                filteredRecipes.retainAll(temp);
 
-                // Filter the library based on the user input
-                List<Recipe> filteredRecipes = library.getAllRecipes();
+                temp = library.filterByMultipleIng(((JTextField) inputFields.get(1)).getText());
+                filteredRecipes.retainAll(temp);
 
-                if (filterByName) {
-                    filteredRecipes = library.filterByName(filNameInput.getText());
-                }
-                if (filterByIngredients) {
-                    filteredRecipes = library.filterByMultipleIng(filIngInput.getText());
-                }
-                if (filterByDiet) {
-                    filteredRecipes = library.filterByDiet(filDietInput.getSelectedItem().toString());
-                }
-                if (filterByTime) {
-                    filteredRecipes = library.filterByTime(filTimeInput.getValue());
-                }
+                temp = library.filterByDiet(((JComboBox<String>) inputFields.get(2)).getSelectedItem().toString());
+                filteredRecipes.retainAll(temp);
+
+                temp = library.filterByTime(((JSlider) inputFields.get(3)).getValue());
+                filteredRecipes.retainAll(temp);
 
                 configureResult(filteredRecipes);
             }
         });
-
-        searchPanel.add(filName);
-        searchPanel.add(filNameInput);
-        searchPanel.add(filIng);
-        searchPanel.add(filIngInput);
-        searchPanel.add(filDiet);
-        searchPanel.add(filDietInput);
-        searchPanel.add(filTime);
-        searchPanel.add(filTimeInput);
         searchPanel.add(enter);
-
-        layout.putConstraint(SpringLayout.WEST, filName, 10, SpringLayout.WEST, searchPanel);
-        layout.putConstraint(SpringLayout.NORTH, filName, 10, SpringLayout.NORTH, searchPanel);
-        layout.putConstraint(SpringLayout.WEST, filNameInput, 5, SpringLayout.EAST, filName);
-        layout.putConstraint(SpringLayout.NORTH, filNameInput, 10, SpringLayout.NORTH, searchPanel);
-
-        layout.putConstraint(SpringLayout.WEST, filIng, 10, SpringLayout.WEST, searchPanel);
-        layout.putConstraint(SpringLayout.NORTH, filIng, 10, SpringLayout.SOUTH, filName);
-        layout.putConstraint(SpringLayout.WEST, filIngInput, 5, SpringLayout.EAST, filIng);
-        layout.putConstraint(SpringLayout.NORTH, filIngInput, 10, SpringLayout.SOUTH, filNameInput);
-
-        layout.putConstraint(SpringLayout.WEST, filDiet, 10, SpringLayout.WEST, searchPanel);
-        layout.putConstraint(SpringLayout.NORTH, filDiet, 10, SpringLayout.SOUTH, filIng);
-        layout.putConstraint(SpringLayout.WEST, filDietInput, 5, SpringLayout.EAST, filDiet);
-        layout.putConstraint(SpringLayout.NORTH, filDietInput, 10, SpringLayout.SOUTH, filIngInput);
-
-        layout.putConstraint(SpringLayout.WEST, filTime, 10, SpringLayout.WEST, searchPanel);
-        layout.putConstraint(SpringLayout.NORTH, filTime, 10, SpringLayout.SOUTH, filDiet);
-        layout.putConstraint(SpringLayout.WEST, filTimeInput, 5, SpringLayout.EAST, filTime);
-        layout.putConstraint(SpringLayout.NORTH, filTimeInput, 10, SpringLayout.SOUTH, filDietInput);
-
-        layout.putConstraint(SpringLayout.WEST, enter, 10, SpringLayout.WEST, searchPanel);
-        layout.putConstraint(SpringLayout.SOUTH, enter, -10, SpringLayout.SOUTH, searchPanel);
-        layout.putConstraint(SpringLayout.EAST, enter, -10, SpringLayout.EAST, searchPanel);
     }
 
     public void configureResult(List<Recipe> lib) {
         resultPanel.removeAll();
-        resultPanel = new JPanel();
-        resultPanel.setSize(100, 400);
-        resultPanel.setBackground(new Color(241, 235, 225));
-        resultPanel.setLayout(new GridLayout(2, 2, 10, 10));
-        resultPanel.setVisible(true);
 
-        for (Recipe r : lib) {
-            JButton card = new JButton(r.getName());
-            resultPanel.add(card);
+        if (lib.isEmpty()) {
+            JLabel empty = new JLabel("No results found.");
+            resultPanel.add(empty);
+        } else {
+            resultPanel.setLayout(new GridLayout(2,2,10,10));
+            for (Recipe r : lib) {
+                JButton card = new JButton(r.getName());
+                card.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        showButtonInfo(r);
+                    }
+                });
+                resultPanel.add(card);
+            }
         }
+
+        resultPanel.revalidate();
+        resultPanel.repaint();
+        System.out.println("hehe");
+    }
+
+    public void showButtonInfo(Recipe r) {
+        JFrame infoFrame = new JFrame("Recipe");
+        JPanel infoPanel = new JPanel(new BorderLayout());
+        JTextArea info = new JTextArea(r.toString());
+        info.setEditable(false);
+
+        infoPanel.add(info, BorderLayout.CENTER);
+
+        infoFrame.getContentPane().add(infoPanel);
+        infoFrame.setPreferredSize(new Dimension(500,500));
+        infoFrame.setLocationRelativeTo(null);
+
+        infoFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                infoFrame.dispose();
+            }
+        });
+
+        infoFrame.setVisible(true);
     }
 }

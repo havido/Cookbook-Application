@@ -6,22 +6,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SearchAddPanel extends JPanel {
-//    private RecipeApp app;
     private MainPanel otherPanel;
     private JLabel prompt;
     private JButton searchButton;
     private JButton addButton;
 
     public SearchAddPanel(MainPanel otherPanel) {
-//        this.app = app;
         this.otherPanel = otherPanel;
         setBackground(new Color(241, 235, 225));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setSize(100,400);
+        setPreferredSize(new Dimension(250, 700));
         setVisible(true);
 
         prompt = new JLabel("What do you want to do today?");
-        prompt.setPreferredSize(new Dimension(100, 60));
         add(prompt);
 
         searchButton = new JButton("Search recipes");
@@ -45,11 +42,20 @@ public class SearchAddPanel extends JPanel {
 
         add(searchButton);
         add(addButton);
+        add(Box.createVerticalGlue());
     }
 
     public void configureButton(JButton b) {
         b.setBackground((new Color(192,207,178)));
         b.setSize(new Dimension(100, 60));
+    }
+
+    public void disappear() {
+        setVisible(false);
+    }
+
+    public void appear() {
+        setVisible(true);
     }
 }
 

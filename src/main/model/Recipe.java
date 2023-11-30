@@ -134,7 +134,7 @@ public class Recipe implements Writable {
     public String toString() {
         String printSteps = "";
         for (int i = 1; i <= steps.size(); i++) {
-            printSteps += "\n" + "Step " + i + ": " + steps.get(i - 1);
+            printSteps += steps.get(i - 1);
         }
 
         List<String> ingName = new ArrayList<>();

@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 public class LibraryPanel extends JPanel {
-//    private RecipeApp app;
-    private MainPanel otherPanel;
+    private RecipeAppContext context;
+    private SearchAddPanel saPanel;
     private JLabel prompt;
     private JLabel loadStatus;
     private JLabel saveStatus;
@@ -21,18 +21,18 @@ public class LibraryPanel extends JPanel {
     private JButton saveButton;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
-    private static RecipeLibrary library;
+    private RecipeLibrary library;
 
-    public LibraryPanel() {
-//        this.app = app;
-        this.otherPanel = otherPanel;
+    public LibraryPanel(RecipeAppContext context, SearchAddPanel sa) {
+        this.context = context;
+        this.saPanel = sa;
+        library = context.getLibrary();
         setBackground(new Color(241, 235, 225));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setSize(100,400);
+        setPreferredSize(new Dimension(250, 700));
         setVisible(true);
 
         prompt = new JLabel("Choose a library to load from: ");
-        prompt.setPreferredSize(new Dimension(100, 60));
         add(prompt);
 
         loadStatus = new JLabel();
@@ -41,34 +41,11 @@ public class LibraryPanel extends JPanel {
         libUserButton = new JButton("User's library");
         saveButton = new JButton("Save to current library");
 
-        libraryButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                try {
-                    library = new RecipeLibrary();
-                    jsonReader = new JsonReader("./data/library.json");
-                    library = jsonReader.read();
-                    loadStatus.setText("Currently using the default library");
-                } catch (Exception e) {
-                    loadStatus.setText("Error loading library from the default library");
-                }
-            }
-        });
+        library.toString();
+        loadFromDefault();
+        loadFromUserLib();
 
-        libUserButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                try {
-                    library = new RecipeLibrary();
-                    jsonReader = new JsonReader("./data/libUser.json");
-                    library = jsonReader.read();
-                    loadStatus.setText("Currently using the user's library");
-                } catch (Exception e) {
-                    loadStatus.setText("Error loading library from the user's library");
-                }
-            }
-        });
-
+        // this save button should only be put at the mainPanel > addNewRecipe or editRecipe
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -80,6 +57,7 @@ public class LibraryPanel extends JPanel {
                     saveStatus.setText("All changes saved to " + jsonReader.getSource());
                 } catch (FileNotFoundException e) {
                     saveStatus.setText("Error saving library to " + jsonReader.getSource());
+                    e.printStackTrace();
                 }
             }
         });
@@ -92,12 +70,41 @@ public class LibraryPanel extends JPanel {
         add(saveButton);
     }
 
-//    public void configureButton(JButton button) {
-//        button.setBackground(new Color());
-//        button.set
-//    }
+    private void loadFromUserLib() {
+        libUserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    jsonReader = new JsonReader("./data/libUser.json");
+                    RecipeLibrary temp = jsonReader.read();
+                    library.updateLibrary(temp);
+                    loadStatus.setText("Currently using the user's library");
+                    saPanel.appear();
+                } catch (Exception e) {
+                    loadStatus.setText("Error loading library from the user's library");
+                    e.printStackTrace();
+                }
+            }
+        });
+        library.toString();
+    }
 
-    public static RecipeLibrary getLibrary() {
-        return library;
+    private void loadFromDefault() {
+        libraryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    jsonReader = new JsonReader("./data/library.json");
+                    RecipeLibrary temp = jsonReader.read();
+                    library.updateLibrary(temp);
+                    loadStatus.setText("Currently using the default library");
+                    saPanel.appear();
+                } catch (Exception e) {
+                    loadStatus.setText("Error loading library from the default library");
+                    e.printStackTrace();
+                }
+            }
+        });
+        library.toString();
     }
 }

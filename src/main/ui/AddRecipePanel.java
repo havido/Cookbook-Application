@@ -12,8 +12,6 @@ import java.awt.event.ActionListener;
 import java.util.*;
 
 public class AddRecipePanel extends JPanel {
-//    private RecipeApp app;
-    private MainPanel mainPanel;
     private RecipeLibrary library;
     private JPanel menu;
     private JPanel main;
@@ -33,10 +31,8 @@ public class AddRecipePanel extends JPanel {
     private JTextArea stepInput;
     private JButton addStep;
 
-    public AddRecipePanel(MainPanel mainPanel) {
-//        this.app = app;
-        this.mainPanel = mainPanel;
-        library = LibraryPanel.getLibrary();
+    public AddRecipePanel(RecipeAppContext context) {
+        library = context.getLibrary();
         setBackground(new Color(241,235,225));
         setVisible(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
