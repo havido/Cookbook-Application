@@ -79,6 +79,7 @@ public class LibraryPanel extends JPanel {
                     RecipeLibrary temp = jsonReader.read();
                     library.updateLibrary(temp);
                     loadStatus.setText("Currently using the user's library");
+                    context.setSource("./data/libUser.json");
                     saPanel.appear();
                 } catch (Exception e) {
                     loadStatus.setText("Error loading library from the user's library");
@@ -98,6 +99,7 @@ public class LibraryPanel extends JPanel {
                     RecipeLibrary temp = jsonReader.read();
                     library.updateLibrary(temp);
                     loadStatus.setText("Currently using the default library");
+                    context.setSource("./data/library.json");
                     saPanel.appear();
                 } catch (Exception e) {
                     loadStatus.setText("Error loading library from the default library");
