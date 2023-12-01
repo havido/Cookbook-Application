@@ -351,7 +351,10 @@
             "gluten-free",
             "vegetarian"
         ],
-        "Steps": [],
+        "Steps": [
+          "Test step 1",
+          "Test step 2"
+        ],
         "Ingredients": [
             {
                 "name": "broccoli",

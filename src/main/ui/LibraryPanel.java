@@ -15,12 +15,9 @@ public class LibraryPanel extends JPanel {
     private SearchAddPanel saPanel;
     private JLabel prompt;
     private JLabel loadStatus;
-    private JLabel saveStatus;
     private JButton libraryButton;
     private JButton libUserButton;
-    private JButton saveButton;
     private JsonReader jsonReader;
-    private JsonWriter jsonWriter;
     private RecipeLibrary library;
 
     public LibraryPanel(RecipeAppContext context, SearchAddPanel sa) {
@@ -36,38 +33,17 @@ public class LibraryPanel extends JPanel {
         add(prompt);
 
         loadStatus = new JLabel();
-        saveStatus = new JLabel();
         libraryButton = new JButton("Default");
         libUserButton = new JButton("User's library");
-        saveButton = new JButton("Save to current library");
 
         library.toString();
         loadFromDefault();
         loadFromUserLib();
 
-        // this save button should only be put at the mainPanel > addNewRecipe or editRecipe
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                try {
-                    jsonWriter = new JsonWriter(jsonReader.getSource());
-                    jsonWriter.open();
-                    jsonWriter.write(library);
-                    jsonWriter.close();
-                    saveStatus.setText("All changes saved to " + jsonReader.getSource());
-                } catch (FileNotFoundException e) {
-                    saveStatus.setText("Error saving library to " + jsonReader.getSource());
-                    e.printStackTrace();
-                }
-            }
-        });
-
         add(libraryButton);
         add(libUserButton);
         add(loadStatus);
         add(Box.createVerticalGlue());
-        add(saveStatus);
-        add(saveButton);
     }
 
     private void loadFromUserLib() {

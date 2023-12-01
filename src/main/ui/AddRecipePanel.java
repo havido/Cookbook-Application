@@ -19,14 +19,14 @@ public class AddRecipePanel extends JPanel {
     private JPanel main;
     private JPanel savePanel;
     private JsonWriter jsonWriter;
-    private static int counter;
+    private int counter;
     private ArrayList<Object> inputFields;
 
     public AddRecipePanel(RecipeAppContext context) {
         this.context = context;
         library = context.getLibrary();
+        counter = 0;
         setBackground(new Color(241, 235, 225));
-        setVisible(true);
         setLayout(new BorderLayout());
 
         menu = new JPanel();
@@ -34,9 +34,9 @@ public class AddRecipePanel extends JPanel {
         savePanel = new JPanel();
         configureMenu();
 
-        add(menu, BorderLayout.WEST);
-        add(main, BorderLayout.CENTER);
-        add(savePanel, BorderLayout.SOUTH);
+        add(BorderLayout.WEST, menu);
+        add(BorderLayout.CENTER, new JScrollPane(main));
+        add(BorderLayout.SOUTH, savePanel);
     }
 
     public void configureMenu() {
@@ -51,14 +51,7 @@ public class AddRecipePanel extends JPanel {
         menu.add(drafts);
 
         for (Recipe r : library.getDrafts()) {
-            JButton recipeButton = new JButton(r.getName());
-            recipeButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    configureMainExisting(r);
-                }
-            });
-            menu.add(recipeButton);
+            menuButtonExistingDraft(r);
         }
 
         JButton newRecipe = new JButton("Create new draft... +");
@@ -69,6 +62,17 @@ public class AddRecipePanel extends JPanel {
             }
         });
         menu.add(newRecipe);
+    }
+
+    private void menuButtonExistingDraft(Recipe r) {
+        JButton recipeButton = new JButton(r.getName());
+        recipeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                configureMainExisting(r);
+            }
+        });
+        menu.add(recipeButton);
     }
 
     public void configureMainExisting(Recipe r) {
@@ -116,26 +120,18 @@ public class AddRecipePanel extends JPanel {
                 }
                 case "Add an ingredient: ": { // ingredient
                     ArrayList<Ingredient> updatedIngList = new ArrayList<>(); // i need an array to store each input
-                    counter += r.getIngredients().size() - 1; // add the number of rows
+                    JPanel ingredientPanel = new JPanel(new BorderLayout());
 
                     for (int a = 0; a < r.getIngredients().size(); a++) {
-                        JPanel group = new JPanel();
+//                        JPanel group = new JPanel();
                         JTextField ingName = new JTextField(r.getIngredients().get(a).getName());
                         JComboBox dietChoice = new JComboBox<>(IngredientCategories.values());
                         dietChoice.setSelectedItem(r.getIngredients().get(a).getCategory());
-                        group.add(ingName);
-                        group.add(dietChoice);
-                        if (a == 0) {
-                            l.setLabelFor(group);
-                        } else {
-                            JLabel placeholder = new JLabel();
-                            placeholder.setLabelFor(group);
-                            main.add(placeholder);
-                        }
-                        main.add(group);
-//                        layout.putConstraint(SpringLayout.EAST, ingName, 5, SpringLayout.WEST, dietChoice);
-                        if (!String.valueOf(ingName).isEmpty()) {
-                            Ingredient ingredient = new Ingredient(String.valueOf(ingName),
+                        ingredientPanel.add(BorderLayout.CENTER, ingName);
+                        ingredientPanel.add(BorderLayout.EAST, dietChoice);
+
+                        if (!ingName.getText().isEmpty()) {
+                            Ingredient ingredient = new Ingredient(ingName.getText(),
                                     IngredientCategories.valueOf(String.valueOf(dietChoice.getSelectedItem())));
                             updatedIngList.add(ingredient); // add all modified changes
                         }
@@ -145,30 +141,21 @@ public class AddRecipePanel extends JPanel {
                     addIng.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent ae) {
-                            JPanel group = new JPanel();
                             JTextField newIngInput = new JTextField();
                             JComboBox newDietChoice = new JComboBox<>(IngredientCategories.values());
-                            group.add(newIngInput);
-                            group.add(newDietChoice);
+                            ingredientPanel.add(BorderLayout.CENTER, newIngInput);
+                            ingredientPanel.add(BorderLayout.EAST, newDietChoice);
+
                             if (!String.valueOf(newIngInput).isEmpty()) {
                                 Ingredient i = new Ingredient(String.valueOf(newIngInput),
                                         IngredientCategories.valueOf(String.valueOf(newDietChoice.getSelectedItem())));
                                 updatedIngList.add(i); // keep track of changes
                             }
-                            JLabel placeholder2 = new JLabel();
-                            placeholder2.setLabelFor(group);
-                            main.add(placeholder2);
-                            main.add(group);
-//                            layout.putConstraint(SpringLayout.EAST, newIngInput, 5, SpringLayout.WEST, newDietChoice);
-                            counter++;
                         }
                     });
-                    JLabel placeholder = new JLabel();
-                    placeholder.setLabelFor(addIng);
-                    counter++;
-                    main.add(placeholder);
-                    main.add(addIng);
+                    ingredientPanel.add(BorderLayout.CENTER, addIng);
                     inputFields.add(updatedIngList); // index 3
+                    main.add(new JScrollPane(ingredientPanel));
                     break;
                 }
                 // STEP
@@ -186,8 +173,8 @@ public class AddRecipePanel extends JPanel {
                             main.add(placeholder);
                         }
                         main.add(input);
-                        if (!String.valueOf(input).isEmpty()) {
-                            updatedStepList.add(String.valueOf(input)); // add all modified changes
+                        if (!input.getText().isEmpty()) {
+                            updatedStepList.add(input.getText()); // add all modified changes
                         }
                     }
 
@@ -197,13 +184,14 @@ public class AddRecipePanel extends JPanel {
                         public void actionPerformed(ActionEvent ae) {
                             JTextField newInput = new JTextField();
                             if (!String.valueOf(newInput).isEmpty()) {
-                                updatedStepList.add(String.valueOf(newInput)); // keep track of changes
+                                updatedStepList.add(newInput.getText()); // keep track of changes
                             }
                             JLabel placeholder2 = new JLabel();
                             placeholder2.setLabelFor(newInput);
                             main.add(placeholder2);
                             main.add(newInput);
                             counter++;
+                            SpringUtilities.makeCompactGrid(main, counter, 2,6,6,6,6);
                         }
                     });
                     JLabel placeholder = new JLabel();
@@ -484,7 +472,11 @@ public class AddRecipePanel extends JPanel {
             saveStatus.setText("Error saving library to " + context.getSource());
             e.printStackTrace();
         }
+        savePanel.removeAll();
+        savePanel.setBackground(new Color(241, 235, 225));
         savePanel.add(saveStatus);
+        savePanel.revalidate();
+        savePanel.repaint();
     }
 }
 

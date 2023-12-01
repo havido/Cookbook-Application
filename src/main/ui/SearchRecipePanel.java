@@ -29,7 +29,7 @@ public class SearchRecipePanel extends JPanel {
         resultPanel = new JPanel();
         resultPanel.setBackground(new Color(241,235,225));
         add(BorderLayout.NORTH, searchPanel);
-        add(BorderLayout.CENTER, resultPanel);
+        add(BorderLayout.CENTER, new JScrollPane(resultPanel));
         configureSearch();
     }
 
@@ -103,7 +103,7 @@ public class SearchRecipePanel extends JPanel {
             JLabel empty = new JLabel("No results found.");
             resultPanel.add(empty);
         } else {
-            resultPanel.setLayout(new GridLayout(2,2,10,10));
+            resultPanel.setLayout(new GridLayout(0,2,10,10));
             for (Recipe r : lib) {
                 JButton card = new JButton(r.getName());
                 card.addActionListener(new ActionListener() {
