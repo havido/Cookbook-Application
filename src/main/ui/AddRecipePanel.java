@@ -20,6 +20,7 @@ public class AddRecipePanel extends JPanel {
     private JPanel savePanel;
     private JsonWriter jsonWriter;
     private static int counter;
+    private ArrayList<Object> inputFields;
 
     public AddRecipePanel(RecipeAppContext context) {
         this.context = context;
@@ -80,7 +81,7 @@ public class AddRecipePanel extends JPanel {
                 "Add an ingredient: ", "Add step: "};
         int numPairs = labels.length;
         counter = numPairs;
-        ArrayList<Object> inputFields = new ArrayList<>();
+        inputFields = new ArrayList<>();
         // 0 = name, 1 = author, 2 = time, 3 = ingredientList, 4 = stepList
 
         for (int i = 0; i < numPairs; i++) {
@@ -115,22 +116,24 @@ public class AddRecipePanel extends JPanel {
                 }
                 case "Add an ingredient: ": { // ingredient
                     ArrayList<Ingredient> updatedIngList = new ArrayList<>(); // i need an array to store each input
-                    counter += r.getIngredients().size(); // add the number of rows
+                    counter += r.getIngredients().size() - 1; // add the number of rows
 
                     for (int a = 0; a < r.getIngredients().size(); a++) {
+                        JPanel group = new JPanel();
                         JTextField ingName = new JTextField(r.getIngredients().get(a).getName());
                         JComboBox dietChoice = new JComboBox<>(IngredientCategories.values());
                         dietChoice.setSelectedItem(r.getIngredients().get(a).getCategory());
+                        group.add(ingName);
+                        group.add(dietChoice);
                         if (a == 0) {
-                            l.setLabelFor(ingName);
+                            l.setLabelFor(group);
                         } else {
                             JLabel placeholder = new JLabel();
-                            placeholder.setLabelFor(ingName);
+                            placeholder.setLabelFor(group);
                             main.add(placeholder);
                         }
-                        main.add(ingName);
-                        main.add(dietChoice);
-                        layout.putConstraint(SpringLayout.EAST, ingName, 5, SpringLayout.WEST, dietChoice);
+                        main.add(group);
+//                        layout.putConstraint(SpringLayout.EAST, ingName, 5, SpringLayout.WEST, dietChoice);
                         if (!String.valueOf(ingName).isEmpty()) {
                             Ingredient ingredient = new Ingredient(String.valueOf(ingName),
                                     IngredientCategories.valueOf(String.valueOf(dietChoice.getSelectedItem())));
@@ -142,19 +145,21 @@ public class AddRecipePanel extends JPanel {
                     addIng.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent ae) {
+                            JPanel group = new JPanel();
                             JTextField newIngInput = new JTextField();
                             JComboBox newDietChoice = new JComboBox<>(IngredientCategories.values());
+                            group.add(newIngInput);
+                            group.add(newDietChoice);
                             if (!String.valueOf(newIngInput).isEmpty()) {
                                 Ingredient i = new Ingredient(String.valueOf(newIngInput),
-                                        IngredientCategories.valueOf(String.valueOf(newDietChoice)));
+                                        IngredientCategories.valueOf(String.valueOf(newDietChoice.getSelectedItem())));
                                 updatedIngList.add(i); // keep track of changes
                             }
                             JLabel placeholder2 = new JLabel();
-                            placeholder2.setLabelFor(newIngInput);
+                            placeholder2.setLabelFor(group);
                             main.add(placeholder2);
-                            main.add(newIngInput);
-                            main.add(newDietChoice);
-                            layout.putConstraint(SpringLayout.EAST, newIngInput, 5, SpringLayout.WEST, newDietChoice);
+                            main.add(group);
+//                            layout.putConstraint(SpringLayout.EAST, newIngInput, 5, SpringLayout.WEST, newDietChoice);
                             counter++;
                         }
                     });
@@ -166,9 +171,10 @@ public class AddRecipePanel extends JPanel {
                     inputFields.add(updatedIngList); // index 3
                     break;
                 }
+                // STEP
                 case "Add step: ": { // step
                     ArrayList<String> updatedStepList = new ArrayList<>(); // i need an array to store each input
-                    counter += r.getSteps().size(); // add the number of rows
+                    counter += r.getSteps().size() - 1; // add the number of rows
 
                     for (int a = 0; a < r.getSteps().size(); a++) {
                         JTextField input = new JTextField(r.getSteps().get(a));
@@ -210,12 +216,12 @@ public class AddRecipePanel extends JPanel {
                 }
             }
         }
-
+        System.out.println(counter);
         SpringUtilities.makeCompactGrid(main, counter, 2, 6, 6, 6, 6);
         main.setOpaque(true);
         main.revalidate();
         main.repaint();
-//        saveToLibraryExisting(r);
+        saveToLibraryExisting(r);
     }
 
     public void configureMainEmpty() {
@@ -226,57 +232,66 @@ public class AddRecipePanel extends JPanel {
         String[] labels = {"Name of recipe: ", "Name of author: ", "Total time needed: ",
                 "Add an ingredient: ", "Add step: "};
         int numPairs = labels.length;
-        ArrayList<Object> inputFields = new ArrayList<>();
+        inputFields = new ArrayList<>();
 
         for (int i = 0; i < numPairs; i++) {
             JLabel l = new JLabel(labels[i], JLabel.TRAILING);
             main.add(l);
 
             if (labels[i].equals("Add step: ")) { // step (done?)
+                ArrayList<String> stepList = new ArrayList<>();
                 JButton addStep = new JButton("Add a new step... +");
-                l.setLabelFor(addStep);
-                boolean b = false;
                 addStep.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                        JTextField newStep = new JTextField();
-//                        if (!b) {
-//                            l.setLabelFor(newStep);
-//                            b = true;
-//                        }
-                        ArrayList<String> stepList = new ArrayList<>();
-                        if (!String.valueOf(newStep).isEmpty()) {
-                            stepList.add(newStep.getText());
+                        JTextField newInput = new JTextField();
+                        if (!String.valueOf(newInput).isEmpty()) {
+                            stepList.add(String.valueOf(newInput)); // keep track of changes
                         }
-                        main.add(newStep);
+                        JLabel placeholder2 = new JLabel();
+                        placeholder2.setLabelFor(newInput);
+                        main.add(placeholder2);
+                        main.add(newInput);
+                        counter++;
                     }
                 });
-                l.setLabelFor(addStep);
+                JLabel placeholder = new JLabel();
+                placeholder.setLabelFor(addStep);
+                counter++;
+                main.add(placeholder);
                 main.add(addStep);
-                inputFields.add(addStep);
+                inputFields.add(stepList); // index 4
 
             } else if (labels[i].equals("Add an ingredient: ")) { // ingredient (done?)
-                boolean b = false;
                 ArrayList<Ingredient> ingList = new ArrayList<>();
 
                 JButton addIng = new JButton("Add a new ingredient... +");
                 addIng.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
+                        JPanel group = new JPanel();
                         JTextField newIngInput = new JTextField();
                         JComboBox newDietChoice = new JComboBox<>(IngredientCategories.values());
+                        group.add(newIngInput);
+                        group.add(newDietChoice);
                         if (!String.valueOf(newIngInput).isEmpty()) {
                             Ingredient i = new Ingredient(String.valueOf(newIngInput),
-                                    IngredientCategories.valueOf(String.valueOf(newDietChoice)));
-                            ingList.add(i);
+                                    IngredientCategories.valueOf(String.valueOf(newDietChoice.getSelectedItem())));
+                            ingList.add(i); // keep track of changes
                         }
-                        main.add(newIngInput);
-                        main.add(newDietChoice);
+                        JLabel placeholder2 = new JLabel();
+                        placeholder2.setLabelFor(group);
+                        main.add(placeholder2);
+                        main.add(group);
+                        counter++;
                     }
                 });
-                l.setLabelFor(addIng);
+
+                JLabel placeholder = new JLabel();
+                placeholder.setLabelFor(addIng);
+                main.add(placeholder);
                 main.add(addIng);
-                inputFields.add(addIng);
+                inputFields.add(ingList); // index 3
 
             } else if (labels[i].equals("Total time needed: ")) { // time (done)
                 JSlider input = new JSlider(JSlider.HORIZONTAL, 0, 1000, 1000);
@@ -286,13 +301,13 @@ public class AddRecipePanel extends JPanel {
                 input.setPaintLabels(true);
                 l.setLabelFor(input);
                 main.add(input);
-                inputFields.add(input);
+                inputFields.add(input); // index 3
 
             } else { // name, author (done)
                 JTextField input = new JTextField();
                 l.setLabelFor(input);
                 main.add(input);
-                inputFields.add(input);
+                inputFields.add(input); // index 1,2
             }
         }
 
@@ -300,182 +315,176 @@ public class AddRecipePanel extends JPanel {
         main.setOpaque(true);
         main.revalidate();
         main.repaint();
-//        saveToLibraryEmpty();
+        saveToLibraryEmpty();
     }
 
-//    public void saveToLibraryExisting(Recipe r) {
-//        savePanel.removeAll();
-//        savePanel.setBackground(new Color(241, 235, 225));
-//
-//        JButton saveToDraft = new JButton("Save to draft");
-//        saveToDraft.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                saveRecipe(r, RecipeTag.DRAFT);
-//            }
-//        });
-//
-//        JButton saveForReal = new JButton("Save for real");
-//        saveForReal.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                saveRecipe(r, RecipeTag.DEFAULT);
-//            }
-//        });
-//
-//        savePanel.add(saveToDraft);
-//        savePanel.add(saveForReal);
-//
-//        savePanel.revalidate();
-//        savePanel.repaint();
-//    }
+    public void saveToLibraryExisting(Recipe r) {
+        savePanel.removeAll();
+        savePanel.setBackground(new Color(241, 235, 225));
 
-//    public void saveToLibraryEmpty() {
-//        savePanel.removeAll();
-//        savePanel.setBackground(new Color(241, 235, 225));
-//
-//        JButton saveToDraft = new JButton("Save to draft");
-//        saveToDraft.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                saveRecipe(r, RecipeTag.DRAFT);
-//            }
-//        });
-//
-//        JButton saveForReal = new JButton("Save for real");
-//        saveForReal.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                saveRecipe(r, RecipeTag.DEFAULT);
-//            }
-//        });
-//
-//        savePanel.add(saveToDraft);
-//        savePanel.add(saveForReal);
-//
-//        savePanel.revalidate();
-//        savePanel.repaint();
-//    }
-//
-//    private void saveRecipe(Recipe r, RecipeTag tag) {
-//        // Update the existing recipe with the user's input
-//        updateRecipe(r);
-//
-//        // Set the tag for the recipe
-//        r.setTag(tag);
-//
-//        // Update the library with the modified recipe
-//        library.updateLibrary(library);
-//
-//        // Clear the main panel
-//        main.removeAll();
-//
-//        // Clear the save panel
-//        savePanel.removeAll();
-//
-//        // Reconfigure the menu with the updated drafts
-//        configureMenu();
-//
-//        // Revalidate and repaint the main panel
-//        main.revalidate();
-//        main.repaint();
-//    }
-//
-//    private void saveNewRecipe(RecipeTag tag) {
-//        // Create a new recipe with the user's input
-//        Recipe newRecipe = createRecipe(tag);
-//
-//        // Add the new recipe to the library
-//        library.addRecipeToLibrary(newRecipe);
-//
-//        // Clear the main panel
-//        main.removeAll();
-//
-//        // Clear the save panel
-//        savePanel.removeAll();
-//
-//        // Reconfigure the menu with the updated drafts
-//        configureMenu();
-//
-//        // Revalidate and repaint the main panel
-//        main.revalidate();
-//        main.repaint();
-//    }
-//
-//    private void updateRecipe(Recipe r) {
-//        // Update the recipe fields with the user's input
-//        r.setName(((JTextField) inputFields.get(0)).getText());
-//        r.setAuthor(((JTextField) inputFields.get(1)).getText());
-//        r.setTime(((JSlider) inputFields.get(2)).getValue());
-//
-//        // Clear existing ingredients and add the updated ones
-//        r.getIngredients().clear();
-//        for (int i = 3; i < inputFields.size(); i += 2) {
-//            JTextField ingNameField = (JTextField) inputFields.get(i);
-//            JComboBox<String> dietChoice = (JComboBox<String>) inputFields.get(i + 1);
-//
-//            if (!ingNameField.getText().isEmpty()) {
-//                Ingredient ingredient = new Ingredient(ingNameField.getText(), IngredientCategories.valueOf(dietChoice.getSelectedItem().toString()));
-//                r.addIngredients(ingredient);
-//            }
-//        }
-//
-//        // Clear existing steps and add the updated ones
-//        r.getSteps().clear();
-//        for (int i = 3; i < inputFields.size(); i++) {
-//            JTextField stepField = (JTextField) inputFields.get(i);
-//
-//            if (!stepField.getText().isEmpty()) {
-//                r.getSteps().add(stepField.getText());
-//            }
-//        }
-//    }
-//
-//    private Recipe createRecipe(RecipeTag tag) {
-//        // Create a new recipe with the user's input
-//        Recipe newRecipe = new Recipe("", "", tag);
-//
-//        // Update the recipe fields with the user's input
-//        newRecipe.setName(((JTextField) inputFields.get(0)).getText());
-//        newRecipe.setAuthor(((JTextField) inputFields.get(1)).getText());
-//        newRecipe.setTime(((JSlider) inputFields.get(2)).getValue());
-//
-//        // Add ingredients to the new recipe
-//        for (int i = 3; i < inputFields.size(); i += 2) {
-//            JTextField ingNameField = (JTextField) inputFields.get(i);
-//            JComboBox<String> dietChoice = (JComboBox<String>) inputFields.get(i + 1);
-//
-//            if (!ingNameField.getText().isEmpty()) {
-//                Ingredient ingredient = new Ingredient(ingNameField.getText(), IngredientCategories.valueOf(dietChoice.getSelectedItem().toString()));
-//                newRecipe.addIngredients(ingredient);
-//            }
-//        }
-//
-//        // Add steps to the new recipe
-//        for (int i = 4; i < inputFields.size(); i++) {
-//            JTextField stepField = (JTextField) inputFields.get(i);
-//
-//            if (!stepField.getText().isEmpty()) {
-//                newRecipe.getSteps().add(stepField.getText());
-//            }
-//        }
-//
-//        return newRecipe;
-//    }
-//
-//    public void saveToJson() {
-//        JLabel saveStatus = new JLabel();
-//        try {
-//            jsonWriter = new JsonWriter(context.getSource());
-//            jsonWriter.open();
-//            jsonWriter.write(library);
-//            jsonWriter.close();
-//            saveStatus.setText("All changes saved to " + context.getSource());
-//        } catch (FileNotFoundException e) {
-//            saveStatus.setText("Error saving library to " + context.getSource());
-//            e.printStackTrace();
-//        }
-//        savePanel.add(saveStatus);
-//    }
+        JButton saveToDraft = new JButton("Save to draft");
+        saveToDraft.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveRecipe(r, RecipeTag.DRAFT);
+                saveToJson();
+            }
+        });
+
+        JButton saveForReal = new JButton("Save for real");
+        saveForReal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveRecipe(r, RecipeTag.DEFAULT);
+                saveToJson();
+            }
+        });
+
+        savePanel.add(saveToDraft);
+        savePanel.add(saveForReal);
+
+        savePanel.revalidate();
+        savePanel.repaint();
+    }
+
+    public void saveToLibraryEmpty() {
+        savePanel.removeAll();
+        savePanel.setBackground(new Color(241, 235, 225));
+
+        JButton saveToDraft = new JButton("Save to draft");
+        saveToDraft.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Recipe r = new Recipe("a", "b", RecipeTag.DRAFT);
+                saveRecipe(r, RecipeTag.DRAFT);
+                saveToJson();
+            }
+        });
+
+        JButton saveForReal = new JButton("Save for real");
+        saveForReal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Recipe r = new Recipe("a", "b", RecipeTag.DEFAULT);
+                saveRecipe(r, RecipeTag.DEFAULT);
+                saveToJson();
+            }
+        });
+
+        savePanel.add(saveToDraft);
+        savePanel.add(saveForReal);
+
+        savePanel.revalidate();
+        savePanel.repaint();
+    }
+
+    private void saveRecipe(Recipe r, RecipeTag tag) {
+        updateRecipe(r);
+        r.setTag(tag);
+        library.updateLibrary(library);
+
+        main.removeAll();
+        savePanel.removeAll();
+        configureMenu();
+        main.revalidate();
+        main.repaint();
+    }
+
+    private void saveNewRecipe(RecipeTag tag) {
+        // Create a new recipe with the user's input
+        Recipe newRecipe = createRecipe(tag);
+
+        // Add the new recipe to the library
+        library.addRecipeToLibrary(newRecipe);
+
+        // Clear the main panel
+        main.removeAll();
+
+        // Clear the save panel
+        savePanel.removeAll();
+
+        // Reconfigure the menu with the updated drafts
+        configureMenu();
+
+        // Revalidate and repaint the main panel
+        main.revalidate();
+        main.repaint();
+    }
+
+    private void updateRecipe(Recipe r) {
+        // Update the recipe fields with the user's input
+        r.setName(((JTextField) inputFields.get(0)).getText());
+        r.setAuthor(((JTextField) inputFields.get(1)).getText());
+        r.setTime(((JSlider) inputFields.get(2)).getValue());
+
+        // Clear existing ingredients and add the updated ones
+        r.getIngredients().clear();
+        for (int i = 3; i < inputFields.size(); i += 2) {
+            JTextField ingNameField = (JTextField) inputFields.get(i);
+            JComboBox<String> dietChoice = (JComboBox<String>) inputFields.get(i + 1);
+
+            if (!ingNameField.getText().isEmpty()) {
+                Ingredient ingredient = new Ingredient(ingNameField.getText(), IngredientCategories.valueOf(dietChoice.getSelectedItem().toString()));
+                r.addIngredients(ingredient);
+            }
+        }
+
+        // Clear existing steps and add the updated ones
+        r.getSteps().clear();
+        for (int i = 3; i < inputFields.size(); i++) {
+            JTextField stepField = (JTextField) inputFields.get(i);
+
+            if (!stepField.getText().isEmpty()) {
+                r.getSteps().add(stepField.getText());
+            }
+        }
+    }
+
+    private Recipe createRecipe(RecipeTag tag) {
+        // Create a new recipe with the user's input
+        Recipe newRecipe = new Recipe("", "", tag);
+
+        // Update the recipe fields with the user's input
+        newRecipe.setName(((JTextField) inputFields.get(0)).getText());
+        newRecipe.setAuthor(((JTextField) inputFields.get(1)).getText());
+        newRecipe.setTime(((JSlider) inputFields.get(2)).getValue());
+
+        // Add ingredients to the new recipe
+        for (int i = 3; i < inputFields.size(); i += 2) {
+            JTextField ingNameField = (JTextField) inputFields.get(i);
+            JComboBox<String> dietChoice = (JComboBox<String>) inputFields.get(i + 1);
+
+            if (!ingNameField.getText().isEmpty()) {
+                Ingredient ingredient = new Ingredient(ingNameField.getText(), IngredientCategories.valueOf(dietChoice.getSelectedItem().toString()));
+                newRecipe.addIngredients(ingredient);
+            }
+        }
+
+        // Add steps to the new recipe
+        for (int i = 4; i < inputFields.size(); i++) {
+            JTextField stepField = (JTextField) inputFields.get(i);
+
+            if (!stepField.getText().isEmpty()) {
+                newRecipe.getSteps().add(stepField.getText());
+            }
+        }
+
+        return newRecipe;
+    }
+
+    public void saveToJson() {
+        JLabel saveStatus = new JLabel();
+        try {
+            jsonWriter = new JsonWriter(context.getSource());
+            jsonWriter.open();
+            jsonWriter.write(library);
+            jsonWriter.close();
+            saveStatus.setText("All changes saved to " + context.getSource());
+        } catch (FileNotFoundException e) {
+            saveStatus.setText("Error saving library to " + context.getSource());
+            e.printStackTrace();
+        }
+        savePanel.add(saveStatus);
+    }
 }
 

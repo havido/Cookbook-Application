@@ -124,10 +124,18 @@ public class SearchRecipePanel extends JPanel {
     public void showButtonInfo(Recipe r) {
         JFrame infoFrame = new JFrame("Recipe");
         JPanel infoPanel = new JPanel(new BorderLayout());
+        JLabel imageLabel = new JLabel();
+        ImageIcon image = new ImageIcon("./images/" + r.getId() + ".jpg");
+        if (image.getImage() == null) {
+            imageLabel.setText("No image yet");
+        } else {
+            imageLabel.setIcon(image);
+        }
         JTextArea info = new JTextArea(r.toString());
         info.setEditable(false);
 
         infoPanel.add(info, BorderLayout.CENTER);
+        infoPanel.add(imageLabel, BorderLayout.WEST);
 
         infoFrame.getContentPane().add(infoPanel);
         infoFrame.setPreferredSize(new Dimension(500,500));
