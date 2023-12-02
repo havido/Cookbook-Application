@@ -52,5 +52,6 @@ public class EventLogTest {
         assertTrue(itr.hasNext());   // After log is cleared, the clear log event is added
         assertEquals("Event log cleared.", itr.next().getDescription());
         assertFalse(itr.hasNext());
+        //testcommit
     }
 }
