@@ -41,6 +41,16 @@ public class SearchRecipePanel extends JPanel {
         int numPairs = labels.length;
         ArrayList<Object> inputFields = new ArrayList<>();
 
+        createFilterMenu(labels, numPairs, inputFields);
+
+        SpringUtilities.makeCompactGrid(searchPanel, numPairs, 2, 6, 6, 6, 6);
+        searchPanel.setOpaque(true);
+
+        createEnterButton(inputFields);
+        searchPanel.add(enter);
+    }
+
+    private void createFilterMenu(String[] labels, int numPairs, ArrayList<Object> inputFields) {
         for (int i = 0; i < numPairs; i++) {
             JLabel b = new JLabel(labels[i], JLabel.TRAILING);
             searchPanel.add(b);
@@ -67,10 +77,9 @@ public class SearchRecipePanel extends JPanel {
                 inputFields.add(input);
             }
         }
+    }
 
-        SpringUtilities.makeCompactGrid(searchPanel, numPairs, 2, 6, 6, 6, 6);
-        searchPanel.setOpaque(true);
-
+    private void createEnterButton(ArrayList<Object> inputFields) {
         enter = new JButton("Search!");
         enter.addActionListener(new ActionListener() {
             @Override
@@ -93,7 +102,6 @@ public class SearchRecipePanel extends JPanel {
                 configureResult(filteredRecipes);
             }
         });
-        searchPanel.add(enter);
     }
 
     public void configureResult(List<Recipe> lib) {

@@ -26,6 +26,14 @@ public class SearchAddPanel extends JPanel {
         configureButton(searchButton);
         configureButton(addButton);
 
+        addActionsToButton(otherPanel);
+
+        add(searchButton);
+        add(addButton);
+        add(Box.createVerticalGlue());
+    }
+
+    private void addActionsToButton(MainPanel otherPanel) {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -39,10 +47,6 @@ public class SearchAddPanel extends JPanel {
                 otherPanel.addRecipePanel();
             }
         });
-
-        add(searchButton);
-        add(addButton);
-        add(Box.createVerticalGlue());
     }
 
     public void configureButton(JButton b) {
