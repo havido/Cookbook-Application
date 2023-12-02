@@ -45,15 +45,40 @@ eat their cooking
 dietary requirements, and/or time consumption
 - [x] As a user, I want to be able to view the list of recipes after filtering
 - [x] As a user, I want to be able to add my recipes to the library
-- [ ] As a user, I want to be able to save my recipe to the library (if I so choose)
-- [ ] As a user, when I select the quit option from the application menu and I have a
-recipe that is not fully constructed, I want to be reminded to save my recipe to 
-file and have the option to do so or not.
-- [ ] As a user, when I start the application, I want to be given the option to load my 
+- [x] As a user, I want to be able to load a library of my choice for the program to be run upon
+- [x] As a user, I want to be able to save my recipe to the library (if I so choose)
+- [x] As a user, when I start the application, I want to be given the option to load my 
 half-constructed recipe from file.
 - [x] As a user, I want to be able to view a recipe using its ID
 - [ ] As a user, I want to be able to select a recipe in the database and rate it, as
 well as comment on it
+
+### Instructions for Grader
+- Initially, you have to choose a library for the program to be run upon to proceed to
+the next steps. Here, you should click on the "Default Library" button just because
+this library has more recipes than the other one, thus makes it more useful to test on
+functions. This satisfies the user story of loading the state of the application from file.
+- For the user story "add multiple Xs to a Y", click "Add a new recipe"
+- You now have the option to edit current drafts or create a new recipe. Click any.
+- If you chose to edit a draft, some inputs have been read from the draft and initialised
+for you. If you chose to create a new one, all inputs are blank.
+- For Ingredients and Steps, when you want to add a new ingredient or step, click the "Add..."
+button in their corresponding panel
+- If you want to delete an existing ingredient or step, just leave the input blank
+- Click "save to draft" or "save for real" to save to the .json library. This satisfies the
+user story where user can choose to save their work to file.
+- "Save to draft": save to the drafts library. Your draft will now be accessible from the
+menu of drafts
+- "Save for real": save to the default library. Your recipe must not have any blank inputs
+in order to save successfully
+- For the case that "all the Xs that have already been added to Y are displayed": click 
+"Search a recipe" from the second panel at the start
+- To view all recipes added in the default library, leave all search bars blank, and hit
+"Search!"
+- Otherwise, you can filter as you like, and hit "Search!"
+- To view a specific recipe, click on the button. A frame will pop up that include the recipe's
+information, and its image. Note that recipes added by user have yet to have the function
+to include images. I didn't have enough time...
 
 ### Scrap ideas
 
