@@ -162,6 +162,27 @@ Added ingredient butter to recipe drafthehe
 Fri Dec 01 16:14:56 PST 2023
 Library saved to: ./data/library.json
 
+### Phase 4: Task 3
+
+#### Some ideas I would like to add
+
+- When the user encounters the screen where they add/edit a recipe, they have the option
+to upload a photo of their recipe to the program, which will be stored in ./images/
+- I want to edit the application so that it looks better visually
+- I want to make the program more real - perhaps I can make a tool that reads recipes
+from a specific tool from the internet and store it in the .json file? But that would
+take a long time
+
+#### Refactoring
+
+- I didn't really make custom exceptions, so if I had more time I could work on that
+- Separated panels into even more classes for readability. Right now some
+of my classes have 5~6 panels, maybe even more, which was extremely confusing for me
+to code at times, and I doubt people would have a great time reading my codes
+- An abstract class for my panels so that every panel is configured in the
+same way
+- For the GUI, the user can load a library and the program will depend on this library
+throughout the program. I could try refactoring it into simpleton design pattern
 
 ### Scrap ideas
 
