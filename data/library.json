@@ -345,13 +345,11 @@
         "Name": "Vi's breakfast toast"
     },
     {
-        "Dietary restrictions": [
-            "lactose-free",
-            "gluten-free"
-        ],
+        "Dietary restrictions": ["gluten-free"],
         "Steps": [
             "Test step 1",
-            "Test step 2"
+            "Test step 2",
+            "Test step 3"
         ],
         "Ingredients": [
             {
@@ -363,7 +361,7 @@
                 "category": "MEAT"
             },
             {
-                "name": "tomato",
+                "name": "cucumber",
                 "category": "NONE"
             },
             {
@@ -371,14 +369,86 @@
                 "category": "MEAT"
             },
             {
-                "name": "onion",
-                "category": "NONE"
+                "name": "milk",
+                "category": "LACTOSE"
             }
         ],
         "Author": "Meomeow",
-        "Time": 21,
+        "Time": 37,
         "Tag": "DRAFT",
         "ID": 8,
-        "Name": "Cat"
+        "Name": "CatCatCat"
+    },
+    {
+        "Dietary restrictions": [
+            "lactose-free",
+            "gluten-free",
+            "vegetarian"
+        ],
+        "Steps": [
+            "Mix one teaspoon of dark ground coffee and one teaspoon of honey with hot water, stir well",
+            "Heat up a cup of oatmilk, you can use the microwave if you want",
+            "Mix everything together, stir and enjoy!"
+        ],
+        "Ingredients": [
+            {
+                "name": "oatmilk",
+                "category": "NONE"
+            },
+            {
+                "name": "dark ground coffee",
+                "category": "NONE"
+            },
+            {
+                "name": "honey",
+                "category": "NONE"
+            }
+        ],
+        "Author": "Vi",
+        "Time": 18,
+        "Tag": "DEFAULT",
+        "ID": 9,
+        "Name": "Oatmilk latte"
+    },
+    {
+        "Dietary restrictions": ["gluten-free"],
+        "Steps": [
+            "Heat up the pan to the highest. When the pan is slightly hot, put a tablespoon-ish of oil in.",
+            "When the oil is slightly hot (don't check with your hand), put minced garlic and minced onion in, stir fry well.",
+            "Put chopped tomato in, stir fry until slightly soft, add 1/4 cup of water, close the lid. Reduce heat to medium, wait for around 5 minutes.",
+            "Meanwhile, mix egg with 1 tablespoon of fish sauce. After the tomato are soft, put egg in and scramble continuously.",
+            "Turn off the heat when the egg seems done and enjoy!"
+        ],
+        "Ingredients": [
+            {
+                "name": "egg",
+                "category": "NONE"
+            },
+            {
+                "name": "tomato",
+                "category": "NONE"
+            },
+            {
+                "name": "vegetarian oil",
+                "category": "NONE"
+            },
+            {
+                "name": "onion",
+                "category": "NONE"
+            },
+            {
+                "name": "fish sauce",
+                "category": "MEAT"
+            },
+            {
+                "name": "garlic",
+                "category": "NONE"
+            }
+        ],
+        "Author": "Vi",
+        "Time": 21,
+        "Tag": "DEFAULT",
+        "ID": 10,
+        "Name": "Scrambled eggs with tomato"
     }
 ]}

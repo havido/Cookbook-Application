@@ -43,6 +43,15 @@ public class AddRecipePanel extends JPanel {
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
         menu.setVisible(true);
 
+        JButton newRecipe = new JButton("Create new draft... +");
+        newRecipe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                configureMain(new Recipe("", "", RecipeTag.DRAFT));
+            }
+        });
+        menu.add(newRecipe);
+
         JLabel drafts = new JLabel("Your current drafts:");
         if (library.getDrafts().isEmpty()) {
             drafts.setText("You don't have any drafts");
@@ -52,15 +61,6 @@ public class AddRecipePanel extends JPanel {
         for (Recipe r : library.getDrafts()) {
             menuButtonExistingDraft(r);
         }
-
-        JButton newRecipe = new JButton("Create new draft... +");
-        newRecipe.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                configureMain(new Recipe("", "", RecipeTag.DRAFT));
-            }
-        });
-        menu.add(newRecipe);
     }
 
     private void menuButtonExistingDraft(Recipe r) {
@@ -115,7 +115,7 @@ public class AddRecipePanel extends JPanel {
     }
 
     private void createRowsWithSteps(Recipe r, JLabel l) {
-        ArrayList<String> updatedStepList = new ArrayList<>(); // i need an array to store each input
+        ArrayList<JTextField> stepList = new ArrayList<>(); // i need an array to store each input
         JPanel stepPanel = new JPanel(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(stepPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -129,10 +129,7 @@ public class AddRecipePanel extends JPanel {
         for (int a = 0; a < r.getSteps().size(); a++) {
             JTextField input = new JTextField(r.getSteps().get(a));
             inputPanel.add(input);
-
-            if (!input.getText().isEmpty()) {
-                updatedStepList.add(input.getText()); // add all modified changes
-            }
+            stepList.add(input);
         }
 
         JButton addStep = new JButton("Add a new step... +");
@@ -141,21 +138,19 @@ public class AddRecipePanel extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 JTextField newInput = new JTextField();
                 inputPanel.add(newInput);
-
-                if (!String.valueOf(newInput).isEmpty()) {
-                    updatedStepList.add(newInput.getText()); // keep track of changes
-                }
+                stepList.add(newInput);
                 stepPanel.revalidate();
                 stepPanel.repaint();
             }
         });
         stepPanel.add(BorderLayout.SOUTH, addStep);
         inputPanel.add(Box.createVerticalGlue());
-        inputFields.add(updatedStepList); // index 4
+        inputFields.add(stepList); // index 5
     }
 
     private void createRowsWithIngredients(Recipe r, JLabel l) {
-        ArrayList<Ingredient> updatedIngList = new ArrayList<>(); // i need an array to store each input
+        ArrayList<JTextField> ingList = new ArrayList<>(); // i need an array to store each input
+        ArrayList<JComboBox> dietList = new ArrayList<>();
         JPanel ingredientPanel = new JPanel(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(ingredientPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -177,11 +172,8 @@ public class AddRecipePanel extends JPanel {
                 ingNamePanel.add(ingName);
                 ingCatPanel.add(dietChoice);
 
-                if (!ingName.getText().isEmpty()) {
-                    Ingredient ingredient = new Ingredient(ingName.getText(),
-                            IngredientCategories.valueOf(String.valueOf(dietChoice.getSelectedItem())));
-                    updatedIngList.add(ingredient); // add all modified changes
-                }
+                ingList.add(ingName);
+                dietList.add(dietChoice);
             }
         }
 
@@ -194,11 +186,9 @@ public class AddRecipePanel extends JPanel {
                 ingNamePanel.add(newIngInput);
                 ingCatPanel.add(newDietChoice);
 
-                if (!String.valueOf(newIngInput).isEmpty()) {
-                    Ingredient i = new Ingredient(String.valueOf(newIngInput),
-                            IngredientCategories.valueOf(String.valueOf(newDietChoice.getSelectedItem())));
-                    updatedIngList.add(i); // keep track of changes
-                }
+                ingList.add(newIngInput);
+                dietList.add(newDietChoice);
+
                 ingredientPanel.revalidate();
                 ingredientPanel.repaint();
             }
@@ -206,7 +196,8 @@ public class AddRecipePanel extends JPanel {
         ingredientPanel.add(BorderLayout.SOUTH, addIng);
         ingNamePanel.add(Box.createVerticalGlue());
         ingCatPanel.add(Box.createVerticalGlue());
-        inputFields.add(updatedIngList); // index 3
+        inputFields.add(ingList); // index 3
+        inputFields.add(dietList); // index 4
     }
 
     private void createRowsWithSlider(int r, JLabel l) {
@@ -242,7 +233,7 @@ public class AddRecipePanel extends JPanel {
         saveToDraft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateRecipe(r, ingList, stepList);
+                updateRecipe(r);
                 if (!library.getDrafts().contains(r)) {
                     library.addRecipeToLibrary(r);
                     menuButtonExistingDraft(r);
@@ -258,9 +249,8 @@ public class AddRecipePanel extends JPanel {
         saveForReal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Recipe tempRecipe = new Recipe("", "", RecipeTag.DRAFT);
-                updateRecipe(tempRecipe, ingList, stepList);
-                if (!tempRecipe.checkNotNull()) {
+                updateRecipe(r);
+                if (!r.checkNotNull()) {
                     status.setText("One or more fields are incomplete!");
                 } else {
                     r.setTag(RecipeTag.DEFAULT);
@@ -282,16 +272,43 @@ public class AddRecipePanel extends JPanel {
         savePanel.repaint();
     }
 
-    private void updateRecipe(Recipe r, ArrayList<Ingredient> ingList, ArrayList<String> stepList) {
+    private ArrayList updateIngList() {
+        ArrayList<JTextField> ingNames = (ArrayList<JTextField>) inputFields.get(3);
+        ArrayList<JComboBox> dietChoices = (ArrayList<JComboBox>) inputFields.get(4);
+        ArrayList<Ingredient> updatedIngList = new ArrayList<>();
+        for (int i = 0; i < ingNames.size(); i++) {
+            if (!ingNames.get(i).getText().isBlank()) {
+                Ingredient ing = new Ingredient(ingNames.get(i).getText(),
+                        IngredientCategories.valueOf(String.valueOf(dietChoices.get(i).getSelectedItem())));
+                updatedIngList.add(ing);
+            }
+        }
+        return updatedIngList;
+    }
+
+    private ArrayList updateStepList() {
+        ArrayList<JTextField> steps = (ArrayList<JTextField>) inputFields.get(5);
+        ArrayList<String> updatedStepList = new ArrayList<>();
+        for (int i = 0; i < steps.size(); i++) {
+            if (!steps.get(i).getText().isBlank()) {
+                updatedStepList.add(steps.get(i).getText());
+            }
+        }
+        return updatedStepList;
+    }
+
+    private void updateRecipe(Recipe r) {
         r.setName(((JTextField) inputFields.get(0)).getText());
         r.setAuthor(((JTextField) inputFields.get(1)).getText());
         r.setTime(((JSlider) inputFields.get(2)).getValue());
 
+        ArrayList<Ingredient> ingList = updateIngList();
         r.getIngredients().clear();
         for (Ingredient i : ingList) {
             r.addIngredients(i);
         }
 
+        ArrayList<String> stepList = updateStepList();
         r.getSteps().clear();
         r.getSteps().addAll(stepList);
     }
@@ -308,8 +325,6 @@ public class AddRecipePanel extends JPanel {
             saveStatus.setText("Error saving library to " + context.getSource());
             e.printStackTrace();
         }
-        savePanel.removeAll();
-        savePanel.setBackground(new Color(241, 235, 225));
         savePanel.add(saveStatus);
         savePanel.revalidate();
         savePanel.repaint();
