@@ -37,8 +37,12 @@ public class RecipeLibrary {
         recipe.setId(allRecipes.indexOf(recipe) + 1);
         if (recipe.getTag() == RecipeTag.DEFAULT) {
             library.add(recipe);
+            EventLog.getInstance().logEvent(new Event("Added recipe " + recipe.getName()
+                    + " to library [ID: " + recipe.getId() + "]"));
         } else {
             drafts.add(recipe);
+            EventLog.getInstance().logEvent(new Event("Added recipe " + recipe.getName()
+                    + " to drafts [ID: " + recipe.getId() + "]"));
         }
     }
 
@@ -53,6 +57,7 @@ public class RecipeLibrary {
                 filteredName.add(recipe);
             }
         }
+        EventLog.getInstance().logEvent(new Event("Filtered result based on name: " + keyword));
         return filteredName;
     }
 
@@ -85,6 +90,7 @@ public class RecipeLibrary {
             List<Recipe> filteredList = filterByIngredients(ingredient.trim());
             tempLib.retainAll(filteredList);
         }
+        EventLog.getInstance().logEvent(new Event("Filtered result based on ingredients: " + s));
         return tempLib;
     }
 
@@ -103,6 +109,7 @@ public class RecipeLibrary {
                 }
             }
         }
+        EventLog.getInstance().logEvent(new Event("Filtered result based on diet: " + keyword));
         return filteredDiet;
     }
 
@@ -115,6 +122,7 @@ public class RecipeLibrary {
                 filteredTime.add(recipe);
             }
         }
+        EventLog.getInstance().logEvent(new Event("Filtered result based on time: " + maxTime));
         return filteredTime;
     }
 
@@ -142,5 +150,8 @@ public class RecipeLibrary {
         for (Recipe r : lib.getAllRecipes()) {
             addRecipeToLibrary(r);
         }
+        EventLog.getInstance().logEvent(new Event("Current library record updated. Total number of works: "
+                + numTotal() + ", number of recipes in library: " + numRecipesInLibrary() + ", number of drafts: "
+                + numDrafts()));
     }
 }

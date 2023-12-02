@@ -56,6 +56,7 @@ public class JsonReader {
 
             library.addRecipeToLibrary(recipe);
         }
+        EventLog.getInstance().logEvent(new Event("Library loaded from: " + source));
         return library;
     }
 

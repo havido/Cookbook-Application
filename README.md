@@ -54,6 +54,7 @@ half-constructed recipe from file.
 well as comment on it
 
 ### Instructions for Grader
+
 - Initially, you have to choose a library for the program to be run upon to proceed to
 the next steps. Here, you should click on the "Default Library" button just because
 this library has more recipes than the other one, thus makes it more useful to test on
@@ -79,6 +80,88 @@ in order to save successfully
 - To view a specific recipe, click on the button. A frame will pop up that include the recipe's
 information, and its image. Note that recipes added by user have yet to have the function
 to include images. I didn't have enough time...
+
+### Phase 4: Task 2
+
+Fri Dec 01 16:14:13 PST 2023
+Library loaded from: ./data/library.json
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe Ground Beef Spinach Casserole to library [ID: 1]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe Mexican Ground Beef Casserole to library [ID: 2]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe Spaghetti Pie to library [ID: 3]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe Chef John's Buttermilk Fried Chicken to library [ID: 4]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe Classic Meatloaf to library [ID: 5]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe Greek Couscous Salad to library [ID: 6]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe Vi's breakfast toast to library [ID: 7]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe CatCatCat to drafts [ID: 8]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe Oatmilk latte to library [ID: 9]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe Scrambled eggs with tomato to library [ID: 10]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe hehe to drafts [ID: 11]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Added recipe Pork and Cabbage Dumpling to library [ID: 12]
+
+
+Fri Dec 01 16:14:13 PST 2023
+Current library record updated. Total number of works: 12, number of recipes in library: 10, number of drafts: 2
+
+
+Fri Dec 01 16:14:23 PST 2023
+Filtered result based on name: toast
+
+
+Fri Dec 01 16:14:23 PST 2023
+Filtered result based on time: 1000
+
+
+Fri Dec 01 16:14:56 PST 2023
+Added ingredient cabbage to recipe drafthehe
+
+
+Fri Dec 01 16:14:56 PST 2023
+Added ingredient cucumber to recipe drafthehe
+
+
+Fri Dec 01 16:14:56 PST 2023
+Added ingredient butter to recipe drafthehe
+
+
+Fri Dec 01 16:14:56 PST 2023
+Library saved to: ./data/library.json
+
 
 ### Scrap ideas
 

@@ -134,7 +134,6 @@ public class SearchRecipePanel extends JPanel {
 
         resultPanel.revalidate();
         resultPanel.repaint();
-        System.out.println("hehe");
     }
 
     // EFFECTS: create a new frame to show the information of each recipe, with visual components beign their images
