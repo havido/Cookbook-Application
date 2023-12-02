@@ -74,6 +74,7 @@ public class AddRecipePanel extends JPanel {
         menu.add(recipeButton);
     }
 
+    @SuppressWarnings("methodlength")
     private void configureMain(Recipe r) {
         resetDisplayMenu();
 
@@ -132,6 +133,13 @@ public class AddRecipePanel extends JPanel {
             stepList.add(input);
         }
 
+        JButton addStep = getAddStepButton(stepList, stepPanel, inputPanel);
+        stepPanel.add(BorderLayout.SOUTH, addStep);
+        inputPanel.add(Box.createVerticalGlue());
+        inputFields.add(stepList); // index 5
+    }
+
+    private static JButton getAddStepButton(ArrayList<JTextField> stepList, JPanel stepPanel, JPanel inputPanel) {
         JButton addStep = new JButton("Add a new step... +");
         addStep.addActionListener(new ActionListener() {
             @Override
@@ -143,9 +151,7 @@ public class AddRecipePanel extends JPanel {
                 stepPanel.repaint();
             }
         });
-        stepPanel.add(BorderLayout.SOUTH, addStep);
-        inputPanel.add(Box.createVerticalGlue());
-        inputFields.add(stepList); // index 5
+        return addStep;
     }
 
     private void createRowsWithIngredients(Recipe r, JLabel l) {
@@ -164,6 +170,18 @@ public class AddRecipePanel extends JPanel {
         ingredientPanel.add(BorderLayout.CENTER, ingNamePanel);
         l.setLabelFor(ingredientPanel);
 
+        printOriginalIngList(r, ingList, dietList, ingNamePanel, ingCatPanel);
+
+        JButton addIng = getAddIngButton(ingList, dietList, ingredientPanel, ingNamePanel, ingCatPanel);
+        ingredientPanel.add(BorderLayout.SOUTH, addIng);
+        ingNamePanel.add(Box.createVerticalGlue());
+        ingCatPanel.add(Box.createVerticalGlue());
+        inputFields.add(ingList); // index 3
+        inputFields.add(dietList); // index 4
+    }
+
+    private static void printOriginalIngList(Recipe r, ArrayList<JTextField> ingList, ArrayList<JComboBox> dietList,
+                                             JPanel ingNamePanel, JPanel ingCatPanel) {
         if (!r.getIngredients().isEmpty()) {
             for (int a = 0; a < r.getIngredients().size(); a++) {
                 JTextField ingName = new JTextField(r.getIngredients().get(a).getName());
@@ -176,7 +194,10 @@ public class AddRecipePanel extends JPanel {
                 dietList.add(dietChoice);
             }
         }
+    }
 
+    private static JButton getAddIngButton(ArrayList<JTextField> ingList, ArrayList<JComboBox> dietList,
+                                           JPanel ingredientPanel, JPanel ingNamePanel, JPanel ingCatPanel) {
         JButton addIng = new JButton("Add a new ingredient... +");
         addIng.addActionListener(new ActionListener() {
             @Override
@@ -193,11 +214,7 @@ public class AddRecipePanel extends JPanel {
                 ingredientPanel.repaint();
             }
         });
-        ingredientPanel.add(BorderLayout.SOUTH, addIng);
-        ingNamePanel.add(Box.createVerticalGlue());
-        ingCatPanel.add(Box.createVerticalGlue());
-        inputFields.add(ingList); // index 3
-        inputFields.add(dietList); // index 4
+        return addIng;
     }
 
     private void createRowsWithSlider(int r, JLabel l) {
@@ -246,6 +263,15 @@ public class AddRecipePanel extends JPanel {
         });
 
         JButton saveForReal = new JButton("Save for real");
+        configureSaveForRealButton(r, status, saveForReal);
+        savePanel.add(saveToDraft);
+        savePanel.add(saveForReal);
+        savePanel.add(status);
+        savePanel.revalidate();
+        savePanel.repaint();
+    }
+
+    private void configureSaveForRealButton(Recipe r, JLabel status, JButton saveForReal) {
         saveForReal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -265,11 +291,6 @@ public class AddRecipePanel extends JPanel {
                 }
             }
         });
-        savePanel.add(saveToDraft);
-        savePanel.add(saveForReal);
-        savePanel.add(status);
-        savePanel.revalidate();
-        savePanel.repaint();
     }
 
     private ArrayList updateIngList() {

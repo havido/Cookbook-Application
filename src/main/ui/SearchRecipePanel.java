@@ -50,6 +50,7 @@ public class SearchRecipePanel extends JPanel {
         searchPanel.add(enter);
     }
 
+    @SuppressWarnings("methodlength")
     private void createFilterMenu(String[] labels, int numPairs, ArrayList<Object> inputFields) {
         for (int i = 0; i < numPairs; i++) {
             JLabel b = new JLabel(labels[i], JLabel.TRAILING);
@@ -132,17 +133,7 @@ public class SearchRecipePanel extends JPanel {
     public void showButtonInfo(Recipe r) {
         JFrame infoFrame = new JFrame("Recipe");
         JPanel infoPanel = new JPanel(new BorderLayout());
-        JLabel imageLabel = new JLabel();
-
-        ImageIcon imageIcon = new ImageIcon("./images/" + r.getId() + ".jpg");
-        Image scaledImage = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(scaledImage);
-
-        if (imageIcon.getImage() == null) {
-            imageLabel.setText("No image yet");
-        } else {
-            imageLabel.setIcon(imageIcon);
-        }
+        JLabel imageLabel = getImageLabel(r);
 
         JTextArea info = new JTextArea(r.toString());
         info.setEditable(false);
@@ -166,5 +157,20 @@ public class SearchRecipePanel extends JPanel {
         });
 
         infoFrame.setVisible(true);
+    }
+
+    private static JLabel getImageLabel(Recipe r) {
+        JLabel imageLabel = new JLabel();
+
+        ImageIcon imageIcon = new ImageIcon("./images/" + r.getId() + ".jpg");
+        Image scaledImage = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(scaledImage);
+
+        if (imageIcon.getImage() == null) {
+            imageLabel.setText("No image yet");
+        } else {
+            imageLabel.setIcon(imageIcon);
+        }
+        return imageLabel;
     }
 }

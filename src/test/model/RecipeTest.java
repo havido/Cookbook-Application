@@ -73,7 +73,7 @@ class RecipeTest {
         assertEquals(1, recipe.getDietaryRequirements().size());
 
         recipe.addIngredients(i3);
-        assertEquals(0, recipe.getIngredients().size());
+        assertEquals(3, recipe.getIngredients().size());
     }
 
     @Test

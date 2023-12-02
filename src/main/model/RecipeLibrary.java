@@ -5,6 +5,7 @@ import java.util.List;
 
 // Represents a library having 3 lists of recipe: an overall list, a list of officially added recipes,
 // and a list of drafts
+// NOTE: All differences from Phase 2 are noted
 public class RecipeLibrary {
     private List<Recipe> allRecipes;
     private List<Recipe> library;
@@ -45,7 +46,7 @@ public class RecipeLibrary {
     public List<Recipe> filterByName(String keyword) {
         if (keyword.isBlank()) {
             return library;
-        }
+        } // Diff phase 2
         List<Recipe> filteredName = new ArrayList<Recipe>();
         for (Recipe recipe : library) {
             if (recipe.getName().toLowerCase().contains(keyword.toLowerCase())) {
@@ -59,7 +60,7 @@ public class RecipeLibrary {
     public List<Recipe> filterByIngredients(String keyword) {
         if (keyword.isBlank()) {
             return library;
-        }
+        } // Diff phase 2
         List<Recipe> filteredIngredients = new ArrayList<Recipe>();
         for (Recipe recipe : library) {
 
@@ -73,6 +74,7 @@ public class RecipeLibrary {
         return filteredIngredients;
     }
 
+    // Diff phase 2
     public List<Recipe> filterByMultipleIng(String s) {
         if (s.isBlank()) {
             return library;
@@ -91,7 +93,7 @@ public class RecipeLibrary {
     public List<Recipe> filterByDiet(String keyword) {
         if (keyword.isBlank() || keyword.toLowerCase().equals("none")) {
             return library;
-        }
+        } // Diff phase 2
         List<Recipe> filteredDiet = new ArrayList<Recipe>();
         for (Recipe recipe : library) {
             for (String requirement : recipe.getDietaryRequirements()) {
@@ -131,6 +133,7 @@ public class RecipeLibrary {
         return allRecipes.size();
     }
 
+    // Diff phase 2
     public void updateLibrary(RecipeLibrary lib) {
         allRecipes.clear();
         drafts.clear();

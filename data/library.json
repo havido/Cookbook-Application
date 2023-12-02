@@ -411,7 +411,10 @@
         "Name": "Oatmilk latte"
     },
     {
-        "Dietary restrictions": ["gluten-free"],
+        "Dietary restrictions": [
+            "lactose-free",
+            "gluten-free"
+        ],
         "Steps": [
             "Heat up the pan to the highest. When the pan is slightly hot, put a tablespoon-ish of oil in.",
             "When the oil is slightly hot (don't check with your hand), put minced garlic and minced onion in, stir fry well.",
@@ -450,5 +453,31 @@
         "Tag": "DEFAULT",
         "ID": 10,
         "Name": "Scrambled eggs with tomato"
+    },
+    {
+        "Dietary restrictions": [
+            "lactose-free",
+            "gluten-free",
+            "vegetarian"
+        ],
+        "Steps": [
+            "test step 1",
+            "test step 2"
+        ],
+        "Ingredients": [
+            {
+                "name": "cabbage",
+                "category": "NONE"
+            },
+            {
+                "name": "cucumber",
+                "category": "NONE"
+            }
+        ],
+        "Author": "Anonymous",
+        "Time": 15,
+        "Tag": "DRAFT",
+        "ID": 11,
+        "Name": "hehe"
     }
 ]}
