@@ -133,20 +133,29 @@ public class SearchRecipePanel extends JPanel {
         JFrame infoFrame = new JFrame("Recipe");
         JPanel infoPanel = new JPanel(new BorderLayout());
         JLabel imageLabel = new JLabel();
-        ImageIcon image = new ImageIcon("./images/" + r.getId() + ".jpg");
-        if (image.getImage() == null) {
+
+        ImageIcon imageIcon = new ImageIcon("./images/" + r.getId() + ".jpg");
+        Image scaledImage = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(scaledImage);
+
+        if (imageIcon.getImage() == null) {
             imageLabel.setText("No image yet");
         } else {
-            imageLabel.setIcon(image);
+            imageLabel.setIcon(imageIcon);
         }
+
         JTextArea info = new JTextArea(r.toString());
         info.setEditable(false);
+        info.setLineWrap(true);
+        info.setWrapStyleWord(true);
+        JScrollPane scrollPane = new JScrollPane(info);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        infoPanel.add(info, BorderLayout.CENTER);
+        infoPanel.add(scrollPane, BorderLayout.CENTER);
         infoPanel.add(imageLabel, BorderLayout.WEST);
 
         infoFrame.getContentPane().add(infoPanel);
-        infoFrame.setPreferredSize(new Dimension(500,500));
+        infoFrame.setMinimumSize(new Dimension(500,500));
         infoFrame.setLocationRelativeTo(null);
 
         infoFrame.addWindowListener(new java.awt.event.WindowAdapter() {
