@@ -13,6 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class JsonReaderTest extends JsonTest {
 
     @Test
+    void testGetSource() {
+        JsonReader reader = new JsonReader("./data/noSuchFile.json");
+        assertEquals("./data/noSuchFile.json", reader.getSource());
+    }
+    @Test
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {

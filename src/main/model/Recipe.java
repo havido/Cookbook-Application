@@ -122,7 +122,7 @@ public class Recipe implements Writable {
 
     // EFFECTS: check if the recipe has any blank fields
     public boolean checkNotNull() {
-        if (!name.isBlank() && !author.isBlank() && time != 0 && ingredients.size() != 0 && steps.size() != 0) {
+        if (!name.isBlank() && time != 0 && ingredients.size() != 0 && steps.size() != 0) {
             return true;
         } else {
             return false;
@@ -133,8 +133,10 @@ public class Recipe implements Writable {
     @Override
     public String toString() {
         String printSteps = "";
-        for (int i = 1; i <= steps.size(); i++) {
-            printSteps += "\n\nStep " + i + ": " + steps.get(i - 1);
+        if (!steps.isEmpty()) {
+            for (int i = 1; i <= steps.size(); i++) {
+                printSteps += "\n\nStep " + i + ": " + steps.get(i - 1);
+            }
         }
 
         List<String> ingName = new ArrayList<>();

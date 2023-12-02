@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RecipeTest {
     private Recipe recipe;
+    private Recipe recipe2;
     private Ingredient i1;
     private Ingredient i2;
     private Ingredient i3;
@@ -21,10 +22,12 @@ class RecipeTest {
         i2 = new Ingredient("i2", IngredientCategories.GLUTEN);
         i3 = new Ingredient("i3", IngredientCategories.MEAT);
         i4 = new Ingredient("i4", IngredientCategories.NONE);
+        recipe2 = new Recipe("", "", RecipeTag.DRAFT);
     }
 
     @Test
     void testConstructor() {
+        assertEquals("Anonymous", recipe2.getAuthor());
         assertEquals("name", recipe.getName());
         assertEquals("author", recipe.getAuthor());
         assertEquals(RecipeTag.DRAFT, recipe.getTag());
@@ -78,12 +81,29 @@ class RecipeTest {
 
     @Test
     public void testCheckNotNull() {
-        assertFalse(recipe.checkNotNull()); // Fields are empty
+        assertFalse(recipe2.checkNotNull()); // Fields are empty
+        recipe2.setName("hehe");
+        assertFalse(recipe2.checkNotNull()); // Fields are empty
+        recipe2.setTime(30);
+        assertFalse(recipe2.checkNotNull()); // Fields are empty
+        recipe2.addIngredients(i1);
+        assertFalse(recipe2.checkNotNull()); // Fields are empty
+        recipe2.getSteps().add("test 1");
+        assertTrue(recipe2.checkNotNull()); // All fields are filled
+    }
 
-        recipe.setTime(30);
+    @Test
+    public void testToString() {
+        String emptyIngSteps = "ID: -1\nRecipe: name\nAuthor: author\nTotal time: 0\n\nDietary notes: [lactose-free, gluten-free, vegetarian]\nIngredients: []" +
+                "\n\nInstructions: ";
+        assertEquals(emptyIngSteps, recipe.toString());
         recipe.addIngredients(i1);
-        recipe.getSteps().add("test 1");
-
-        assertTrue(recipe.checkNotNull()); // All fields are filled
+        String emptyIng = "ID: -1\nRecipe: name\nAuthor: author\nTotal time: 0\n\nDietary notes: [gluten-free, vegetarian]\nIngredients: [i1]" +
+                "\n\nInstructions: ";
+        assertEquals(emptyIng, recipe.toString());
+        recipe.getSteps().add("test step");
+        String good = "ID: -1\nRecipe: name\nAuthor: author\nTotal time: 0\n\nDietary notes: [gluten-free, vegetarian]\nIngredients: [i1]" +
+                "\n\nInstructions: \n\nStep 1: test step";
+        assertEquals(good, recipe.toString());
     }
 }
