@@ -11,7 +11,8 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-// Represents the add recipe window
+// Represents the last panel after user clicks "Add a recipe" in the previous panel. This panel lets user chooses
+// whether they want to edit an existing draft or create a new draft, and then they have the option to save
 public class AddRecipePanel extends JPanel {
     private RecipeAppContext context;
     private RecipeLibrary library;
@@ -22,6 +23,7 @@ public class AddRecipePanel extends JPanel {
     private int counter;
     private ArrayList<Object> inputFields;
 
+    // EFFECTS: sets the background colour and draws the initial labels and buttons
     public AddRecipePanel(RecipeAppContext context) {
         this.context = context;
         library = context.getLibrary();
@@ -39,6 +41,7 @@ public class AddRecipePanel extends JPanel {
         add(BorderLayout.SOUTH, savePanel);
     }
 
+    // EFFECTS: create a number of buttons corresponding to the number of drafts in the library
     public void configureMenu() {
         menu.setBackground(new Color(241, 235, 225));
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
@@ -64,6 +67,8 @@ public class AddRecipePanel extends JPanel {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: if the user chooses to edit one of the drafts, configure the main panel
     private void menuButtonExistingDraft(Recipe r) {
         JButton recipeButton = new JButton(r.getName());
         recipeButton.addActionListener(new ActionListener() {
@@ -75,6 +80,8 @@ public class AddRecipePanel extends JPanel {
         menu.add(recipeButton);
     }
 
+    // MODIFIES: this
+    // EFFECTS: configure the main panel, organise the fields, etc.
     @SuppressWarnings("methodlength")
     private void configureMain(Recipe r) {
         resetDisplayMenu();
@@ -116,6 +123,7 @@ public class AddRecipePanel extends JPanel {
         saveToLibrary(r, (ArrayList<Ingredient>) inputFields.get(3), (ArrayList<String>) inputFields.get(4));
     }
 
+    // EFFECTS: due to checkstyle -> refactor. This method creates a panel to display all the steps
     private void createRowsWithSteps(Recipe r, JLabel l) {
         ArrayList<JTextField> stepList = new ArrayList<>(); // i need an array to store each input
         JPanel stepPanel = new JPanel(new BorderLayout());
@@ -140,6 +148,7 @@ public class AddRecipePanel extends JPanel {
         inputFields.add(stepList); // index 5
     }
 
+    // EFFECTS: due to checkstyle -> refactor. This method adds a button to let user adds new fields for steps
     private static JButton getAddStepButton(ArrayList<JTextField> stepList, JPanel stepPanel, JPanel inputPanel) {
         JButton addStep = new JButton("Add a new step... +");
         addStep.addActionListener(new ActionListener() {
@@ -155,6 +164,8 @@ public class AddRecipePanel extends JPanel {
         return addStep;
     }
 
+    // EFFECTS: due to checkstyle -> refactor. This method creates a panel to display all the ingredients name and
+    // diet type
     private void createRowsWithIngredients(Recipe r, JLabel l) {
         ArrayList<JTextField> ingList = new ArrayList<>(); // i need an array to store each input
         ArrayList<JComboBox> dietList = new ArrayList<>();
@@ -181,6 +192,8 @@ public class AddRecipePanel extends JPanel {
         inputFields.add(dietList); // index 4
     }
 
+    // EFFECTS: due to checkstyle -> refactor. This method reads the existing ingredients of the recipe and initialise
+    // inputs for these ingredients
     private static void printOriginalIngList(Recipe r, ArrayList<JTextField> ingList, ArrayList<JComboBox> dietList,
                                              JPanel ingNamePanel, JPanel ingCatPanel) {
         if (!r.getIngredients().isEmpty()) {
@@ -197,6 +210,7 @@ public class AddRecipePanel extends JPanel {
         }
     }
 
+    // EFFECTS: due to checkstyle -> refactor. This method creates a button that let user add fields for new ingredients
     private static JButton getAddIngButton(ArrayList<JTextField> ingList, ArrayList<JComboBox> dietList,
                                            JPanel ingredientPanel, JPanel ingNamePanel, JPanel ingCatPanel) {
         JButton addIng = new JButton("Add a new ingredient... +");
@@ -218,6 +232,7 @@ public class AddRecipePanel extends JPanel {
         return addIng;
     }
 
+    // EFFECTS: due to checkstyle -> refactor. This method creates a slider to let user specify time consumption
     private void createRowsWithSlider(int r, JLabel l) {
         JSlider input = new JSlider(JSlider.HORIZONTAL, 0, 1000, r);
         input.setMajorTickSpacing(100);
@@ -229,6 +244,7 @@ public class AddRecipePanel extends JPanel {
         inputFields.add(input); // index 2
     }
 
+    // EFFECTS: due to checkstyle -> refactor. This method creates textfields to let user specify name and author
     private void createRowsWithTextField(String r, JLabel l) {
         JTextField input = new JTextField(r);
         l.setLabelFor(input);
@@ -236,6 +252,8 @@ public class AddRecipePanel extends JPanel {
         inputFields.add(input); // index 0
     }
 
+    // MODIFIES: this
+    // EFFECTS: clears the current main panel (display panel)
     private void resetDisplayMenu() {
         main.removeAll();
         savePanel.removeAll();
@@ -245,6 +263,8 @@ public class AddRecipePanel extends JPanel {
         main.setLayout(layout);
     }
 
+    // MODIFIES: this
+    // EFFECTS: create buttons to save as drafts or save for real to the json library
     public void saveToLibrary(Recipe r, ArrayList<Ingredient> ingList, ArrayList<String> stepList) {
         JLabel status = new JLabel();
         JButton saveToDraft = new JButton("Save to draft");
@@ -272,6 +292,7 @@ public class AddRecipePanel extends JPanel {
         savePanel.repaint();
     }
 
+    // EFFECTS: due to checkstyle -> refactor. This method create the save for real button
     private void configureSaveForRealButton(Recipe r, JLabel status, JButton saveForReal) {
         saveForReal.addActionListener(new ActionListener() {
             @Override
@@ -294,6 +315,8 @@ public class AddRecipePanel extends JPanel {
         });
     }
 
+    // EFFECTS: read all inputs from the ingredient panel at the point where this method is called, and store them into
+    // a list
     private ArrayList updateIngList() {
         ArrayList<JTextField> ingNames = (ArrayList<JTextField>) inputFields.get(3);
         ArrayList<JComboBox> dietChoices = (ArrayList<JComboBox>) inputFields.get(4);
@@ -308,6 +331,8 @@ public class AddRecipePanel extends JPanel {
         return updatedIngList;
     }
 
+    // EFFECTS: read all inputs from the step panel at the point where this method is called, and store them into
+    // a list
     private ArrayList updateStepList() {
         ArrayList<JTextField> steps = (ArrayList<JTextField>) inputFields.get(5);
         ArrayList<String> updatedStepList = new ArrayList<>();
@@ -319,6 +344,8 @@ public class AddRecipePanel extends JPanel {
         return updatedStepList;
     }
 
+    // MODIFIES: this
+    // EFFECTS: at the point of being called, update the recipe to match the user inputs
     private void updateRecipe(Recipe r) {
         r.setName(((JTextField) inputFields.get(0)).getText());
         r.setAuthor(((JTextField) inputFields.get(1)).getText());
@@ -335,6 +362,8 @@ public class AddRecipePanel extends JPanel {
         r.getSteps().addAll(stepList);
     }
 
+    // MODIFIES: .json library
+    // EFFECTS: save library to its json file
     public void saveToJson() {
         JLabel saveStatus = new JLabel();
         try {
