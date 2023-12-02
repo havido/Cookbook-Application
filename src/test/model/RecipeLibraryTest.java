@@ -82,6 +82,7 @@ class RecipeLibraryTest {
         assertEquals(1, recipeLibrary.filterByDiet("vegetarian").size());
         assertEquals(0, recipeLibrary.filterByDiet("random").size());
         assertEquals(2, recipeLibrary.filterByDiet("").size());
+        assertEquals(2, recipeLibrary.filterByDiet("none").size());
     }
 
     @Test

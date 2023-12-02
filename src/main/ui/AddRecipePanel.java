@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+// Represents the add recipe window
 public class AddRecipePanel extends JPanel {
     private RecipeAppContext context;
     private RecipeLibrary library;

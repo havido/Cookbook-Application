@@ -2,6 +2,7 @@ package ui;
 
 import java.io.FileNotFoundException;
 
+// Run the program on the console
 public class MainConsole {
     public static void main(String[] args) {
         try {

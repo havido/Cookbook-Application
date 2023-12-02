@@ -2,24 +2,24 @@ package ui;
 
 import model.RecipeLibrary;
 import persistence.JsonReader;
-import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 
+// Represents the first panel when user opens the app, to let user choose which data source they want the
+// application to be run upon
 public class LibraryPanel extends JPanel {
-    private RecipeAppContext context;
-    private SearchAddPanel saPanel;
-    private JLabel prompt;
+    private final RecipeAppContext context;
+    private final SearchAddPanel saPanel;
     private JLabel loadStatus;
     private JButton libraryButton;
     private JButton libUserButton;
     private JsonReader jsonReader;
     private RecipeLibrary library;
 
+    // EFFECTS: sets the background colour and draws the initial labels and buttons
     public LibraryPanel(RecipeAppContext context, SearchAddPanel sa) {
         this.context = context;
         this.saPanel = sa;
@@ -29,14 +29,13 @@ public class LibraryPanel extends JPanel {
         setPreferredSize(new Dimension(250, 700));
         setVisible(true);
 
-        prompt = new JLabel("Choose a library to load from: ");
+        JLabel prompt = new JLabel("Choose a library to load from: ");
         add(prompt);
 
         loadStatus = new JLabel();
         libraryButton = new JButton("Default");
         libUserButton = new JButton("User's library");
 
-        library.toString();
         loadFromDefault();
         loadFromUserLib();
 
@@ -46,6 +45,8 @@ public class LibraryPanel extends JPanel {
         add(Box.createVerticalGlue());
     }
 
+    // MODIFIES: this
+    // EFFECTS: load from libUser.json
     private void loadFromUserLib() {
         libUserButton.addActionListener(new ActionListener() {
             @Override
@@ -63,9 +64,10 @@ public class LibraryPanel extends JPanel {
                 }
             }
         });
-        library.toString();
     }
 
+    // MODIFIES: this
+    // EFFECTS: load from libUser.json
     private void loadFromDefault() {
         libraryButton.addActionListener(new ActionListener() {
             @Override
@@ -83,6 +85,5 @@ public class LibraryPanel extends JPanel {
                 }
             }
         });
-        library.toString();
     }
 }

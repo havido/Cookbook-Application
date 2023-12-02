@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents the last panel after user clicks "Search a recipe" in the previous panel. This panel lets user enters
+// inputs to search up a list of filtered recipes based on names, ingredients, time consumption,
+// and dietary requirements
 public class SearchRecipePanel extends JPanel {
     private final String ingPrompt = "Enter ingredients, each separated by a comma";
     private RecipeLibrary library;
@@ -18,6 +21,7 @@ public class SearchRecipePanel extends JPanel {
     private JPanel resultPanel;
     private JButton enter;
 
+    // EFFECTS: sets the background colour and draws the initial labels and buttons
     public SearchRecipePanel(RecipeAppContext context) {
         library = context.getLibrary();
         setBackground(new Color(241, 235, 225));
@@ -32,6 +36,7 @@ public class SearchRecipePanel extends JPanel {
         configureSearch();
     }
 
+    // EFFECTS: using SpringLayout and the external library SpringUtilities, create a search bar
     public void configureSearch() {
         searchPanel.setBackground(new Color(241, 235, 225));
 
@@ -49,6 +54,7 @@ public class SearchRecipePanel extends JPanel {
         searchPanel.add(enter);
     }
 
+    // EFFECTS: specifies which label goes with what type of inputs: JTextField, JSlider or JComboBox
     @SuppressWarnings("methodlength")
     private void createFilterMenu(String[] labels, int numPairs, ArrayList<Object> inputFields) {
         for (int i = 0; i < numPairs; i++) {
@@ -79,6 +85,7 @@ public class SearchRecipePanel extends JPanel {
         }
     }
 
+    // EFFECTS: create a "Search!" button to read from all inputs and filter the library to generate results
     private void createEnterButton(ArrayList<Object> inputFields) {
         enter = new JButton("Search!");
         enter.addActionListener(new ActionListener() {
@@ -104,6 +111,7 @@ public class SearchRecipePanel extends JPanel {
         });
     }
 
+    // EFFECTS: using GridLayout, organise the results
     public void configureResult(List<Recipe> lib) {
         resultPanel.removeAll();
 
@@ -129,6 +137,7 @@ public class SearchRecipePanel extends JPanel {
         System.out.println("hehe");
     }
 
+    // EFFECTS: create a new frame to show the information of each recipe, with visual components beign their images
     public void showButtonInfo(Recipe r) {
         JFrame infoFrame = new JFrame("Recipe");
         JPanel infoPanel = new JPanel(new BorderLayout());
@@ -158,6 +167,7 @@ public class SearchRecipePanel extends JPanel {
         infoFrame.setVisible(true);
     }
 
+    // EFFECTS: crop the image to use them in showButtonInfo()
     private static JLabel getImageLabel(Recipe r) {
         JLabel imageLabel = new JLabel();
 

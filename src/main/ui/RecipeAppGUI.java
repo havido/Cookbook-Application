@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
+// Represents the main window in which the cookbook application is run
 public class RecipeAppGUI extends JFrame {
 
     private RecipeAppContext context;

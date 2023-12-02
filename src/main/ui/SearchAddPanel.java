@@ -5,12 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Represents the second panel after user have chosen data source, to let them choose what action to do next
 public class SearchAddPanel extends JPanel {
     private MainPanel otherPanel;
     private JLabel prompt;
     private JButton searchButton;
     private JButton addButton;
 
+    // EFFECTS: sets the background colour and draws the initial labels and buttons
     public SearchAddPanel(MainPanel otherPanel) {
         this.otherPanel = otherPanel;
         setBackground(new Color(241, 235, 225));
@@ -33,6 +35,8 @@ public class SearchAddPanel extends JPanel {
         add(Box.createVerticalGlue());
     }
 
+    // MODIFIES: this
+    // EFFECTS: add actions to the search/load buttons
     private void addActionsToButton(MainPanel otherPanel) {
         searchButton.addActionListener(new ActionListener() {
             @Override
@@ -49,15 +53,20 @@ public class SearchAddPanel extends JPanel {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: set visual aspects for the buttons
     public void configureButton(JButton b) {
         b.setBackground((new Color(192,207,178)));
-        b.setSize(new Dimension(100, 60));
     }
 
+    // MODIFIES: this
+    // EFFECTS: make the searchAddPanel disappear
     public void disappear() {
         setVisible(false);
     }
 
+    // MODIFIES: this
+    // EFFECTS: make the searchAddPanel appear
     public void appear() {
         setVisible(true);
     }

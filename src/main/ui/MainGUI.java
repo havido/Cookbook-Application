@@ -3,6 +3,7 @@ package ui;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 
+// Run the program GUI
 public class MainGUI {
     public static void main(String[] args) {
         try {
