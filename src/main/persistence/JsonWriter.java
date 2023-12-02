@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import model.Recipe;
 import model.RecipeLibrary;
 import org.json.JSONArray;
@@ -30,6 +32,7 @@ public class JsonWriter {
     public void write(RecipeLibrary library) {
         JSONObject jsonLibrary = libraryToJson(library);
         saveToFile(jsonLibrary.toString(TAB));
+        EventLog.getInstance().logEvent(new Event("Library saved to: " + destination));
     }
 
     // MODIFIES: this

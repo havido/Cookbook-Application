@@ -349,7 +349,7 @@
         "Steps": [
             "Test step 1",
             "Test step 2",
-            "Test step 3"
+            "Testing"
         ],
         "Ingredients": [
             {
@@ -371,6 +371,10 @@
             {
                 "name": "milk",
                 "category": "LACTOSE"
+            },
+            {
+                "name": "tofu",
+                "category": "NONE"
             }
         ],
         "Author": "Meomeow",
@@ -456,13 +460,12 @@
     },
     {
         "Dietary restrictions": [
-            "lactose-free",
             "gluten-free",
             "vegetarian"
         ],
         "Steps": [
             "test step 1",
-            "test step 2"
+            "testing"
         ],
         "Ingredients": [
             {
@@ -472,12 +475,53 @@
             {
                 "name": "cucumber",
                 "category": "NONE"
+            },
+            {
+                "name": "butter",
+                "category": "LACTOSE"
             }
         ],
         "Author": "Anonymous",
         "Time": 15,
         "Tag": "DRAFT",
         "ID": 11,
-        "Name": "hehe"
+        "Name": "drafthehe"
+    },
+    {
+        "Dietary restrictions": ["lactose-free"],
+        "Steps": [
+            "Mix ground pork, minced cabbage and minced leek well together in a big bowl, season with some soy sauce and salt",
+            "Wrap the mixture into dumpling wraps. For every wrap, use the amount of mixture that spreads to approx. 1/5 the size of the wrap. Be sure to wrap tightly",
+            "You can either store these dumplings into the freezer, or steam them for eating. To steam, boil 1 cup of water in a steam pot with the amount of dumplings you want to eat. Don't let the water touch directly to the dumplings!",
+            "After the water boils, leave on high heat for another 2 minutes. After that, lower the heat to low-medium and steam for another 7 minutes.",
+            "Serve with soy sauce, add some chili crisps for extra flavour. Enjoy!"
+        ],
+        "Ingredients": [
+            {
+                "name": "ground pork",
+                "category": "MEAT"
+            },
+            {
+                "name": "cabbage",
+                "category": "NONE"
+            },
+            {
+                "name": "dumpling wraps",
+                "category": "GLUTEN"
+            },
+            {
+                "name": "soy sauce",
+                "category": "GLUTEN"
+            },
+            {
+                "name": "leek",
+                "category": "NONE"
+            }
+        ],
+        "Author": "Vi",
+        "Time": 100,
+        "Tag": "DEFAULT",
+        "ID": 12,
+        "Name": "Pork and Cabbage Dumpling"
     }
 ]}

@@ -102,6 +102,8 @@ public class Recipe implements Writable {
     public void addIngredients(Ingredient ingredient) {
         ingredients.add(ingredient);
         calculateDietaryRequirements(ingredients.get(ingredients.size() - 1));
+        EventLog.getInstance().logEvent(new Event("Added ingredient " + ingredient.getName()
+                + " to recipe " + name));
     }
 
     public List<String> getDietaryRequirements() {
