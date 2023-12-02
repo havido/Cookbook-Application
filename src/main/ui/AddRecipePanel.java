@@ -1,6 +1,6 @@
 package ui;
 
-import layout.SpringUtilities;
+import ui.layout.SpringUtilities;
 import model.*;
 import persistence.JsonWriter;
 

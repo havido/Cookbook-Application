@@ -1,7 +1,6 @@
 package ui;
 
-import layout.SpringUtilities;
-import model.Ingredient;
+import ui.layout.SpringUtilities;
 import model.Recipe;
 import model.RecipeLibrary;
 
