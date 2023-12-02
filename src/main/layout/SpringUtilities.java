@@ -142,7 +142,7 @@ public class SpringUtilities {
     }
 
     /* Used by makeCompactGrid. */
-    private static SpringLayout.Constraints getConstraintsForCell(
+    static SpringLayout.Constraints getConstraintsForCell(
             int row, int col,
             Container parent,
             int cols) {

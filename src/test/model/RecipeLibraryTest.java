@@ -75,11 +75,13 @@ class RecipeLibraryTest {
         assertTrue(recipeLibrary.filterByIngredients("i3").contains(recipe2));
         assertTrue(recipeLibrary.filterByMultipleIng("i1,i3").contains(recipe2));
         assertEquals(0, recipeLibrary.filterByIngredients("carrot").size());
+        assertEquals(2, recipeLibrary.filterByMultipleIng("").size());
 
         // Test filtering by dietary requirements
         assertEquals(2, recipeLibrary.filterByDiet("gluten-free").size());
         assertEquals(1, recipeLibrary.filterByDiet("vegetarian").size());
         assertEquals(0, recipeLibrary.filterByDiet("random").size());
+        assertEquals(2, recipeLibrary.filterByDiet("").size());
     }
 
     @Test
