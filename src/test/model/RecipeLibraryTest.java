@@ -39,6 +39,7 @@ class RecipeLibraryTest {
         // See if ID are assigned properly
         assertEquals(1, recipe1.getId());
         assertEquals(2, recipe2.getId());
+        assertEquals(3, recipe3.getId());
     }
 
     @Test
@@ -47,6 +48,7 @@ class RecipeLibraryTest {
         recipeLibrary.addRecipeToLibrary(recipe2);
 
         // Test filtering by name
+        assertEquals(2, recipeLibrary.filterByName("").size());
         assertEquals(2, recipeLibrary.filterByName("recipe").size());
         assertEquals(1, recipeLibrary.filterByName("1").size());
         assertTrue(recipeLibrary.filterByName("1").contains(recipe1));
@@ -64,11 +66,14 @@ class RecipeLibraryTest {
         recipeLibrary.addRecipeToLibrary(recipe2);
 
         // Test filtering by ingredients
+        assertEquals(2, recipeLibrary.filterByIngredients("").size());
         assertEquals(2, recipeLibrary.filterByIngredients("i1").size());
         assertEquals(1, recipeLibrary.filterByIngredients("i2").size());
         assertTrue(recipeLibrary.filterByIngredients("i2").contains(recipe1));
+        assertTrue(recipeLibrary.filterByMultipleIng("i1,i2").contains(recipe1));
         assertEquals(1, recipeLibrary.filterByIngredients("i3").size());
         assertTrue(recipeLibrary.filterByIngredients("i3").contains(recipe2));
+        assertTrue(recipeLibrary.filterByMultipleIng("i1,i3").contains(recipe2));
         assertEquals(0, recipeLibrary.filterByIngredients("carrot").size());
 
         // Test filtering by dietary requirements
@@ -89,5 +94,15 @@ class RecipeLibraryTest {
         assertEquals(1, recipeLibrary.filterByTime(40).size());
         assertEquals(2, recipeLibrary.filterByTime(100).size());
         assertEquals(0, recipeLibrary.filterByTime(20).size());
+    }
+
+    @Test
+    public void testUpdateLibrary() {
+        recipeLibrary.addRecipeToLibrary(recipe1);
+        recipeLibrary.addRecipeToLibrary(recipe2);
+        RecipeLibrary temp = new RecipeLibrary();
+        temp.addRecipeToLibrary(recipe3);
+        recipeLibrary.updateLibrary(temp);
+        assertEquals(temp.getAllRecipes(), recipeLibrary.getAllRecipes());
     }
 }

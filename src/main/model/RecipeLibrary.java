@@ -37,7 +37,7 @@ public class RecipeLibrary {
         recipe.setId(allRecipes.indexOf(recipe) + 1);
         if (recipe.getTag() == RecipeTag.DEFAULT) {
             library.add(recipe);
-        } else if (recipe.getTag() == RecipeTag.DRAFT) {
+        } else {
             drafts.add(recipe);
         }
     }
