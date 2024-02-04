@@ -1,5 +1,7 @@
 # My Personal Project
 
+This is a course project for the course CPSC 210 at UBC. This project builds a local PC cookbook application that lets people search up recipes from local library, and add more recipes into that library.
+
 [//]: # (## A subtitle)
 
 [//]: # ()
